@@ -1,8 +1,21 @@
-# React + Vite
+Hello mother fuckers.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta es nuestra iniciativa :D
 
-Currently, two official plugins are available:
+Esta documentacion es para los developers que deseen trabajar/mejorar esta idea.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Extructura de las carpetas:
+
+Pages: Es son routes level pages que el usuario puede interactuar. (Home screen example. Show content to the user) Esta carpeta puede llegar a tener subcarpetas, si es que corresponde a la home page.
+
+Components: Buttons, forms. Todo los componentes reutilizables que son pequeños pero son reutilizables. (Buena idea crear una carpeta dentro de ui para todos los smalls components)
+
+Hooks: Esto es para poder tener todos nuestros hooks guardado de forma separada.
+
+Services: Esta se refiere a cualquier servicio externo de consumo. (Si usas next js tendrias que usar otra estructura)
+
+Utils: Se puede utilizar para funciones recicables.
+
+Librerias adicionales usadas:
+
+- Node v20

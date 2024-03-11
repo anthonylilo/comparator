@@ -1,0 +1,7 @@
+Crear componente home page:
+
+Estara compuesto por dos formularios, uno es el editor de texto y el otro es el comparador.
+
+Uno es con el cual nosotros escribimos el texto del editor de texto enriquecido.
+
+El otro sera para poner la url del articulo y extraera la informacion de la pagina y te dira si esta bien o mal.
