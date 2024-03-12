@@ -1,6 +1,7 @@
 Crear componente home page:
 
-Estara compuesto por dos formularios, uno es el editor de texto y el otro es el comparador.
+Estara compuesto por dos formularios, uno es el editor de texto y el otro es el comparador (Los dos son componentes individuales).
+TODO: Hacer el editor de texto modulado, no tiene que estar todo en el mismo componente. @dylan.
 
 Uno es con el cual nosotros escribimos el texto del editor de texto enriquecido.
 

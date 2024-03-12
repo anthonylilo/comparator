@@ -19,3 +19,5 @@ Utils: Se puede utilizar para funciones recicables.
 Librerias adicionales usadas:
 
 - Node v20
+- React Bootstrap (https://react-bootstrap.netlify.app) 2.10.1
+- Cheerio (https://cheerio.js.org) 1.0.0-rc.12

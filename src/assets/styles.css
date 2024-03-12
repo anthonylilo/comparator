@@ -8,9 +8,3 @@ body{
   -moz-osx-font-smoothing: grayscale;
   background-color: #f0f0f0;
 }
-
-.container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
