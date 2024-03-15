@@ -6,7 +6,7 @@ Esta documentacion es para los developers que deseen trabajar/mejorar esta idea.
 
 Extructura de las carpetas:
 
-Pages: Es son routes level pages que el usuario puede interactuar. (Home screen example. Show content to the user) Esta carpeta puede llegar a tener subcarpetas, si es que corresponde a la home page.
+Pages: Es son routes level pages que el usuario puede interactuar. (Home screen example. Show content to the user) Esta carpeta puede llegar a tener subcarpetas, si es que corresponde a la home page. (En este caso no aplica)
 
 Components: Buttons, forms. Todo los componentes reutilizables que son pequeños pero son reutilizables. (Buena idea crear una carpeta dentro de ui para todos los smalls components)
 
@@ -19,5 +19,9 @@ Utils: Se puede utilizar para funciones recicables.
 Librerias adicionales usadas:
 
 - Node v20
-- React Bootstrap (https://react-bootstrap.netlify.app) 2.10.1
-- Cheerio (https://cheerio.js.org) 1.0.0-rc.12
+- React v18.2.0
+- Vite v5.1.0
+- Axios v1.6.7
+- React Bootstrap (https://react-bootstrap.netlify.app) Bootstrap: v5.3.3 - React Bootstrap: v2.10.1
+- Cheerio (https://cheerio.js.org) v1.0.0-rc.12
+- React-json-view (https://www.npmjs.com/package/react-json-view)

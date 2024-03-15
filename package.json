@@ -1,7 +1,7 @@
 {
-  "name": "comparator",
+  "name": "nestle_syncbox",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,8 @@
     "cheerio": "^1.0.0-rc.12",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-json-view": "^1.21.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",
