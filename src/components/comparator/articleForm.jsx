@@ -1,20 +1,46 @@
-import { useState } from 'react';
-import { Container, Row, Form, Button } from 'react-bootstrap';
-import axios from 'axios';
+import {
+  Container,
+  Row,
+  Form,
+  Button,
+  Col,
+  ProgressBar,
+} from "react-bootstrap";
+import { useArticleFormHooks } from "../../hooks/useArticleFormHooks";
+import handleSubmitLogic from "../../utils/handleSubmitLogic";
+import CardsImages from "../cards/cardsImages";
+import InvalidLinksComponent from "../invalidLinks/invalidLinks";
+import SchemaViewer from "../schema/SchemaViewer";
 
 function ArticleForm() {
-  const [url, setUrl] = useState('');
-  const [textareaValue, setTextareaValue] = useState('');
-  const [htmlContent, setHtmlContent] = useState('');
+  const {
+    url,
+    setUrl,
+    textareaValue,
+    setTextareaValue,
+    imageUrls,
+    setImageUrls,
+    invalidLinks,
+    setInvalidLinks,
+    schema,
+    setSchema,
+    loading,
+    setLoading,
+    showAdditionalFields,
+    setShowAdditionalFields,
+  } = useArticleFormHooks();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.get(url);
-      setHtmlContent(response.data);
-    } catch (error) {
-      console.error('Error fetching HTML:', error);
-    }
+    handleSubmitLogic(
+      url,
+      setLoading,
+      setTextareaValue,
+      setImageUrls,
+      setInvalidLinks,
+      setSchema,
+      setShowAdditionalFields
+    );
   };
 
   return (
@@ -30,24 +56,39 @@ function ArticleForm() {
               onChange={(e) => setUrl(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Example textarea</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              value={textareaValue}
-              onChange={(e) => setTextareaValue(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
+          <Button variant="primary" type="submit" disabled={loading}>
+            {loading ? "Loading..." : "Submit"}
           </Button>
+          {loading && <ProgressBar animated now={100} className="mt-2" />}
         </Form>
       </Row>
-      {htmlContent && (
-        <Row className="mt-3">
-          <pre>{htmlContent}</pre>
-        </Row>
+      {showAdditionalFields && (
+        <>
+          <Row className="mt-3">
+            <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Article Content</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={10}
+                value={textareaValue}
+                readOnly
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mt-3">
+            {imageUrls.map((image, index) => (
+              <Col key={index} md={6} className="mb-3">
+                <CardsImages image={image} />
+              </Col>
+            ))}
+          </Row>
+          {invalidLinks.length > 0 && (
+            <InvalidLinksComponent invalidLinks={invalidLinks} />
+          )}
+          {schema && (
+            <SchemaViewer schema={schema} />
+          )}
+        </>
       )}
     </Container>
   );
