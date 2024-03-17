@@ -1,12 +1,21 @@
 import axios from "axios";
 import cheerio from "cheerio";
 
+const checkUrlStatus = (url) => {
+  return new Promise((resolve) => {
+    fetch(url, { method: 'HEAD' })
+      .then(response => resolve(response.status))
+      .catch(error => resolve(error.status));
+  });
+};
+
 const handleSubmitLogic = async (
   url,
   setLoading,
   setTextareaValue,
   setImageUrls,
   setInvalidLinks,
+  setLinkStatuses,
   setSchema,
   setShowAdditionalFields
 ) => {
@@ -26,19 +35,29 @@ const handleSubmitLogic = async (
       const absoluteUrl = new URL(relativeUrl, baseUrl).href;
       const altText = $(element).attr("alt") || "Empty";
       const imageTitle = $(element).attr("title") || "Empty";
-      urls.push({ src: absoluteUrl, alt: altText, title: imageTitle });
+      const imageName = relativeUrl.substring(relativeUrl.lastIndexOf("/") + 1);
+      urls.push({
+        src: absoluteUrl,
+        alt: altText,
+        title: imageTitle,
+        imageName: imageName,
+      });
     });
     setImageUrls(urls);
 
+    const linkStatusPromises = [];
     $(".article-internal.article-container a").each((index, element) => {
       const linkUrl = new URL($(element).attr("href"), baseUrl).href;
+      linkStatusPromises.push(checkUrlStatus(linkUrl));
       const linkDomain = new URL(linkUrl).origin.split(".").slice(-2).join(".");
       if (linkDomain !== baseDomain) {
         invalid.push(linkUrl);
       }
     });
-
     setInvalidLinks(invalid);
+
+    const linkStatuses = await Promise.all(linkStatusPromises);
+    setLinkStatuses(linkStatuses);
 
     const schemaScripts = $('script[type="application/ld+json"]');
     const schemas = [];

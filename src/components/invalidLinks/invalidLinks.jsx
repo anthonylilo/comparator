@@ -15,7 +15,7 @@ const InvalidLinksComponent = ({ invalidLinks }) => {
 };
 
 InvalidLinksComponent.propTypes = {
-  invalidLinks: PropTypes.object.isRequired,
+  invalidLinks: PropTypes.array.isRequired,
 };
 
 export default InvalidLinksComponent;

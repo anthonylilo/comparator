@@ -10,6 +10,7 @@ import { useArticleFormHooks } from "../../hooks/useArticleFormHooks";
 import handleSubmitLogic from "../../utils/handleSubmitLogic";
 import CardsImages from "../cards/cardsImages";
 import InvalidLinksComponent from "../invalidLinks/invalidLinks";
+import HttpsModule from '../httpsLinks/httpsModule';
 import SchemaViewer from "../schema/SchemaViewer";
 
 function ArticleForm() {
@@ -22,6 +23,8 @@ function ArticleForm() {
     setImageUrls,
     invalidLinks,
     setInvalidLinks,
+    linkStatuses,
+    setLinkStatuses,
     schema,
     setSchema,
     loading,
@@ -38,6 +41,7 @@ function ArticleForm() {
       setTextareaValue,
       setImageUrls,
       setInvalidLinks,
+      setLinkStatuses,
       setSchema,
       setShowAdditionalFields
     );
@@ -85,9 +89,10 @@ function ArticleForm() {
           {invalidLinks.length > 0 && (
             <InvalidLinksComponent invalidLinks={invalidLinks} />
           )}
-          {schema && (
-            <SchemaViewer schema={schema} />
-          )}
+          <Row className="mt-3">
+            <HttpsModule linkStatuses={linkStatuses} />
+          </Row>
+          {schema && <SchemaViewer schema={schema} />}
         </>
       )}
     </Container>
