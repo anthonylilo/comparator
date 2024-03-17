@@ -3,9 +3,9 @@ import cheerio from "cheerio";
 
 const checkUrlStatus = (url) => {
   return new Promise((resolve) => {
-    fetch(url, { method: 'HEAD' })
-      .then(response => resolve(response.status))
-      .catch(error => resolve(error.status));
+    fetch(url, { method: "HEAD" })
+      .then((response) => resolve(response.status))
+      .catch((error) => resolve(error.status));
   });
 };
 
@@ -30,6 +30,7 @@ const handleSubmitLogic = async (
     const baseDomain = baseUrl.split(".").slice(-2).join(".");
     const urls = [];
     const invalid = [];
+    // Images
     $(".article-internal.article-container img").each((index, element) => {
       const relativeUrl = $(element).attr("src");
       const absoluteUrl = new URL(relativeUrl, baseUrl).href;
@@ -45,19 +46,25 @@ const handleSubmitLogic = async (
     });
     setImageUrls(urls);
 
-    const linkStatusPromises = [];
-    $(".article-internal.article-container a").each((index, element) => {
+    // Invalid links
+    const linkStatusesObj = {};
+    for (const element of $(".article-internal.article-container a")) {
       const linkUrl = new URL($(element).attr("href"), baseUrl).href;
-      linkStatusPromises.push(checkUrlStatus(linkUrl));
+      const linkStatus = await checkUrlStatus(linkUrl);
       const linkDomain = new URL(linkUrl).origin.split(".").slice(-2).join(".");
+
+      if (linkStatus === undefined) {
+        linkStatusesObj[linkUrl] = "No se pudo obtener el estado";
+      } else {
+        linkStatusesObj[linkUrl] = linkStatus;
+      }
+
       if (linkDomain !== baseDomain) {
         invalid.push(linkUrl);
       }
-    });
+    }
     setInvalidLinks(invalid);
-
-    const linkStatuses = await Promise.all(linkStatusPromises);
-    setLinkStatuses(linkStatuses);
+    setLinkStatuses(linkStatusesObj);
 
     const schemaScripts = $('script[type="application/ld+json"]');
     const schemas = [];
