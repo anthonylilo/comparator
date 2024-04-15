@@ -2,8 +2,10 @@ import axios from "axios";
 import cheerio from "cheerio";
 
 const checkUrlStatus = (url) => {
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  const requestUrl = proxyUrl + url;
   return new Promise((resolve) => {
-    fetch(url, { method: "HEAD" })
+    fetch(requestUrl, { method: "HEAD" })
       .then((response) => resolve(response.status))
       .catch((error) => resolve(error.status));
   });
