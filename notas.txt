@@ -1,15 +1,15 @@
-Crear componente home page:
-
-Estara compuesto por dos formularios, uno es el editor de texto y el otro es el comparador (Los dos son componentes individuales).
-TODO: Hacer el editor de texto modulado, no tiene que estar todo en el mismo componente. @dylan.
-
-Uno es con el cual nosotros escribimos el texto del editor de texto enriquecido.
-
-El otro sera para poner la url del articulo y extraera la informacion de la pagina y te dira si esta bien o mal.
-
-
-NOTAS NUEVAS:
-1)Agregar el nombre de la imagen en el card.
-2)Comprobar las redirecciones, del lado de dylan se ponen las urls que se redirigieron. Tienen que dar status 300
-  2.1)En mi lado tengo que decir si redirige o no.
-3)Todas las url que esten en el contenido, tienen que llevar a una pagina existente.
+TODO:
+1)Imagenes:
+  1.1)Agregar tamaño.
+  1.2)Agregar dimensiones.
+  1.3)Alt title - Name (Cambiar orden de las card)
+  1.4)No esta trayendo el banner.
+2)Meta title(30-70), meta description(max. 160), url (max 80 incluyendo https://) (largores) = matriz this data.
+3)Fuentes colocar a parte con su respectivo status.
+4)Mejorar logica de las urls que no son de purina.
+5)Status http:
+  5.1)Servidor Proxy
+  5.2)Scraping web
+  5.3)Crear Backend
+  5.4)Puppeteer
+https://www.purina.com.sv/purina/perros/que-frutas-pueden-comer-los-perros

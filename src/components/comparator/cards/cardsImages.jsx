@@ -1,5 +1,5 @@
-import { Card, ListGroup } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import { Card, ListGroup } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 const CardsImages = ({ image }) => {
   return (
@@ -7,6 +7,10 @@ const CardsImages = ({ image }) => {
       <Card.Img variant="top" src={image.src} />
       <Card.Body>
         <ListGroup className="list-group-flush">
+          <ListGroup.Item>
+            <strong>Name: </strong>
+            {image.imageName}
+          </ListGroup.Item>
           <ListGroup.Item>
             <strong>Title: </strong>
             {image.title}

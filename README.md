@@ -18,10 +18,12 @@ Utils: Se puede utilizar para funciones recicables.
 
 Librerias adicionales usadas:
 
-- Node v20
+- Node v20.10.0
 - React v18.2.0
 - Vite v5.1.0
 - Axios v1.6.7
 - React Bootstrap (https://react-bootstrap.netlify.app) Bootstrap: v5.3.3 - React Bootstrap: v2.10.1
 - Cheerio (https://cheerio.js.org) v1.0.0-rc.12
-- React-json-view (https://www.npmjs.com/package/react-json-view)
+- React-json-view (https://www.npmjs.com/package/react-json-view) v^1.21.3
+- Express v^4.18.3
+- Http proxy middleware v^2.0.6
