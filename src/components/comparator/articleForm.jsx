@@ -6,12 +6,12 @@ import {
   Col,
   ProgressBar,
 } from "react-bootstrap";
-import { useArticleFormHooks } from "../../hooks/useArticleFormHooks";
-import handleSubmitLogic from "../../utils/handleSubmitLogic";
-import CardsImages from "../cards/cardsImages";
-import InvalidLinksComponent from "../invalidLinks/invalidLinks";
-import HttpsModule from '../httpsLinks/httpsModule';
-import SchemaViewer from "../schema/SchemaViewer";
+import { useArticleFormHooks } from "./hooks/useArticleFormHooks";
+import handleSubmitLogic from "./utils/handleSubmitLogic";
+import CardsImages from "./cards/cardsImages";
+import InvalidLinksComponent from "./invalidLinks/invalidLinks";
+import HttpsModule from './httpsLinks/httpsModule';
+import SchemaViewer from "./schema/SchemaViewer";
 
 function ArticleForm() {
   const {

@@ -5,7 +5,7 @@ const checkUrlStatus = (url) => {
   const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
   const requestUrl = proxyUrl + url;
   return new Promise((resolve) => {
-    fetch(requestUrl, { method: "HEAD" })
+    fetch(requestUrl, { method: "GET" })
       .then((response) => resolve(response.status))
       .catch((error) => resolve(error.status));
   });
@@ -23,7 +23,9 @@ const handleSubmitLogic = async (
 ) => {
   setLoading(true);
   try {
-    const response = await axios.get(url);
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const requestUrl = proxyUrl + url;
+    const response = await axios.get(requestUrl);
     const $ = cheerio.load(response.data);
     const articleContent = $(".article-internal.article-container").html();
     setTextareaValue(articleContent);

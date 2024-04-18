@@ -3,6 +3,13 @@ TODO:
   1.1)Agregar tamaño.
   1.2)Agregar dimensiones.
   1.3)Alt title - Name (Cambiar orden de las card)
+  1.4)No esta trayendo el banner.
 2)Meta title(30-70), meta description(max. 160), url (max 80 incluyendo https://) (largores) = matriz this data.
 3)Fuentes colocar a parte con su respectivo status.
 4)Mejorar logica de las urls que no son de purina.
+5)Status http:
+  5.1)Servidor Proxy
+  5.2)Scraping web
+  5.3)Crear Backend
+  5.4)Puppeteer
+https://www.purina.com.sv/purina/perros/que-frutas-pueden-comer-los-perros

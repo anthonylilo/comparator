@@ -1,5 +1,6 @@
 import { Container, Row, Col } from 'react-bootstrap'
 import ArticleForm from '../components/comparator/articleForm'
+import EditorTest from '../components/editor/editor'
 
 export default function HomePage() {
   return (
@@ -8,6 +9,7 @@ export default function HomePage() {
       <h1>Nestlé SyncBox</h1>
         <Col md={6}>
           <h3>Editor</h3>
+          <EditorTest/>
         </Col>
         <Col md={6}>
           <h3>Comparador</h3>
