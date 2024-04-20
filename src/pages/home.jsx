@@ -2,24 +2,20 @@ import { Container, Row, Col } from 'react-bootstrap'
 import ArticleForm from '../components/comparator/articleForm'
 import EditorTest from '../components/editor/editor'
 import Dropdowns from '../components/comparator/dropdowns/dropdowns';
-import Desplegables from '../components/comparator/desplegables/desplegables';
+import Button from 'react-bootstrap/Button';
+import UrlInput from '../components/editor/urlInput';
 
 export default function HomePage() {
   return (
     <Container fluid="md">
       <Row className="justify-content-md-center text-center">
       <h1>Nestlé SyncBox</h1>
+          <Dropdowns/>
         <Col md={6}>
           <h3>Editor</h3>
-          <Dropdowns/>
+          <Button id='uploadButton' variant="primary">Subir archivo Word</Button>
           <EditorTest/>
-          <Desplegables />
-        <input type="radio" name="projectSelector" id="Purina" />
-        <label htmlFor="Purina">Purina</label>
-        <input type="radio" name="projectSelector" id="babyAndMe" />
-        <label htmlFor="babyAndMe">Baby and me</label>
-        <input type="radio" name="projectSelector" id="NP" />
-        <label htmlFor="NP">Nestlé Proffesional</label>
+          <UrlInput />
         </Col>
         <Col md={6}>
           <h3>Comparador</h3>
