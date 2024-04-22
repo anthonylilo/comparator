@@ -3,7 +3,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 function EditorTest() {
     return(
         <div className="App">
-                <h2>Using CKEditor&nbsp;5 build in React</h2>
+                <h2>Copia el texto y pegalo en el CMS</h2>
                 <CKEditor
                     editor={ ClassicEditor }
                     data="<p>Hello from CKEditor&nbsp;5!</p>"
@@ -24,5 +24,4 @@ function EditorTest() {
             </div>
     )
 }
-
 export default EditorTest
