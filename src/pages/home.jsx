@@ -5,6 +5,7 @@ import Dropdowns from '../components/comparator/dropdowns/dropdowns';
 import Button from 'react-bootstrap/Button';
 import UrlInput from '../components/editor/urlInput';
 
+
 export default function HomePage() {
   return (
     <Container fluid="md">
@@ -15,7 +16,7 @@ export default function HomePage() {
           <h3>Editor</h3>
           <Button id='uploadButton' variant="primary">Subir archivo Word</Button>
           <EditorTest/>
-          <UrlInput />
+          <UrlInput/>
         </Col>
         <Col md={6}>
           <h3>Comparador</h3>
