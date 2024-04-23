@@ -5,7 +5,6 @@ import Dropdowns from '../components/comparator/dropdowns/dropdowns';
 import Button from 'react-bootstrap/Button';
 import UrlInput from '../components/editor/urlInput';
 
-
 export default function HomePage() {
   return (
     <Container fluid="md">

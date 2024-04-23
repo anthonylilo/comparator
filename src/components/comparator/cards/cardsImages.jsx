@@ -8,16 +8,20 @@ const CardsImages = ({ image }) => {
       <Card.Body>
         <ListGroup className="list-group-flush">
           <ListGroup.Item>
-            <strong>Name: </strong>
-            {image.imageName}
+            <strong>Size: </strong>
+            {image.size}
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <strong>Alt: </strong>
+            {image.alt}
           </ListGroup.Item>
           <ListGroup.Item>
             <strong>Title: </strong>
             {image.title}
           </ListGroup.Item>
           <ListGroup.Item>
-            <strong>Alt: </strong>
-            {image.alt}
+            <strong>Name: </strong>
+            {image.imageName}
           </ListGroup.Item>
         </ListGroup>
       </Card.Body>

@@ -11,6 +11,14 @@ const checkUrlStatus = (url) => {
   });
 };
 
+const formatFileSize = (bytes) => {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
+
 const handleSubmitLogic = async (
   url,
   setLoading,
@@ -34,21 +42,32 @@ const handleSubmitLogic = async (
     const baseDomain = baseUrl.split(".").slice(-2).join(".");
     const urls = [];
     const invalid = [];
+    const imageInfo = [];
     // Images
-    $(".article-internal.article-container img").each((index, element) => {
+    $(".article-internal.article-container img").each(async (index, element) => {
       const relativeUrl = $(element).attr("src");
       const absoluteUrl = new URL(relativeUrl, baseUrl).href;
       const altText = $(element).attr("alt") || "Empty";
       const imageTitle = $(element).attr("title") || "Empty";
       const imageName = relativeUrl.substring(relativeUrl.lastIndexOf("/") + 1);
-      urls.push({
-        src: absoluteUrl,
-        alt: altText,
-        title: imageTitle,
-        imageName: imageName,
-      });
+
+      // Get image size
+      try {
+        const imageResponse = await axios.head(absoluteUrl);
+        const imageSize = imageResponse.headers['content-length'];
+        const formattedSize = formatFileSize(imageSize);
+        imageInfo.push({
+          src: absoluteUrl,
+          alt: altText,
+          title: imageTitle,
+          imageName: imageName,
+          size: formattedSize
+        });
+      } catch (error) {
+        console.error("Error fetching image size:", error);
+      }
     });
-    setImageUrls(urls);
+    setImageUrls(imageInfo);
 
     // Invalid links
     const linkStatusesObj = {};
