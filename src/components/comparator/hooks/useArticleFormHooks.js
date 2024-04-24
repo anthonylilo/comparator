@@ -9,6 +9,9 @@ export const useArticleFormHooks = () => {
   const [schema, setSchema] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
+  const [metaDescription, setMetaDescription] = useState('');
+  const [title, setTitle] = useState('');
+  
 
   return {
     url,
@@ -27,5 +30,9 @@ export const useArticleFormHooks = () => {
     setLoading,
     showAdditionalFields,
     setShowAdditionalFields,
+    metaDescription,
+    setMetaDescription,
+    title,
+    setTitle,
   };
 };

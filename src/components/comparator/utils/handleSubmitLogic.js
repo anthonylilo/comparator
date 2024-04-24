@@ -21,13 +21,16 @@ const formatFileSize = (bytes) => {
 
 const handleSubmitLogic = async (
   url,
+  setUrl,
   setLoading,
   setTextareaValue,
   setImageUrls,
   setInvalidLinks,
   setLinkStatuses,
   setSchema,
-  setShowAdditionalFields
+  setShowAdditionalFields,
+  setTitle,
+  setMetaDescription
 ) => {
   setLoading(true);
   try {
@@ -36,7 +39,13 @@ const handleSubmitLogic = async (
     const response = await axios.get(requestUrl);
     const $ = cheerio.load(response.data);
     const articleContent = $(".article-internal.article-container").html();
+    const title = $("title").text();
+    const metaDescription = $("meta[name='description']").attr("content");
+    const extractedUrl = response.config.url;
+    setTitle(title);
+    setMetaDescription(metaDescription);
     setTextareaValue(articleContent);
+    setUrl(extractedUrl)
 
     const baseUrl = new URL(url).origin;
     const baseDomain = baseUrl.split(".").slice(-2).join(".");

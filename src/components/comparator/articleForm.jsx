@@ -12,6 +12,7 @@ import CardsImages from "./cards/cardsImages";
 import InvalidLinksComponent from "./invalidLinks/invalidLinks";
 import HttpsModule from './httpsLinks/httpsModule';
 import SchemaViewer from "./schema/SchemaViewer";
+import MetaData from "./metaData/metaData";
 
 function ArticleForm() {
   const {
@@ -31,6 +32,10 @@ function ArticleForm() {
     setLoading,
     showAdditionalFields,
     setShowAdditionalFields,
+    title,
+    setTitle,
+    metaDescription,
+    setMetaDescription,
   } = useArticleFormHooks();
 
   const handleSubmit = async (e) => {
@@ -43,7 +48,11 @@ function ArticleForm() {
       setInvalidLinks,
       setLinkStatuses,
       setSchema,
-      setShowAdditionalFields
+      setShowAdditionalFields,
+      setTitle,
+      setMetaDescription,
+      title,
+      metaDescription
     );
   };
 
@@ -68,6 +77,12 @@ function ArticleForm() {
       </Row>
       {showAdditionalFields && (
         <>
+        {/* Mostrar el título y la descripción meta */}
+        <Row className="mt-3">
+            <Col>
+              <MetaData title={title} metaDescription={metaDescription} url={url} />
+            </Col>
+          </Row>
           <Row className="mt-3">
             <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
               <Form.Label>Article Content</Form.Label>
