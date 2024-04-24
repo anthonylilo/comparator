@@ -33,14 +33,12 @@ function ArticleForm() {
     setLoading,
     showAdditionalFields,
     setShowAdditionalFields,
-    meta,
     title,
     setTitle,
     metaDescription,
     setMetaDescription,
     banner,
     setBanner,
-    master
   } = useArticleFormHooks();
 
   const handleSubmit = async (e) => {

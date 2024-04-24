@@ -30,7 +30,7 @@ const handleSubmitLogic = async (
   setSchema,
   setShowAdditionalFields,
   setTitle,
-  setMetaDescription
+  setMetaDescription,
   setBanner
 ) => {
   setLoading(true);
