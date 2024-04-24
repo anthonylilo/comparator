@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export const useArticleFormHooks = () => {
-  const [url, setUrl] = useState('');
-  const [textareaValue, setTextareaValue] = useState('');
+  const [url, setUrl] = useState("");
+  const [textareaValue, setTextareaValue] = useState("");
   const [imageUrls, setImageUrls] = useState([]);
   const [invalidLinks, setInvalidLinks] = useState([]);
   const [linkStatuses, setLinkStatuses] = useState({});
@@ -11,7 +11,7 @@ export const useArticleFormHooks = () => {
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
   const [metaDescription, setMetaDescription] = useState('');
   const [title, setTitle] = useState('');
-  
+  const [banner, setBanner] = useState(null);
 
   return {
     url,
@@ -34,5 +34,7 @@ export const useArticleFormHooks = () => {
     setMetaDescription,
     title,
     setTitle,
+    banner,
+    setBanner,
   };
 };

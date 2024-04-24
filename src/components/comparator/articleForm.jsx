@@ -8,6 +8,7 @@ import {
 } from "react-bootstrap";
 import { useArticleFormHooks } from "./hooks/useArticleFormHooks";
 import handleSubmitLogic from "./utils/handleSubmitLogic";
+import BannerData from "./banner/bannerData";
 import CardsImages from "./cards/cardsImages";
 import InvalidLinksComponent from "./invalidLinks/invalidLinks";
 import HttpsModule from './httpsLinks/httpsModule';
@@ -32,10 +33,14 @@ function ArticleForm() {
     setLoading,
     showAdditionalFields,
     setShowAdditionalFields,
+    meta,
     title,
     setTitle,
     metaDescription,
     setMetaDescription,
+    banner,
+    setBanner,
+    master
   } = useArticleFormHooks();
 
   const handleSubmit = async (e) => {
@@ -52,7 +57,8 @@ function ArticleForm() {
       setTitle,
       setMetaDescription,
       title,
-      metaDescription
+      metaDescription,
+      setBanner
     );
   };
 
@@ -93,6 +99,9 @@ function ArticleForm() {
                 readOnly
               />
             </Form.Group>
+          </Row>
+          <Row className="mt-3">
+            <BannerData image={banner} />
           </Row>
           <Row className="mt-3">
             {imageUrls.map((image, index) => (
