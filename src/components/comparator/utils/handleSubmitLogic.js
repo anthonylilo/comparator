@@ -21,6 +21,7 @@ const formatFileSize = (bytes) => {
 
 const handleSubmitLogic = async (
   url,
+  setUrl,
   setLoading,
   setTextareaValue,
   setImageUrls,
@@ -28,6 +29,8 @@ const handleSubmitLogic = async (
   setLinkStatuses,
   setSchema,
   setShowAdditionalFields,
+  setTitle,
+  setMetaDescription
   setBanner
 ) => {
   setLoading(true);
@@ -66,7 +69,13 @@ const handleSubmitLogic = async (
     };
 
     const articleContent = $(".article-internal.article-container").html();
+    const title = $("title").text();
+    const metaDescription = $("meta[name='description']").attr("content");
+    const extractedUrl = response.config.url;
+    setTitle(title);
+    setMetaDescription(metaDescription);
     setTextareaValue(articleContent);
+    setUrl(extractedUrl)
 
     const baseUrl = new URL(url).origin;
     const baseDomain = baseUrl.split(".").slice(-2).join(".");
