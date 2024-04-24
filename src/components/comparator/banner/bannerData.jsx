@@ -1,7 +1,7 @@
 import { Card, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-const CardsImages = ({ image }) => {
+const BannerData = ({ image }) => {
   return (
     <Card>
       <Card.Img variant="top" src={image.src} />
@@ -33,8 +33,8 @@ const CardsImages = ({ image }) => {
   );
 };
 
-CardsImages.propTypes = {
+BannerData.propTypes = {
   image: PropTypes.object.isRequired,
 };
 
-export default CardsImages;
+export default BannerData;
