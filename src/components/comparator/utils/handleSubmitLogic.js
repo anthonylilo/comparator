@@ -64,9 +64,9 @@ const handleSubmitLogic = async (
         width: bannerWidth,
         height: bannerHeight,
         size: formattedSize,
-        imageName: bannerFilename, // Agregar el nombre de la imagen al objeto de banner
+        imageName: bannerFilename,
       });
-    };
+    };    
 
     const articleContent = $(".article-internal.article-container").html();
     const title = $("title").text();
@@ -75,7 +75,7 @@ const handleSubmitLogic = async (
     setTitle(title);
     setMetaDescription(metaDescription);
     setTextareaValue(articleContent);
-    setUrl(extractedUrl)
+    setUrl(extractedUrl);
 
     const baseUrl = new URL(url).origin;
     const baseDomain = baseUrl.split(".").slice(-2).join(".");

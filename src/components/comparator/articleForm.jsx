@@ -45,6 +45,7 @@ function ArticleForm() {
     e.preventDefault();
     handleSubmitLogic(
       url,
+      setUrl,
       setLoading,
       setTextareaValue,
       setImageUrls,
@@ -54,8 +55,6 @@ function ArticleForm() {
       setShowAdditionalFields,
       setTitle,
       setMetaDescription,
-      title,
-      metaDescription,
       setBanner
     );
   };
