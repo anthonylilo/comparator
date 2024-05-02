@@ -12,6 +12,7 @@ export const useArticleFormHooks = () => {
   const [metaDescription, setMetaDescription] = useState('');
   const [title, setTitle] = useState('');
   const [banner, setBanner] = useState(null);
+  const [articleContent, setArticleContent] = useState("");
 
   return {
     url,
@@ -36,5 +37,7 @@ export const useArticleFormHooks = () => {
     setTitle,
     banner,
     setBanner,
+    articleContent,
+    setArticleContent
   };
 };

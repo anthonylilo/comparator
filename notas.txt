@@ -1,10 +1,15 @@
 TODO:
-3)Fuentes colocar a parte con su respectivo status.
-4)Mejorar logica de las urls que no son de purina.
-5)Status http: (php investigar validación como api)
-  5.1)Servidor Proxy
-  5.2)Scraping web
-  5.3)Crear Backend
-  5.4)Puppeteer
+1)Fuentes colocar a parte con su respectivo status. (DARIO)
+2)Mejorar logica de las urls que no son de purina. (DARIO)
+3)Status http: (php investigar validación como api) (ANTHONY)
+  3.1)Servidor Proxy
+  3.2)Scraping web
+  3.3)Crear Backend
+  3.4)Puppeteer
+4)Exportar datos en Excel. Con formato.
+5)Inputs modulizar con la posibilidad de pasar props.
+6)Crear modulo para el formulario del word. No puede estar en la página de la home.
+7)Mejorar logica para el insert de datos para la parte del Comparador.
+8)Ocultar los campos del lado del editor
 https://www.purina.com.sv/purina/perros/que-frutas-pueden-comer-los-perros
 https://purina.com.sv/purina/perros/que-frutas-pueden-comer-los-perros

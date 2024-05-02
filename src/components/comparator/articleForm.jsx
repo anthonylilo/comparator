@@ -6,12 +6,14 @@ import {
   Col,
   ProgressBar,
 } from "react-bootstrap";
+import { useState } from "react"; // Importa useState
 import { useArticleFormHooks } from "./hooks/useArticleFormHooks";
 import handleSubmitLogic from "./utils/handleSubmitLogic";
+import RichEditor from "../general/ckeditor";
 import BannerData from "./banner/bannerData";
 import CardsImages from "./cards/cardsImages";
 import InvalidLinksComponent from "./invalidLinks/invalidLinks";
-import HttpsModule from './httpsLinks/httpsModule';
+import HttpsModule from "./httpsLinks/httpsModule";
 import SchemaViewer from "./schema/SchemaViewer";
 import MetaData from "./metaData/metaData";
 
@@ -19,8 +21,6 @@ function ArticleForm() {
   const {
     url,
     setUrl,
-    textareaValue,
-    setTextareaValue,
     imageUrls,
     setImageUrls,
     invalidLinks,
@@ -39,6 +39,8 @@ function ArticleForm() {
     setMetaDescription,
     banner,
     setBanner,
+    articleContent,
+    setArticleContent,
   } = useArticleFormHooks();
 
   const handleSubmit = async (e) => {
@@ -47,7 +49,6 @@ function ArticleForm() {
       url,
       setUrl,
       setLoading,
-      setTextareaValue,
       setImageUrls,
       setInvalidLinks,
       setLinkStatuses,
@@ -55,7 +56,8 @@ function ArticleForm() {
       setShowAdditionalFields,
       setTitle,
       setMetaDescription,
-      setBanner
+      setBanner,
+      setArticleContent
     );
   };
 
@@ -80,22 +82,18 @@ function ArticleForm() {
       </Row>
       {showAdditionalFields && (
         <>
-        {/* Mostrar el título y la descripción meta */}
-        <Row className="mt-3">
+          <Row className="mt-3">
             <Col>
-              <MetaData title={title} metaDescription={metaDescription} url={url} />
+              <MetaData
+                title={title}
+                metaDescription={metaDescription}
+                url={url}
+              />
             </Col>
           </Row>
           <Row className="mt-3">
-            <Form.Group as={Col} controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Article Content</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={10}
-                value={textareaValue}
-                readOnly
-              />
-            </Form.Group>
+            <h3>Article Content</h3>
+            <RichEditor articleContent={articleContent} />{" "}
           </Row>
           <Row className="mt-3">
             <BannerData image={banner} />

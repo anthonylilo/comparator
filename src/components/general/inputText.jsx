@@ -1,6 +1,8 @@
 import Form from 'react-bootstrap/Form';
 
-function urlInput() {
+//TODO: Cambiar a props para hacer uso de este componente
+
+function InputText() {
   return (
     <Form>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -11,4 +13,4 @@ function urlInput() {
   );
 }
 
-export default urlInput;
+export default InputText;

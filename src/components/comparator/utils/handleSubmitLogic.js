@@ -1,14 +1,16 @@
 import axios from "axios";
 import cheerio from "cheerio";
 
-const checkUrlStatus = (url) => {
-  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-  const requestUrl = proxyUrl + url;
-  return new Promise((resolve) => {
-    fetch(requestUrl, { method: "GET" })
-      .then((response) => resolve(response.status))
-      .catch((error) => resolve(error.status));
-  });
+const checkUrlStatus = async (url) => {
+  try {
+    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+    const requestUrl = proxyUrl + url;
+    const response = await fetch(requestUrl, { method: "GET" });
+    return response.status;
+  } catch (error) {
+    console.error("Error fetching URL status:", error);
+    return null;
+  }
 };
 
 const formatFileSize = (bytes) => {
@@ -23,7 +25,6 @@ const handleSubmitLogic = async (
   url,
   setUrl,
   setLoading,
-  setTextareaValue,
   setImageUrls,
   setInvalidLinks,
   setLinkStatuses,
@@ -31,7 +32,8 @@ const handleSubmitLogic = async (
   setShowAdditionalFields,
   setTitle,
   setMetaDescription,
-  setBanner
+  setBanner,
+  setArticleContent
 ) => {
   setLoading(true);
   try {
@@ -66,7 +68,7 @@ const handleSubmitLogic = async (
         size: formattedSize,
         imageName: bannerFilename,
       });
-    };    
+    };
 
     const articleContent = $(".article-internal.article-container").html();
     const title = $("title").text();
@@ -74,7 +76,7 @@ const handleSubmitLogic = async (
     const extractedUrl = response.config.url;
     setTitle(title);
     setMetaDescription(metaDescription);
-    setTextareaValue(articleContent);
+    setArticleContent(articleContent);
     setUrl(extractedUrl);
 
     const baseUrl = new URL(url).origin;
