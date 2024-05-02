@@ -1,9 +1,4 @@
-import {
-  Row,
-  Form,
-  Col,
-} from "react-bootstrap";
-import ReactJson from "react-json-view";
+import { Row, Form, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 function SchemaViewer({ schema }) {
@@ -11,7 +6,12 @@ function SchemaViewer({ schema }) {
     <Row className="mt-3 mb-3">
       <Form.Group as={Col} controlId="exampleForm.ControlInput2">
         <Form.Label>Schema</Form.Label>
-        <ReactJson src={schema} theme="monokai" collapsed={2} />
+        <input
+          type="text"
+          className="form-control"
+          value={JSON.stringify(schema)}
+          readOnly
+        />
       </Form.Group>
     </Row>
   );
