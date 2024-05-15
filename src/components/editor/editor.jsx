@@ -7,6 +7,8 @@ function Editor() {
   const [content, setContent] = useState("");
   const [selectedFormat, setSelectedFormat] = useState("html");
   const [markdownContent, setMarkdownContent] = useState("");
+  const [images, setImages] = useState([]);
+  const [schema, setSchema] = useState("");
   const [showMarkdownInput, setShowMarkdownInput] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
 
@@ -24,7 +26,9 @@ function Editor() {
       setContent(result.content);
       setShowEditor(true);
     } else if (selectedFormat === "markdown") {
-      setMarkdownContent(result.content);
+      setMarkdownContent(result.text);
+      setImages(result.images);
+      setSchema(result.schema);
       setShowMarkdownInput(true);
     }
   };
@@ -49,10 +53,31 @@ function Editor() {
           <RichEditor articleContent={content} />
         )}
         {showMarkdownInput && selectedFormat === "markdown" && (
-          <InputGroup className="mt-3">
-            <InputGroup.Text>Markdown Content</InputGroup.Text>
-            <FormControl as="textarea" value={markdownContent} readOnly />
-          </InputGroup>
+          <div>
+            <InputGroup className="mt-3">
+              <InputGroup.Text>Markdown Content</InputGroup.Text>
+              <FormControl as="textarea" value={markdownContent} readOnly />
+            </InputGroup>
+            <div className="mt-3">
+              <h5>Images</h5>
+              {images.map((image, index) => (
+                <div key={index}>
+                  <img
+                    src={image.imageSrc}
+                    alt={image.altText}
+                    style={{ maxWidth: "100%" }}
+                  />
+                  <p>Alt Text: {image.altText}</p>
+                  <p>Title: {image.title}</p>
+                  <p>Nombre de la imagen: {image.imageName}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3">
+              <h5>Datos Estructurados</h5>
+              <input type="text" readOnly value={schema} />
+            </div>
+          </div>
         )}
       </Row>
     </Container>
