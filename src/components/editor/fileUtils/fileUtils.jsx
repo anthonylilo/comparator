@@ -1,6 +1,6 @@
 import mammoth from "mammoth";
 
-export const handleFileChange = async (file, selectedFormat, setContent) => {
+export const handleFileChange = async (file, selectedFormat) => {
   if (file) {
     const reader = new FileReader();
     return new Promise((resolve, reject) => {
@@ -9,16 +9,10 @@ export const handleFileChange = async (file, selectedFormat, setContent) => {
         let result;
         if (selectedFormat === "html") {
           result = await mammoth.convertToHtml({ arrayBuffer: content });
+          result = { content: result.value };
         } else if (selectedFormat === "markdown") {
-          result = await mammoth.convertToMarkdown({
-            arrayBuffer: content,
-            convertImage: mammoth.images.inline((element) => {
-              return "IMAGEN"; // Cambio aquí: devolver "IMAGEN" en lugar de cadena vacía
-            }),
-          });
-        }
-        if (setContent) {
-          setContent(result.value); // Establecer el contenido utilizando la función setContent
+          result = await mammoth.convertToMarkdown({ arrayBuffer: content });
+          result = { content: result.value };
         }
         resolve(result);
       };

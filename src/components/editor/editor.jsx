@@ -13,27 +13,26 @@ function Editor() {
   const handleFormatChange = (e) => {
     const format = e.target.value;
     setSelectedFormat(format);
-    if (format === "markdown") {
-      setShowMarkdownInput(true);
-    } else {
-      setShowMarkdownInput(false);
-    }
+    setShowMarkdownInput(false);
+    setShowEditor(false);
   };
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
-    await handleFileChange(file, selectedFormat, setContent); // Pasar setContent como argumento
-    setShowEditor(true);
-    if (selectedFormat === "markdown") {
-      const result = await handleFileChange(file, selectedFormat);
-      setMarkdownContent(result.value);
+    const result = await handleFileChange(file, selectedFormat);
+    if (selectedFormat === "html") {
+      setContent(result.content);
+      setShowEditor(true);
+    } else if (selectedFormat === "markdown") {
+      setMarkdownContent(result.content);
+      setShowMarkdownInput(true);
     }
   };
 
   return (
     <Container fluid="md">
       <Row className="justify-content-md-center text-center">
-        {!showEditor && (
+        {!showEditor && !showMarkdownInput && (
           <div>
             <Form.Select onChange={handleFormatChange} value={selectedFormat}>
               <option value="html">HTML</option>
@@ -46,8 +45,10 @@ function Editor() {
             />
           </div>
         )}
-        {showEditor && <RichEditor articleContent={content} />}
-        {showMarkdownInput && (
+        {showEditor && selectedFormat === "html" && (
+          <RichEditor articleContent={content} />
+        )}
+        {showMarkdownInput && selectedFormat === "markdown" && (
           <InputGroup className="mt-3">
             <InputGroup.Text>Markdown Content</InputGroup.Text>
             <FormControl as="textarea" value={markdownContent} readOnly />
