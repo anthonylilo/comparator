@@ -9,16 +9,66 @@ export const handleFileChange = async (file, selectedFormat) => {
         let result;
         if (selectedFormat === "html") {
           result = await mammoth.convertToHtml({ arrayBuffer: content });
-          result = { content: result.value };
+          result = parseHtmlContent(result.value);
         } else if (selectedFormat === "markdown") {
           result = await mammoth.convertToMarkdown({ arrayBuffer: content });
           result = parseMarkdownContent(result.value);
         }
         resolve(result);
       };
+      reader.onerror = (error) => reject(error);
       reader.readAsArrayBuffer(file);
     });
   }
+};
+
+const parseHtmlContent = (content) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(content, "text/html");
+
+  // Parse images
+  const images = [...doc.querySelectorAll("img")].map((img) => ({
+    imageSrc: img.src,
+    altText: img.alt || "",
+    title: img.title || "",
+    imageName: img.getAttribute("data-filename") || "",
+  }));
+
+  // Parse structured data
+  let schema = "";
+  const paragraphs = doc.querySelectorAll("p");
+  let isScriptSection = false;
+  let scriptContent = "";
+
+  paragraphs.forEach((p) => {
+    const textContent = p.textContent.trim();
+    if (textContent.startsWith('<script type="application/ld+json">')) {
+      isScriptSection = true;
+      scriptContent = textContent.replace(
+        '<script type="application/ld+json">',
+        ""
+      );
+    } else if (isScriptSection) {
+      if (textContent.endsWith("</script>")) {
+        scriptContent += textContent.replace("</script>", "");
+        isScriptSection = false;
+        schema = scriptContent.trim();
+      } else {
+        scriptContent += textContent;
+      }
+    }
+  });
+
+  // Remove images and schema from content
+  images.forEach((img) => {
+    if (img.parentNode) {
+      img.parentNode.removeChild(img);
+    }
+  });
+
+  const text = doc.body.innerHTML.trim();
+
+  return { images, schema, text };
 };
 
 const parseMarkdownContent = (content) => {
@@ -61,4 +111,4 @@ const parseMarkdownContent = (content) => {
   return { images: imageMarkDown, schema: schemaMarkDown, text };
 };
 
-export default { handleFileChange, parseMarkdownContent };
+export default { handleFileChange, parseHtmlContent, parseMarkdownContent };

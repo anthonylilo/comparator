@@ -23,7 +23,9 @@ function Editor() {
     const file = e.target.files[0];
     const result = await handleFileChange(file, selectedFormat);
     if (selectedFormat === "html") {
-      setContent(result.content);
+      setContent(result.text);
+      setImages(result.images);
+      setSchema(result.schema);
       setShowEditor(true);
     } else if (selectedFormat === "markdown") {
       setMarkdownContent(result.text);
@@ -50,7 +52,28 @@ function Editor() {
           </div>
         )}
         {showEditor && selectedFormat === "html" && (
-          <RichEditor articleContent={content} />
+          <div>
+            <RichEditor articleContent={content} />
+            <div className="mt-3">
+              <h5>Images</h5>
+              {images.map((image, index) => (
+                <div key={index}>
+                  <img
+                    src={image.imageSrc}
+                    alt={image.altText}
+                    style={{ maxWidth: "100%" }}
+                  />
+                  <p>Alt Text: {image.altText}</p>
+                  <p>Title: {image.title}</p>
+                  <p>Nombre de la imagen: {image.imageName}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3">
+              <h5>Datos Estructurados</h5>
+              <input type="text" readOnly value={schema} />
+            </div>
+          </div>
         )}
         {showMarkdownInput && selectedFormat === "markdown" && (
           <div>
