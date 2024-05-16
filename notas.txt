@@ -8,12 +8,10 @@ TODO:
   3.4)Puppeteer
 4)Exportar datos en Excel. Con formato.
 5)Inputs modulizar con la posibilidad de pasar props.
-6)Agregar la verificación de redirecciones (hoy)
-7)Refresh button para los formularios (hoy)
+--pendientes--
 8)Limpiar en markdown las imagenes Y HTML
 9)Ckeditor formato no codigo para markdown
 10)Formatear el texto a copiar y pegar de acuerdo a como se ve en el doc (markdown y html)
-11)Boton para ir a la api (hoy)
 12)Boton para comparar los dos lados (semana que viene)
 https://www.purina.com.sv/purina/perros/que-frutas-pueden-comer-los-perros
 https://purina.com.sv/purina/perros/que-frutas-pueden-comer-los-perros
