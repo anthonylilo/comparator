@@ -23,6 +23,7 @@ const formatFileSize = (bytes) => {
 
 const handleSubmitLogic = async (
   url,
+  redirectUrls,
   setUrl,
   setLoading,
   setImageUrls,
@@ -33,7 +34,8 @@ const handleSubmitLogic = async (
   setTitle,
   setMetaDescription,
   setBanner,
-  setArticleContent
+  setArticleContent,
+  setRedirectStatuses // Add this parameter
 ) => {
   setLoading(true);
   try {
@@ -159,6 +161,16 @@ const handleSubmitLogic = async (
     } else {
       setSchema(null);
     }
+
+    // Handle redirect URLs
+    const redirectUrlsArray = redirectUrls.split(",");
+    const redirectStatuses = {};
+    for (const redirectUrl of redirectUrlsArray) {
+      const trimmedUrl = redirectUrl.trim();
+      const status = await checkUrlStatus(trimmedUrl);
+      redirectStatuses[trimmedUrl] = status;
+    }
+    setRedirectStatuses(redirectStatuses); // Update the redirect statuses state
 
     setShowAdditionalFields(true);
   } catch (error) {

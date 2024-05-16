@@ -6,7 +6,7 @@ import {
   Col,
   ProgressBar,
 } from "react-bootstrap";
-import { useState } from "react"; // Importa useState
+import { useState, useEffect } from "react";
 import { useArticleFormHooks } from "./hooks/useArticleFormHooks";
 import handleSubmitLogic from "./utils/handleSubmitLogic";
 import RichEditor from "../general/ckeditor";
@@ -16,8 +16,9 @@ import InvalidLinksComponent from "./invalidLinks/invalidLinks";
 import HttpsModule from "./httpsLinks/httpsModule";
 import SchemaViewer from "./schema/SchemaViewer";
 import MetaData from "./metaData/metaData";
+import RedirectStatusesComponent from "./redirectStatus/redirectStatuseComponent";
 
-function ArticleForm() {
+function ArticleForm({ reset }) {
   const {
     url,
     setUrl,
@@ -43,10 +44,14 @@ function ArticleForm() {
     setArticleContent,
   } = useArticleFormHooks();
 
+  const [redirectUrls, setRedirectUrls] = useState("");
+  const [redirectStatuses, setRedirectStatuses] = useState({});
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     handleSubmitLogic(
       url,
+      redirectUrls,
       setUrl,
       setLoading,
       setImageUrls,
@@ -57,9 +62,28 @@ function ArticleForm() {
       setTitle,
       setMetaDescription,
       setBanner,
-      setArticleContent
+      setArticleContent,
+      setRedirectStatuses // Passing the state setter for redirect statuses
     );
   };
+
+  useEffect(() => {
+    if (reset) {
+      setUrl("");
+      setRedirectUrls("");
+      setLoading(false);
+      setImageUrls([]);
+      setInvalidLinks([]);
+      setLinkStatuses({});
+      setSchema(null);
+      setShowAdditionalFields(false);
+      setTitle("");
+      setMetaDescription("");
+      setBanner(null);
+      setArticleContent("");
+      setRedirectStatuses({});
+    }
+  }, [reset]);
 
   return (
     <Container fluid="md">
@@ -72,6 +96,15 @@ function ArticleForm() {
               placeholder="Enter article URL"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+            <Form.Label>URLs for Redirection Validation</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Ingresa las urls separadas por coma"
+              value={redirectUrls}
+              onChange={(e) => setRedirectUrls(e.target.value)}
             />
           </Form.Group>
           <Button variant="primary" type="submit" disabled={loading}>
@@ -112,6 +145,9 @@ function ArticleForm() {
             <HttpsModule linkStatuses={linkStatuses} />
           </Row>
           {schema && <SchemaViewer schema={schema} />}
+          <Row className="mt-3">
+            <RedirectStatusesComponent redirectStatuses={redirectStatuses} />
+          </Row>
         </>
       )}
     </Container>
