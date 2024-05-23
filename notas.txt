@@ -9,9 +9,14 @@ TODO:
 4)Exportar datos en Excel. Con formato.
 5)Inputs modulizar con la posibilidad de pasar props.
 --pendientes--
-8)Limpiar en markdown las imagenes Y HTML
-9)Ckeditor formato no codigo para markdown
-10)Formatear el texto a copiar y pegar de acuerdo a como se ve en el doc (markdown y html)
-12)Boton para comparar los dos lados (semana que viene)
+6)Limpiar las imagenes Y HTML
+7)Ckeditor formato no codigo para markdown
+8)Formatear el texto a copiar y pegar de acuerdo a como se ve en el doc (markdown y html)
+9)Boton para comparar los dos lados (semana que viene)
+
+
 https://www.purina.com.sv/purina/perros/que-frutas-pueden-comer-los-perros
 https://purina.com.sv/purina/perros/que-frutas-pueden-comer-los-perros
+
+ESTE TIENE UNA URL DE ESPAÑA Y DOS FUENTES:
+https://purina.com.py/purina/perros/acaros-en-perros
