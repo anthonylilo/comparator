@@ -36,7 +36,7 @@ function Editor() {
   };
 
   return (
-    <Container className="j" fluid="md">
+    <Container fluid="md">
       <Row>
         {!showEditor && !showMarkdownInput && (
           <div>

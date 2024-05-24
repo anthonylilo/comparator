@@ -10,7 +10,7 @@ export default function HomePage() {
     </header>
     <Container>
         <Container className="main" fluid>
-          <Row className="">
+          <Row>
             <Col md={6}>
               <h3>Editor</h3>
               <Editor />
