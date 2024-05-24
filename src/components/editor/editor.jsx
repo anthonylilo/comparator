@@ -38,9 +38,10 @@ function Editor() {
 
   return (
     <Container fluid="md">
-      <Row className="justify-content-md-center text-center">
+      <Row>
         {!showEditor && !showMarkdownInput && (
           <div>
+            <p>Type of content</p>
             <Form.Select onChange={handleFormatChange} value={selectedFormat}>
               <option value="html">HTML</option>
               <option value="markdown">Markdown</option>
@@ -55,6 +56,26 @@ function Editor() {
         {showEditor && selectedFormat === "html" && (
           <div>
             <RichEditor articleContent={content} />
+<<<<<<< frontend
+            <div className="mt-3 justify-content-md-center text-center">
+              <h5>Images</h5>
+              {images.map((image, index) => (
+                <div key={index}>
+                  <img
+                    src={image.imageSrc}
+                    alt={image.altText}
+                    style={{ maxWidth: "100%" }}
+                  />
+                  <p>Alt Text: {image.altText}</p>
+                  <p>Title: {image.title}</p>
+                  <p>Nombre de la imagen: {image.imageName}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3">
+              <h5>Datos Estructurados</h5>
+              <input type="text" readOnly value={schema} />
+=======
             <div className="mt-3">
               {parsedContent.map((item, index) =>
                 item.type === "image" ? (
@@ -76,14 +97,27 @@ function Editor() {
                 <h5>Datos Estructurados</h5>
                 <pre>{schema}</pre>
               </div>
+>>>>>>> master
             </div>
           </div>
         )}
         {showMarkdownInput && selectedFormat === "markdown" && (
+<<<<<<< frontend
+          <div className="justify-content-md-center text-center">
+            <InputGroup className="mt-3">
+              <InputGroup.Text>Markdown Content</InputGroup.Text>
+              <FormControl as="textarea" value={markdownContent} readOnly />
+            </InputGroup>
+            <div className="mt-3">
+              <h5>Images</h5>
+              {images.map((image, index) => (
+                <div key={index}>
+=======
           <div>
             {parsedContent.map((item, index) =>
               item.type === "image" ? (
                 <div key={index} className="mt-3">
+>>>>>>> master
                   <img
                     src={item.data.imageSrc}
                     alt={item.data.altText}
