@@ -36,10 +36,11 @@ function Editor() {
   };
 
   return (
-    <Container fluid="md">
-      <Row className="justify-content-md-center text-center">
+    <Container className="j" fluid="md">
+      <Row>
         {!showEditor && !showMarkdownInput && (
           <div>
+            <p>Type of content</p>
             <Form.Select onChange={handleFormatChange} value={selectedFormat}>
               <option value="html">HTML</option>
               <option value="markdown">Markdown</option>
@@ -54,7 +55,7 @@ function Editor() {
         {showEditor && selectedFormat === "html" && (
           <div>
             <RichEditor articleContent={content} />
-            <div className="mt-3">
+            <div className="mt-3 justify-content-md-center text-center">
               <h5>Images</h5>
               {images.map((image, index) => (
                 <div key={index}>
@@ -76,7 +77,7 @@ function Editor() {
           </div>
         )}
         {showMarkdownInput && selectedFormat === "markdown" && (
-          <div>
+          <div className="justify-content-md-center text-center">
             <InputGroup className="mt-3">
               <InputGroup.Text>Markdown Content</InputGroup.Text>
               <FormControl as="textarea" value={markdownContent} readOnly />
