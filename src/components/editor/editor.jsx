@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Container, Row, Form } from "react-bootstrap";
-import RichEditor from "../general/ckeditor";
 import { handleFileChange } from "./fileUtils/fileUtils";
 
 function Editor() {
@@ -54,30 +53,24 @@ function Editor() {
           </div>
         )}
         {showEditor && selectedFormat === "html" && (
-          <div>
-            <RichEditor articleContent={content} />
-            <div className="mt-3 justify-content-md-center text-center">
-              {parsedContent.map((item, index) =>
-                item.type === "image" ? (
-                  <div key={index} className="mt-3">
-                    <img
-                      src={item.data.imageSrc}
-                      alt={item.data.altText}
-                      style={{ maxWidth: "100%" }}
-                    />
-                    <p>Alt Text: {item.data.altText}</p>
-                    <p>Title: {item.data.title}</p>
-                    <p>Nombre de la imagen: {item.data.imageName}</p>
-                  </div>
-                ) : (
-                  <p key={index}>{item.data}</p>
-                )
-              )}
+          <div className="mt-3 justify-content-md-center text-center">
+            {parsedContent.map((item, index) => (
+              <div key={index} dangerouslySetInnerHTML={{ __html: item }} />
+            ))}
+            {metaData && (
               <div className="mt-3">
-                <h5>Datos Estructurados</h5>
-                <input type="text" readOnly value={schema} />
+                <h5>Meta Information</h5>
+                <p>Market: {metaData.market}</p>
+                <p>Article Number: {metaData.articleNumber}</p>
+                <p>Category: {metaData.category}</p>
+                <p>
+                  Suggested URL:{" "}
+                  <a href={metaData.suggestedUrl}>{metaData.suggestedUrl}</a>
+                </p>
+                <p>Meta Title: {metaData.metaTitle}</p>
+                <p>Meta Description: {metaData.metaDescription}</p>
               </div>
-            </div>
+            )}
           </div>
         )}
         {showMarkdownInput && selectedFormat === "markdown" && (

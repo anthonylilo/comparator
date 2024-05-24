@@ -23,52 +23,34 @@ export const handleFileChange = async (file, selectedFormat) => {
 };
 
 const parseHtmlContent = (content) => {
+  const metaDataRegex =
+    /<p>MERCADO:\s*(.*?)<\/p>\s*<p>ARTÍCULO No:\s*(.*?)<\/p>\s*<p><strong>SEO:<\/strong><\/p>\s*<p><strong>CATEGORÍA:<\/strong>\s*(.*?)<\/p>\s*<p><strong>URL SUGERIDA:<\/strong>\s*<a href="(.*?)">(.*?)<\/a><\/p>\s*<p><strong>Meta Title:<\/strong>\s*(.*?)<\/p>\s*<p><strong>Meta Description:<\/strong>\s*(.*?)<\/p>/;
+
+  const metaDataMatch = metaDataRegex.exec(content);
+  let metaData = {};
+  if (metaDataMatch) {
+    metaData = {
+      market: metaDataMatch[1],
+      articleNumber: metaDataMatch[2],
+      category: metaDataMatch[3],
+      suggestedUrl: metaDataMatch[4],
+      metaTitle: metaDataMatch[5],
+      metaDescription: metaDataMatch[6],
+    };
+    // Remove metadata from content
+    content = content.replace(metaDataRegex, "");
+  }
+
   const parser = new DOMParser();
   const doc = parser.parseFromString(content, "text/html");
 
-  // Parse images
-  const images = [...doc.querySelectorAll("img")].map((img) => ({
-    imageSrc: img.src,
-    altText: img.alt || "",
-    title: img.title || "",
-    imageName: img.getAttribute("data-filename") || "",
-  }));
+  const contentParts = [];
+  const contentNodes = doc.body.childNodes;
+  for (const node of contentNodes) {
+    contentParts.push(node.outerHTML);
+  }
 
-  // Parse structured data
-  let schema = "";
-  const paragraphs = doc.querySelectorAll("p");
-  let isScriptSection = false;
-  let scriptContent = "";
-
-  paragraphs.forEach((p) => {
-    const textContent = p.textContent.trim();
-    if (textContent.startsWith('<script type="application/ld+json">')) {
-      isScriptSection = true;
-      scriptContent = textContent.replace(
-        '<script type="application/ld+json">',
-        ""
-      );
-    } else if (isScriptSection) {
-      if (textContent.endsWith("</script>")) {
-        scriptContent += textContent.replace("</script>", "");
-        isScriptSection = false;
-        schema = scriptContent.trim();
-      } else {
-        scriptContent += textContent;
-      }
-    }
-  });
-
-  // Remove images and schema from content
-  images.forEach((img) => {
-    if (img.parentNode) {
-      img.parentNode.removeChild(img);
-    }
-  });
-
-  const text = doc.body.innerHTML.trim();
-
-  return { images, schema, text };
+  return { metaData, content: contentParts };
 };
 
 const parseMarkdownContent = (content) => {
