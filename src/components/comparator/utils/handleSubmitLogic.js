@@ -4,7 +4,7 @@ import cheerio from "cheerio";
 const checkUrlStatus = async (url) => {
   try {
     const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const requestUrl = proxyUrl + url;
+    const requestUrl = proxyUrl + url.trim();
     const response = await fetch(requestUrl, { method: "GET" });
     return response.status;
   } catch (error) {
@@ -40,14 +40,14 @@ const handleSubmitLogic = async (
   setLoading(true);
   try {
     const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const requestUrl = proxyUrl + url;
+    const requestUrl = proxyUrl + url.trim();
     const response = await axios.get(requestUrl);
     const $ = cheerio.load(response.data);
 
     // Extraer banner
     const bannerSrc = $(".article-internal-header-img img").attr("src");
     const bannerAlt = $(".article-internal-header-img img").attr("alt");
-    const bannerSrcUrl = new URL(bannerSrc, url).href;
+    const bannerSrcUrl = new URL(bannerSrc, url.trim()).href;
     const bannerTitle = $(".article-internal-header-img img").attr("title");
 
     // Extraer el nombre de la imagen del banner
@@ -81,7 +81,7 @@ const handleSubmitLogic = async (
     setArticleContent(articleContent);
     setUrl(extractedUrl);
 
-    const baseUrl = new URL(url).origin;
+    const baseUrl = new URL(url.trim()).origin;
     const baseDomain = baseUrl.split(".").slice(-2).join(".");
     const urls = [];
     const invalid = [];
