@@ -56,27 +56,7 @@ function Editor() {
         {showEditor && selectedFormat === "html" && (
           <div>
             <RichEditor articleContent={content} />
-<<<<<<< frontend
             <div className="mt-3 justify-content-md-center text-center">
-              <h5>Images</h5>
-              {images.map((image, index) => (
-                <div key={index}>
-                  <img
-                    src={image.imageSrc}
-                    alt={image.altText}
-                    style={{ maxWidth: "100%" }}
-                  />
-                  <p>Alt Text: {image.altText}</p>
-                  <p>Title: {image.title}</p>
-                  <p>Nombre de la imagen: {image.imageName}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-3">
-              <h5>Datos Estructurados</h5>
-              <input type="text" readOnly value={schema} />
-=======
-            <div className="mt-3">
               {parsedContent.map((item, index) =>
                 item.type === "image" ? (
                   <div key={index} className="mt-3">
@@ -95,59 +75,48 @@ function Editor() {
               )}
               <div className="mt-3">
                 <h5>Datos Estructurados</h5>
-                <pre>{schema}</pre>
+                <input type="text" readOnly value={schema} />
               </div>
->>>>>>> master
             </div>
           </div>
         )}
         {showMarkdownInput && selectedFormat === "markdown" && (
-<<<<<<< frontend
           <div className="justify-content-md-center text-center">
-            <InputGroup className="mt-3">
-              <InputGroup.Text>Markdown Content</InputGroup.Text>
-              <FormControl as="textarea" value={markdownContent} readOnly />
-            </InputGroup>
             <div className="mt-3">
-              <h5>Images</h5>
-              {images.map((image, index) => (
-                <div key={index}>
-=======
-          <div>
-            {parsedContent.map((item, index) =>
-              item.type === "image" ? (
-                <div key={index} className="mt-3">
->>>>>>> master
-                  <img
-                    src={item.data.imageSrc}
-                    alt={item.data.altText}
-                    style={{ maxWidth: "100%" }}
-                  />
-                  <p>Alt Text: {item.data.altText}</p>
-                  <p>Title: {item.data.title}</p>
-                  <p>Nombre de la imagen: {item.data.imageName}</p>
-                </div>
-              ) : (
-                <p key={index}>{item.data}</p>
-              )
-            )}
-            <div className="mt-3">
-              <h5>Meta Information</h5>
-              {metaData && (
-                <>
-                  <p>Market: {metaData.market}</p>
-                  <p>Article Number: {metaData.articleNumber}</p>
-                  <p>Category: {metaData.category}</p>
-                  <p>Suggested URL: {metaData.suggestedUrl}</p>
-                  <p>Meta Title: {metaData.metaTitle}</p>
-                  <p>Meta Description: {metaData.metaDescription}</p>
-                </>
+              {parsedContent.map((item, index) =>
+                item.type === "image" ? (
+                  <div key={index} className="mt-3">
+                    <img
+                      src={item.data.imageSrc}
+                      alt={item.data.altText}
+                      style={{ maxWidth: "100%" }}
+                    />
+                    <p>Alt Text: {item.data.altText}</p>
+                    <p>Title: {item.data.title}</p>
+                    <p>Nombre de la imagen: {item.data.imageName}</p>
+                  </div>
+                ) : (
+                  <p key={index}>{item.data}</p>
+                )
               )}
-            </div>
+              <div className="mt-3">
+                <h5>Meta Information</h5>
+                {metaData && (
+                  <>
+                    <p>Market: {metaData.market}</p>
+                    <p>Article Number: {metaData.articleNumber}</p>
+                    <p>Category: {metaData.category}</p>
+                    <p>Suggested URL: {metaData.suggestedUrl}</p>
+                    <p>Meta Title: {metaData.metaTitle}</p>
+                    <p>Meta Description: {metaData.metaDescription}</p>
+                  </>
+                )}
+              </div>
 
-            <div className="mt-3">
-              <h5>Datos Estructurados</h5>
-              <pre>{schema}</pre>
+              <div className="mt-3">
+                <h5>Datos Estructurados</h5>
+                <pre>{schema}</pre>
+              </div>
             </div>
           </div>
         )}
