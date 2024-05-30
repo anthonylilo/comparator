@@ -1,14 +1,13 @@
-import { Container, Row, Col, Button} from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import ArticleForm from "../components/comparator/articleForm";
 import Editor from "../components/editor/editor";
-import Encabezado from "./encabezado";
+import HomeNavbar from "../components/navbar/homeNavbar";
 
 export default function HomePage() {
   return (
-    <><header>
-        <Encabezado />
-    </header>
-    <Container>
+    <>
+      <HomeNavbar />
+      <Container>
         <Container className="main" fluid>
           <Row>
             <Col md={6}>
@@ -21,6 +20,7 @@ export default function HomePage() {
             </Col>
           </Row>
         </Container>
-      </Container></>
+      </Container>
+    </>
   );
 }

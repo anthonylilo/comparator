@@ -10,7 +10,6 @@ import { useState, useEffect } from "react";
 import { useArticleFormHooks } from "./hooks/useArticleFormHooks";
 import handleSubmitLogic from "./utils/handleSubmitLogic";
 import RichEditor from "../general/ckeditor";
-import BannerData from "./banner/bannerData";
 import CardsImages from "./cards/cardsImages";
 import InvalidLinksComponent from "./invalidLinks/invalidLinks";
 import HttpsModule from "./httpsLinks/httpsModule";
@@ -129,9 +128,7 @@ function ArticleForm({ reset }) {
             <RichEditor articleContent={articleContent} />{" "}
           </Row>
           <Row className="mt-3">
-            <BannerData image={banner} />
-          </Row>
-          <Row className="mt-3">
+            <CardsImages image={banner} />
             {imageUrls.map((image, index) => (
               <Col key={index} md={6} className="mb-3">
                 <CardsImages image={image} />

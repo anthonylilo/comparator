@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Container, Row, Form } from "react-bootstrap";
 import { handleFileChange } from "./fileUtils/fileUtils";
+import CardsImages from "../comparator/cards/cardsImages";
+import SchemaViewer from "../comparator/schema/SchemaViewer";
 
 function Editor() {
   const [content, setContent] = useState("");
   const [selectedFormat, setSelectedFormat] = useState("html");
   const [parsedContent, setParsedContent] = useState([]);
-  const [schema, setSchema] = useState("");
+  const [schema, setSchema] = useState(null);
   const [metaData, setMetaData] = useState({});
   const [showMarkdownInput, setShowMarkdownInput] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
@@ -45,11 +47,13 @@ function Editor() {
               <option value="html">HTML</option>
               <option value="markdown">Markdown</option>
             </Form.Select>
-            <input
-              type="file"
-              onChange={handleFileInputChange}
-              accept=".docx"
-            />
+            <Form.Group controlId="formFile" className="mb-3 mt-3">
+              <Form.Control
+                onChange={handleFileInputChange}
+                type="file"
+                accept=".docx"
+              />
+            </Form.Group>
           </div>
         )}
         {showEditor && selectedFormat === "html" && (
@@ -78,16 +82,7 @@ function Editor() {
             <div className="mt-3">
               {parsedContent.map((item, index) =>
                 item.type === "image" ? (
-                  <div key={index} className="mt-3">
-                    <img
-                      src={item.data.imageSrc}
-                      alt={item.data.altText}
-                      style={{ maxWidth: "100%" }}
-                    />
-                    <p>Alt Text: {item.data.altText}</p>
-                    <p>Title: {item.data.title}</p>
-                    <p>Nombre de la imagen: {item.data.imageName}</p>
-                  </div>
+                  <CardsImages key={index} image={item.data} />
                 ) : (
                   <p key={index}>{item.data}</p>
                 )
@@ -105,10 +100,8 @@ function Editor() {
                   </>
                 )}
               </div>
-
               <div className="mt-3">
-                <h5>Datos Estructurados</h5>
-                <pre>{schema}</pre>
+                {schema && <SchemaViewer schema={schema} />}
               </div>
             </div>
           </div>

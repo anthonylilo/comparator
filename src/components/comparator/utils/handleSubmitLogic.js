@@ -157,7 +157,8 @@ const handleSubmitLogic = async (
       }
     });
     if (schemas.length > 0) {
-      setSchema(schemas[0]);
+      let extractedSchema = schemas[0];
+      setSchema(extractedSchema);
     } else {
       setSchema(null);
     }
