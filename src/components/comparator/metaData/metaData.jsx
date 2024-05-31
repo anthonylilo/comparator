@@ -11,8 +11,8 @@ const MetaData = ({ title, metaDescription, url }) => {
   const WARNING_CHAR_TITLE_SIZE = titleLength == 40 || titleLength == 70
   const MAX_CHAR_TITLE_SIZE = titleLength > 70
   const MIN_CHAR_DESC_SIZE = descriptionLength <= 0
-  const IDEAL_CHAR_DESC_SIZE = descriptionLength >= 41 && descriptionLength <= 130
-  const MAX_CHAR_DESC_SIZE = descriptionLength > 130
+  const IDEAL_CHAR_DESC_SIZE = descriptionLength >= 41 && descriptionLength <= 170
+  const MAX_CHAR_DESC_SIZE = descriptionLength > 170
   const MAX_URL_SIZE = urlLength > 80
 
   if ( MIN_CHAR_TITLE_SIZE) {
@@ -20,7 +20,7 @@ const MetaData = ({ title, metaDescription, url }) => {
     titleMessage = "La cantidad de caracteres es menor a lo recomendado";
   } else if (IDEAL_CHAR_TITLE_SIZE) {
     titleColor = "primary";
-    titleMessage = "la cantidad de caracteres es la ideal";
+    titleMessage = "La cantidad de caracteres es la ideal";
   }else if(WARNING_CHAR_TITLE_SIZE){
     titleColor = "warning";
     titleMessage = "Atencion: la cantidad de caracteres no es el ideal";
@@ -34,7 +34,7 @@ const MetaData = ({ title, metaDescription, url }) => {
     descriptionMessage = "Error deberia de contener  meta description";
   } else if (IDEAL_CHAR_DESC_SIZE) {
     descriptionColor =  "primary";
-    descriptionMessage = "la cantidad de caracteres es la ideal";
+    descriptionMessage = "La cantidad de caracteres es la ideal";
   } else if(MAX_CHAR_DESC_SIZE) {
     descriptionColor = "danger";
     descriptionMessage = "La cantidad de caracteres supera lo recomendado";

@@ -4,7 +4,7 @@ import cheerio from "cheerio";
 const checkUrlStatus = async (url) => {
   try {
     const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const requestUrl = proxyUrl + url.trim();
+    const requestUrl = url.startsWith(proxyUrl) ? url : proxyUrl + url.trim();
     const response = await fetch(requestUrl, { method: "GET" });
     return response.status;
   } catch (error) {
@@ -21,12 +21,30 @@ const formatFileSize = (bytes) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 };
 
+const fetchImageDetails = async (imageUrl) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = () => {
+      const width = img.naturalWidth;
+      const height = img.naturalHeight;
+      axios
+        .get(imageUrl, { responseType: "arraybuffer" })
+        .then((response) => {
+          const size = formatFileSize(response.headers["content-length"]);
+          resolve({ width, height, size });
+        })
+        .catch(reject);
+    };
+    img.onerror = reject;
+  });
+};
+
 const handleSubmitLogic = async (
   url,
   redirectUrls,
   setUrl,
   setLoading,
-  setImageUrls,
   setInvalidLinks,
   setLinkStatuses,
   setSchema,
@@ -35,102 +53,85 @@ const handleSubmitLogic = async (
   setMetaDescription,
   setBanner,
   setArticleContent,
-  setRedirectStatuses // Add this parameter
+  setRedirectStatuses,
+  setArticleTitle
 ) => {
   setLoading(true);
   try {
     const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const requestUrl = proxyUrl + url.trim();
+    const requestUrl = url.startsWith(proxyUrl) ? url : proxyUrl + url.trim();
     const response = await axios.get(requestUrl);
     const $ = cheerio.load(response.data);
+
+    // Extraer título y meta descripción
+    const title = $("title").text();
+    const metaDescription = $("meta[name='description']").attr("content");
+    const articleTitle = $(".article-internal-title span").text();
+    setTitle(title);
+    setMetaDescription(metaDescription);
+    setArticleTitle(articleTitle);
 
     // Extraer banner
     const bannerSrc = $(".article-internal-header-img img").attr("src");
     const bannerAlt = $(".article-internal-header-img img").attr("alt");
     const bannerSrcUrl = new URL(bannerSrc, url.trim()).href;
     const bannerTitle = $(".article-internal-header-img img").attr("title");
-
-    // Extraer el nombre de la imagen del banner
     const bannerFilename = bannerSrc.substring(bannerSrc.lastIndexOf("/") + 1);
 
-    // Crear objeto Image para obtener dimensiones
-    const image = new Image();
-    image.src = bannerSrcUrl;
-    image.onload = () => {
-      const bannerWidth = image.naturalWidth;
-      const bannerHeight = image.naturalHeight;
-      const bannerSize = response.headers["content-length"];
-      const formattedSize = formatFileSize(bannerSize);
-      setBanner({
-        src: bannerSrcUrl,
-        alt: bannerAlt,
-        title: bannerTitle,
-        width: bannerWidth,
-        height: bannerHeight,
-        size: formattedSize,
-        imageName: bannerFilename,
-      });
-    };
+    const bannerDetails = await fetchImageDetails(bannerSrcUrl);
+    setBanner({
+      src: bannerSrcUrl,
+      alt: bannerAlt,
+      title: bannerTitle,
+      width: bannerDetails.width,
+      height: bannerDetails.height,
+      size: bannerDetails.size,
+      imageName: bannerFilename,
+    });
 
-    const articleContent = $(".article-internal.article-container").html();
-    const title = $("title").text();
-    const metaDescription = $("meta[name='description']").attr("content");
-    const extractedUrl = response.config.url;
-    setTitle(title);
-    setMetaDescription(metaDescription);
-    setArticleContent(articleContent);
-    setUrl(extractedUrl);
+    // Extraer el contenido del artículo
+    const contentArray = [];
+    const elements = $(
+      ".article-internal-body .wysiwyg, .article-internal-body img"
+    );
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      if ($(element).is("img")) {
+        const imgSrc = $(element).attr("src");
+        const imgAlt = $(element).attr("alt") || "Empty";
+        const imgTitle = $(element).attr("title") || "Empty";
+        const imgSrcUrl = new URL(imgSrc, url.trim()).href;
+        const imgFilename = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
 
+        const imgDetails = await fetchImageDetails(imgSrcUrl);
+        contentArray.push({
+          type: "image",
+          src: imgSrcUrl,
+          alt: imgAlt,
+          title: imgTitle,
+          imageName: imgFilename,
+          width: imgDetails.width,
+          height: imgDetails.height,
+          size: imgDetails.size,
+        });
+      } else if ($(element).is("div")) {
+        const htmlContent = $(element).html();
+        contentArray.push({
+          type: "html",
+          content: htmlContent,
+        });
+      }
+    }
+
+    setArticleContent(contentArray);
+
+    // Check invalid links
     const baseUrl = new URL(url.trim()).origin;
     const baseDomain = baseUrl.split(".").slice(-2).join(".");
-    const urls = [];
     const invalid = [];
-    const imageInfo = [];
-    // Images
-    $(".article-internal.article-container img").each(
-      async (index, element) => {
-        const relativeUrl = $(element).attr("src");
-        const absoluteUrl = new URL(relativeUrl, baseUrl).href;
-        const altText = $(element).attr("alt") || "Empty";
-        const imageTitle = $(element).attr("title") || "Empty";
-        const imageName = relativeUrl.substring(
-          relativeUrl.lastIndexOf("/") + 1
-        );
-
-        try {
-          const imageResponse = await axios.head(absoluteUrl);
-          const imageSize = imageResponse.headers["content-length"];
-          const image = new Image();
-          image.src = absoluteUrl;
-          await new Promise((resolve, reject) => {
-            image.onload = () => {
-              const formattedSize = formatFileSize(imageSize);
-              const width = image.naturalWidth;
-              const height = image.naturalHeight;
-              imageInfo.push({
-                src: absoluteUrl,
-                alt: altText,
-                title: imageTitle,
-                imageName: imageName,
-                size: formattedSize,
-                width: width,
-                height: height,
-              });
-              resolve();
-            };
-            image.onerror = reject;
-          });
-        } catch (error) {
-          console.error("Error fetching image size:", error);
-        }
-      }
-    );
-
-    setImageUrls(imageInfo);
-
-    // Invalid links
     const linkStatusesObj = {};
-    for (const element of $(".article-internal.article-container a")) {
+
+    $(".article-internal-body a").each(async (index, element) => {
       const linkUrl = new URL($(element).attr("href"), baseUrl).href;
       const linkStatus = await checkUrlStatus(linkUrl);
       const linkDomain = new URL(linkUrl).origin.split(".").slice(-2).join(".");
@@ -144,10 +145,11 @@ const handleSubmitLogic = async (
       if (linkDomain !== baseDomain) {
         invalid.push(linkUrl);
       }
-    }
+    });
     setInvalidLinks(invalid);
     setLinkStatuses(linkStatusesObj);
 
+    // Extraer esquema de JSON-LD
     const schemaScripts = $('script[type="application/ld+json"]');
     const schemas = [];
     schemaScripts.each((index, element) => {
@@ -157,13 +159,12 @@ const handleSubmitLogic = async (
       }
     });
     if (schemas.length > 0) {
-      let extractedSchema = schemas[0];
-      setSchema(extractedSchema);
+      setSchema(schemas[0]);
     } else {
       setSchema(null);
     }
 
-    // Handle redirect URLs
+    // Manejar URLs de redirección
     const redirectUrlsArray = redirectUrls.split(",");
     const redirectStatuses = {};
     for (const redirectUrl of redirectUrlsArray) {
@@ -171,7 +172,7 @@ const handleSubmitLogic = async (
       const status = await checkUrlStatus(trimmedUrl);
       redirectStatuses[trimmedUrl] = status;
     }
-    setRedirectStatuses(redirectStatuses); // Update the redirect statuses state
+    setRedirectStatuses(redirectStatuses);
 
     setShowAdditionalFields(true);
   } catch (error) {

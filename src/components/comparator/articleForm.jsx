@@ -9,7 +9,6 @@ import {
 import { useState, useEffect } from "react";
 import { useArticleFormHooks } from "./hooks/useArticleFormHooks";
 import handleSubmitLogic from "./utils/handleSubmitLogic";
-import RichEditor from "../general/ckeditor";
 import CardsImages from "./cards/cardsImages";
 import InvalidLinksComponent from "./invalidLinks/invalidLinks";
 import HttpsModule from "./httpsLinks/httpsModule";
@@ -17,7 +16,7 @@ import SchemaViewer from "./schema/SchemaViewer";
 import MetaData from "./metaData/metaData";
 import RedirectStatusesComponent from "./redirectStatus/redirectStatuseComponent";
 
-function ArticleForm({ reset }) {
+function ArticleForm({ reset, selectedFormat }) {
   const {
     url,
     setUrl,
@@ -45,15 +44,15 @@ function ArticleForm({ reset }) {
 
   const [redirectUrls, setRedirectUrls] = useState("");
   const [redirectStatuses, setRedirectStatuses] = useState({});
+  const [articleTitle, setArticleTitle] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handleSubmitLogic(
+    await handleSubmitLogic(
       url,
       redirectUrls,
       setUrl,
       setLoading,
-      setImageUrls,
       setInvalidLinks,
       setLinkStatuses,
       setSchema,
@@ -62,7 +61,8 @@ function ArticleForm({ reset }) {
       setMetaDescription,
       setBanner,
       setArticleContent,
-      setRedirectStatuses // Passing the state setter for redirect statuses
+      setRedirectStatuses,
+      setArticleTitle
     );
   };
 
@@ -79,7 +79,8 @@ function ArticleForm({ reset }) {
       setTitle("");
       setMetaDescription("");
       setBanner(null);
-      setArticleContent("");
+      setArticleContent([]);
+      setArticleTitle("");
       setRedirectStatuses({});
     }
   }, [reset]);
@@ -91,17 +92,18 @@ function ArticleForm({ reset }) {
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Url of the article</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Enter article URL"
+              type="url"
+              placeholder="Enter url"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
+              required
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-            <Form.Label>URLs for Redirection Validation</Form.Label>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Redirect Urls</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Ingresa las urls separadas por coma"
+              as="textarea"
+              rows={3}
               value={redirectUrls}
               onChange={(e) => setRedirectUrls(e.target.value)}
             />
@@ -115,33 +117,42 @@ function ArticleForm({ reset }) {
       {showAdditionalFields && (
         <>
           <Row className="mt-3">
-            <Col>
-              <MetaData
-                title={title}
-                metaDescription={metaDescription}
-                url={url}
-              />
-            </Col>
-          </Row>
-          <Row className="mt-3">
             <h3>Article Content</h3>
-            <RichEditor articleContent={articleContent} />{" "}
           </Row>
           <Row className="mt-3">
-            <CardsImages image={banner} />
-            {imageUrls.map((image, index) => (
-              <Col key={index} md={6} className="mb-3">
-                <CardsImages image={image} />
+            <h1>{articleTitle}</h1>
+          </Row>
+          {banner && (
+            <Row className="mt-3">
+              <Col md={12} className="mb-3">
+                <CardsImages image={banner} />
+              </Col>
+            </Row>
+          )}
+          <Row className="mt-3">
+            {articleContent.map((item, index) => (
+              <Col key={index} md={12} className="mb-3">
+                {item.type === "html" && (
+                  <div dangerouslySetInnerHTML={{ __html: item.content }} />
+                )}
+                {item.type === "image" && <CardsImages image={item} />}
               </Col>
             ))}
           </Row>
+          <Row className="mt-3">
+            <MetaData
+              title={title}
+              metaDescription={metaDescription}
+              url={url}
+            />
+          </Row>
+          {schema && <SchemaViewer schema={schema} />}
           {invalidLinks.length > 0 && (
             <InvalidLinksComponent invalidLinks={invalidLinks} />
           )}
           <Row className="mt-3">
             <HttpsModule linkStatuses={linkStatuses} />
           </Row>
-          {schema && <SchemaViewer schema={schema} />}
           <Row className="mt-3">
             <RedirectStatusesComponent redirectStatuses={redirectStatuses} />
           </Row>

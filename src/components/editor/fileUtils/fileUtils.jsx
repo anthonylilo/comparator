@@ -63,6 +63,11 @@ const parseMarkdownContent = (content) => {
 
   const images = [];
 
+  // Function to clean the text
+  const cleanText = (text) => {
+    return text.replace(/\\-/g, "-").replace(/\\\./g, ".").replace(/\\/g, "");
+  };
+
   // Extract metadata
   let metaDataImport = {};
   const metaDataMatch = metaDataRegex.exec(content);
@@ -73,7 +78,7 @@ const parseMarkdownContent = (content) => {
       category: metaDataMatch[3].trim(),
       suggestedUrl: metaDataMatch[4].trim(),
       metaTitle: metaDataMatch[5].trim(),
-      metaDescription: metaDataMatch[6].trim(),
+      metaDescription: cleanText(metaDataMatch[6].trim()),
     };
     content = content.replace(metaDataRegex, "");
   }
@@ -127,7 +132,7 @@ const parseMarkdownContent = (content) => {
       .trim()
       .split(/\n+/);
     paragraphs.forEach((para) => {
-      if (para) contentParts.push({ type: "paragraph", data: para });
+      if (para) contentParts.push({ type: "paragraph", data: cleanText(para) });
     });
 
     // Assign the corresponding tag data if available
@@ -137,9 +142,9 @@ const parseMarkdownContent = (content) => {
     // Add the image with tag data
     images.push({
       src: src.trim(),
-      alt: tagAltText ? tagAltText.trim() : altText.trim(),
-      title: tagTitle.trim(),
-      imageName: tagImageName.trim(),
+      alt: cleanText(tagAltText ? tagAltText.trim() : altText.trim()),
+      title: cleanText(tagTitle.trim()),
+      imageName: cleanText(tagImageName.trim()),
     });
     contentParts.push({ type: "image", data: images[images.length - 1] });
 
@@ -150,7 +155,7 @@ const parseMarkdownContent = (content) => {
   // Add remaining text after the last image
   const remainingText = content.slice(contentCursor).trim().split(/\n+/);
   remainingText.forEach((text) => {
-    if (text) contentParts.push({ type: "paragraph", data: text });
+    if (text) contentParts.push({ type: "paragraph", data: cleanText(text) });
   });
 
   return {

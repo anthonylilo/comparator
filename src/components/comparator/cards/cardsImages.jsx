@@ -19,12 +19,10 @@ const CardsImages = ({ image }) => {
           )}
         </div>
       </Card.ImgOverlay>
-      <Card.Body>
-        <Card.Title className="text-white card_Background_Color card_Name_Image">
-          {image.imageName}
-        </Card.Title>
-      </Card.Body>
       <ListGroup className="list-group-flush text-center">
+        <ListGroup.Item className="text-white card_Background_Color card_Name_Image">
+          {image.imageName}
+        </ListGroup.Item>
         <ListGroup.Item>
           <strong>Title: </strong>
           {image.title}

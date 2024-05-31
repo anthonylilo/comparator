@@ -33,7 +33,7 @@ h3 {
 }
 
 .card_Background_Color {
-  background-color: #595959;
+  background-color: #595959 !important;
 }
 
 .card_Image_Size {

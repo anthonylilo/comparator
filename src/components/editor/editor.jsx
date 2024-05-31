@@ -1,24 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Form } from "react-bootstrap";
 import { handleFileChange } from "./fileUtils/fileUtils";
 import CardsImages from "../comparator/cards/cardsImages";
 import SchemaViewer from "../comparator/schema/SchemaViewer";
 
-function Editor() {
+function Editor({ selectedFormat }) {
   const [content, setContent] = useState("");
-  const [selectedFormat, setSelectedFormat] = useState("html");
   const [parsedContent, setParsedContent] = useState([]);
   const [schema, setSchema] = useState(null);
   const [metaData, setMetaData] = useState({});
   const [showMarkdownInput, setShowMarkdownInput] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
 
-  const handleFormatChange = (e) => {
-    const format = e.target.value;
-    setSelectedFormat(format);
+  useEffect(() => {
     setShowMarkdownInput(false);
     setShowEditor(false);
-  };
+  }, [selectedFormat]);
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
@@ -42,11 +39,6 @@ function Editor() {
       <Row>
         {!showEditor && !showMarkdownInput && (
           <div>
-            <p>Type of content</p>
-            <Form.Select onChange={handleFormatChange} value={selectedFormat}>
-              <option value="html">HTML</option>
-              <option value="markdown">Markdown</option>
-            </Form.Select>
             <Form.Group controlId="formFile" className="mb-3 mt-3">
               <Form.Control
                 onChange={handleFileInputChange}

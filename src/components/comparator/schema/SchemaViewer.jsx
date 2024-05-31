@@ -2,9 +2,6 @@ import React from "react";
 import { Table, Container, Row } from "react-bootstrap";
 
 const SchemaViewer = ({ schema }) => {
-  console.log("schema", schema);
-
-  // Determinar si el schema contiene @graph y seleccionar el primer elemento si es así
   const schemaData = schema["@graph"] ? schema["@graph"][0] : schema;
   if (!schemaData) {
     return <div>No schema data available</div>;
