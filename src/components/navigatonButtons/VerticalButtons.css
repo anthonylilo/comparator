@@ -6,6 +6,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.vertical-buttons.visible {
+    opacity: 1;
 }
 
 .scroll-button, .placeholder-button {
@@ -14,13 +20,31 @@
     margin: 10px 0;
     border: none;
     border-radius: 50%;
-    background-color: #007bff;
     color: white;
-    font-size: 16px;
+    font-size: 1.9rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.api{
+    background-color: #0075FF;
 }
 
 .scroll-button:hover, .placeholder-button:hover {
-    background-color: #0056b3;
+    background-color: #0b5ed7;
+}
+.reset{
+    background-color: #E82F2F;
+}
+.reset:hover{
+    background-color: #bb2d3b;
+}
+.top{
+    background-color: #282929;
+}
+.top:hover{
+    background-color: #000000;
 }
