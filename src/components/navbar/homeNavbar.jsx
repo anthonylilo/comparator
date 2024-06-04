@@ -15,7 +15,7 @@ function HomeNavbar() {
     window.location.reload();
   };
   return (
-    <Navbar expand="lg" className="header" sticky="top">
+    <Navbar expand="lg" className="header" >
       <Container fluid>
         <Navbar.Brand href="./">Nestlé Sync Box</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
