@@ -1,0 +1,25 @@
+.tooltip-button {
+    position: relative; /* Ensure position is relative */
+    /* Other button styles */
+}
+
+.tooltip-text {
+    position: absolute;
+    bottom: 10px; /* Adjust as needed */
+    right: 1rem;
+    transform: translateX(-40px);
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+    font-size: 14px; /* Adjust as needed */
+}
+
+.tooltip-button:hover .tooltip-text {
+    opacity: 1;
+    visibility: visible;
+}

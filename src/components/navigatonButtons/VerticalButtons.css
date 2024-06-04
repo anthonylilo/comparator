@@ -1,0 +1,54 @@
+.vertical-buttons {
+    position: fixed;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s, background-color 0.5s;
+    padding: 10px;
+    border-top-left-radius: 1.1rem;;
+    border-bottom-left-radius: 1.1rem;
+}
+
+.vertical-buttons.visible {
+    opacity: 1;
+    background-color: #ffffff;
+}
+
+.scroll-button, .placeholder-button {
+    width: 50px;
+    height: 50px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.9rem;
+    cursor: pointer;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.api{
+    background-color: #0075FF;
+}
+
+.scroll-button:hover, .placeholder-button:hover {
+    background-color: #0b5ed7;
+}
+.reset{
+    background-color: #E82F2F;
+}
+.reset:hover{
+    background-color: #bb2d3b;
+}
+.top{
+    background-color: #282929;
+}
+.top:hover{
+    background-color: #000000;
+}
