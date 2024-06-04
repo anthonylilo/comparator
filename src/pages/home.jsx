@@ -3,6 +3,7 @@ import { useState } from "react";
 import ArticleForm from "../components/comparator/articleForm";
 import Editor from "../components/editor/editor";
 import HomeNavbar from "../components/navbar/homeNavbar";
+import VerticalButtons from "../components/navigatonButtons/verticalButtons";
 
 export default function HomePage() {
   const [selectedFormat, setSelectedFormat] = useState("markdown");
@@ -35,6 +36,7 @@ export default function HomePage() {
           </Row>
         </Container>
       </Container>
+      <VerticalButtons />
     </>
   );
 }
