@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Form } from "react-bootstrap";
 import { handleFileChange } from "./fileUtils/fileUtils";
-import CardsImages from "../comparator/cards/cardsImages";
-import SchemaViewer from "../comparator/schema/SchemaViewer";
+import CardsImages from "../../components/cards/cardsImages";
+import SchemaViewer from "../../components/schema/SchemaViewer";
 
 function Editor({ selectedFormat }) {
   const [content, setContent] = useState("");
   const [parsedContent, setParsedContent] = useState([]);
   const [schema, setSchema] = useState(null);
   const [metaData, setMetaData] = useState({});
+  const [redirections, setRedirections] = useState([]);
   const [showMarkdownInput, setShowMarkdownInput] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
 
@@ -30,6 +31,7 @@ function Editor({ selectedFormat }) {
       setParsedContent(result.content);
       setSchema(result.schema);
       setMetaData(result.metaDataImport);
+      setRedirections(result.redirections || []);
       setShowMarkdownInput(true);
     }
   };
@@ -83,13 +85,45 @@ function Editor({ selectedFormat }) {
                 <h5>Meta Information</h5>
                 {metaData && (
                   <>
-                    <p>Market: {metaData.market}</p>
-                    <p>Article Number: {metaData.articleNumber}</p>
-                    <p>Category: {metaData.category}</p>
-                    <p>Suggested URL: {metaData.suggestedUrl}</p>
-                    <p>Meta Title: {metaData.metaTitle}</p>
-                    <p>Meta Description: {metaData.metaDescription}</p>
+                    <p>
+                      <strong>Market:</strong> {metaData.market}
+                    </p>
+                    <p>
+                      <strong>Article Number:</strong> {metaData.articleNumber}
+                    </p>
+                    <p>
+                      <strong>Category:</strong> {metaData.category}
+                    </p>
+                    {metaData.oldUrl && (
+                      <p>
+                        <strong>Actual url:</strong> {metaData.oldUrl}
+                      </p>
+                    )}
+                    <p>
+                      <strong>Suggested URL:</strong> {metaData.suggestedUrl}
+                    </p>
+                    <p>
+                      <strong>Meta Title:</strong> {metaData.metaTitle}
+                    </p>
+                    <p>
+                      <strong>Meta Description:</strong>{" "}
+                      {metaData.metaDescription}
+                    </p>
                   </>
+                )}
+              </div>
+              <div className="mt-3">
+                {redirections.length > 0 && (
+                  <div>
+                    <h5>Redirections</h5>
+                    <ul>
+                      {redirections.map((redirect, index) => (
+                        <li key={index}>
+                          <a href={redirect.url}>{redirect.text}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
               <div className="mt-3">

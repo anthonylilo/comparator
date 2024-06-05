@@ -1,7 +1,7 @@
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { useState } from "react";
-import ArticleForm from "../components/comparator/articleForm";
-import Editor from "../components/editor/editor";
+import ArticleForm from "../modules/comparator/articleForm";
+import Editor from "../modules/editor/editor";
 import HomeNavbar from "../components/navbar/homeNavbar";
 import VerticalButtons from "../components/navigatonButtons/verticalButtons";
 

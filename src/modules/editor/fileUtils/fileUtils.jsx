@@ -60,17 +60,22 @@ const parseMarkdownContent = (content) => {
   const schemaRegex = /__DATOS ESTRUCTURADOS:\s*__\s*([\s\S]*?)<\/script>/i;
   const metaDataRegex =
     /\s*MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:__\s*__CATEGORÍA:__\s*(.*?)\s*__URL SUGERIDA:__\s*\[.*?\]\((.*?)\)\s*__Meta Title:__\s*(.*?)\s*__Meta Description:__\s*([\s\S]*?)\s*__FIN DE SEO__/;
+  const metaDataModifedArticle =
+    /\s*MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:__\s*(.*?)\s*__Meta Title:__\s*(.*?)\s*__Meta Description:__\s*([\s\S]*?)\s*__URL ACTUAL:__\s*\[.*?\]\((.*?)\)\s*__URL SUGERIDA:__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO__/;
+  const redirectionsRegex =
+    /__REDIRECCIONES:__\s*((?:\[.*?\]\(.*?\)\s*)*)__FIN DE REDIRECCIONES__/;
 
   const images = [];
 
-  // Function to clean the text
   const cleanText = (text) => {
     return text.replace(/\\-/g, "-").replace(/\\\./g, ".").replace(/\\/g, "");
   };
 
-  // Extract metadata
   let metaDataImport = {};
   const metaDataMatch = metaDataRegex.exec(content);
+  const metaDataModifedArticleMatch = metaDataModifedArticle.exec(content);
+  const redireccionesMatch = redirectionsRegex.exec(content);
+
   if (metaDataMatch) {
     metaDataImport = {
       market: metaDataMatch[1].trim(),
@@ -81,18 +86,42 @@ const parseMarkdownContent = (content) => {
       metaDescription: cleanText(metaDataMatch[6].trim()),
     };
     content = content.replace(metaDataRegex, "");
+  } else if (metaDataModifedArticleMatch) {
+    metaDataImport = {
+      market: metaDataModifedArticleMatch[1].trim(),
+      articleNumber: metaDataModifedArticleMatch[2].trim(),
+      category: metaDataModifedArticleMatch[3].trim(),
+      metaTitle: metaDataModifedArticleMatch[4].trim(),
+      metaDescription: cleanText(metaDataModifedArticleMatch[5].trim()),
+      oldUrl: metaDataModifedArticleMatch[6].trim(),
+      suggestedUrl: metaDataModifedArticleMatch[7].trim(),
+    };
+    content = content.replace(metaDataModifedArticle, "");
   }
 
-  // Extract schema data
+  const redirections = [];
+  if (redireccionesMatch) {
+    const rawRedirections = redireccionesMatch[1].trim().split("\n");
+    rawRedirections.forEach((line) => {
+      const match = /\[(.*?)\]\((.*?)\)/.exec(line);
+      if (match) {
+        redirections.push({
+          text: match[1],
+          url: cleanText(match[2]),
+        });
+      }
+    });
+    content = content.replace(redirectionsRegex, "");
+  }
+
   let schema = "";
   const schemaMatch = schemaRegex.exec(content);
   if (schemaMatch) {
     schema = schemaMatch[1].trim();
     content = content.replace(schemaRegex, "");
-    // Remove <script> tag from schema
-    schema = schema.replace(/<script[^>]*>/i, "").replace(/<\/script>/i, "");
-    // Clean up the schema string to make it valid JSON
     schema = schema
+      .replace(/<script[^>]*>/i, "")
+      .replace(/<\/script>/i, "")
       .replace(/\\/g, "")
       .replace(/\\(["\\/bfnrt])/g, "$1")
       .replace(/\n/g, "")
@@ -105,7 +134,6 @@ const parseMarkdownContent = (content) => {
     }
   }
 
-  // Extract tags and assign them to the corresponding images
   let tagMatch;
   let imageIndex = 0;
   const tagMatches = [];
@@ -113,10 +141,8 @@ const parseMarkdownContent = (content) => {
     tagMatches.push(tagMatch);
   }
 
-  // Remove all tag texts from the content
   content = content.replace(tagRegex, "");
 
-  // Extract images and their corresponding paragraphs
   const contentParts = [];
   let contentCursor = 0;
   let match;
@@ -126,7 +152,6 @@ const parseMarkdownContent = (content) => {
     const endOfPreviousPart = match.index;
     const startOfNextPart = imageRegex.lastIndex;
 
-    // Extract paragraph before the image
     const paragraphs = content
       .slice(contentCursor, endOfPreviousPart)
       .trim()
@@ -135,11 +160,9 @@ const parseMarkdownContent = (content) => {
       if (para) contentParts.push({ type: "paragraph", data: cleanText(para) });
     });
 
-    // Assign the corresponding tag data if available
     const tags = tagMatches[imageIndex] || [];
     const [, tagAltText = "", tagTitle = "", tagImageName = ""] = tags;
 
-    // Add the image with tag data
     images.push({
       src: src.trim(),
       alt: cleanText(tagAltText ? tagAltText.trim() : altText.trim()),
@@ -152,7 +175,6 @@ const parseMarkdownContent = (content) => {
     imageIndex++;
   }
 
-  // Add remaining text after the last image
   const remainingText = content.slice(contentCursor).trim().split(/\n+/);
   remainingText.forEach((text) => {
     if (text) contentParts.push({ type: "paragraph", data: cleanText(text) });
@@ -162,6 +184,7 @@ const parseMarkdownContent = (content) => {
     content: contentParts,
     metaDataImport,
     schema,
+    redirections,
   };
 };
 
