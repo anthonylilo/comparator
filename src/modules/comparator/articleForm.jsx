@@ -90,17 +90,17 @@ function ArticleForm({ reset, selectedFormat }) {
       <Row className="justify-content-md-center text-center">
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Url of the article</Form.Label>
+            <Form.Label>Article URL</Form.Label>
             <Form.Control
               type="url"
-              placeholder="Enter url"
+              placeholder="https://purina.cl/"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               required
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Redirect Urls</Form.Label>
+            <Form.Label>Redirect URLs</Form.Label>
             <Form.Control
               as="textarea"
               rows={3}

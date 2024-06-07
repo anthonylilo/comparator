@@ -4,7 +4,7 @@ function dropdowns() {
     return (
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Seleccionar Proyecto
+          Select Project
         </Dropdown.Toggle>
   
         <Dropdown.Menu>

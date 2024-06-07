@@ -18,7 +18,7 @@ export default function HomePage() {
       <Container>
         <Container className="main" fluid>
           <Row className="text-center">
-            <h3>Select your type of data export</h3>
+            <h3>Select your output format:</h3>
             <Form.Select onChange={handleFormatChange} value={selectedFormat}>
               <option value="markdown">Markdown</option>
               { /* <option value="html">HTML</option> */ }
@@ -30,7 +30,7 @@ export default function HomePage() {
               <Editor selectedFormat={selectedFormat} />
             </Col>
             <Col md={6}>
-              <h3>Comparador</h3>
+              <h3>Comparator</h3>
               <ArticleForm selectedFormat={selectedFormat} />
             </Col>
           </Row>
