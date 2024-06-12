@@ -31,7 +31,7 @@ const CardsImages = ({ image }) => {
           <div className="card_BorderLine"></div>
         </div>
         <ListGroup.Item>
-          <strong>Alt: </strong>
+          <strong>Alt Text: </strong>
           {image.alt}
         </ListGroup.Item>
       </ListGroup>
