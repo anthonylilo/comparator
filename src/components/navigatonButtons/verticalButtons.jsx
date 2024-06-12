@@ -5,7 +5,6 @@ import TooltipButton from './TooltipButton';
 import './VerticalButtons.css';
 
 const VerticalButtons = () => {
-    const [isVisible, setIsVisible] = useState(false);
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -31,7 +30,7 @@ const VerticalButtons = () => {
     }, []);
 
     return (
-        <div className={`vertical-buttons ${isVisible ? 'visible' : ''}`}>
+        <div className="vertical-buttons">
             <a href="https://cors-anywhere.herokuapp.com/" target="_blank" rel="noopener noreferrer">
             <TooltipButton icon={faCircleCheck} className="placeholder-button api" tooltip="Enable API" />
             </a>
