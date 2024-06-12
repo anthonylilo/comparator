@@ -56,19 +56,19 @@ const parseHtmlContent = (content) => {
 const parseMarkdownContent = (content) => {
   const imageRegex = /!\[(.*?)\]\((data:image\/[^)]+)\)/gs;
   const tagRegex =
-    /__ETIQUETAS DE IMAGEN:\s*__\s*__Alt Text:__\s*(.*?)\s*__Title:__\s*(.*?)\s*__Nombre de la imagen:__\s*(.*?)\s*__FIN DE ETIQUETAS__/gs;
+    /__ETIQUETAS DE IMAGEN:\s*__\s*__Alt Text:\s*__\s*(.*?)\s*__Title:\s*__\s*(.*?)\s*__Nombre de la imagen:\s*__\s*(.*?)\s*__FIN DE ETIQUETAS__/gs;
   const schemaRegex = /__DATOS ESTRUCTURADOS:\s*__\s*([\s\S]*?)<\/script>/i;
   const metaDataRegex =
-    /\s*MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:__\s*__CATEGORÍA:__\s*(.*?)\s*__URL SUGERIDA:__\s*\[.*?\]\((.*?)\)\s*__Meta Title:__\s*(.*?)\s*__Meta Description:__\s*([\s\S]*?)\s*__FIN DE SEO__/;
+    /\s*MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:\s*__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__FIN DE SEO\s*__/;
   const metaDataModifedArticle =
-    /\s*MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:__\s*(.*?)\s*__Meta Title:__\s*(.*?)\s*__Meta Description:__\s*([\s\S]*?)\s*__URL ACTUAL:__\s*\[.*?\]\((.*?)\)\s*__URL SUGERIDA:__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO__/;
+    /\s*MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*\[.*?\]\((.*?)\)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO\s*__/;
   const redirectionsRegex =
-    /__REDIRECCIONES:__\s*((?:\[.*?\]\(.*?\)\s*)*)__FIN DE REDIRECCIONES__/;
+    /__REDIRECCIONES:\s*__\s*((?:\[.*?\]\(.*?\)\s*)*)__FIN DE REDIRECCIONES\s*__/;
 
   const images = [];
 
   const cleanText = (text) => {
-    return text.replace(/\\-/g, "-").replace(/\\\./g, ".").replace(/\\/g, "");
+    return text.replace(/\\-/g, "-").replace(/\\\./g, ".").replace(/\\/g, "").trim();
   };
 
   let metaDataImport = {};
@@ -83,7 +83,7 @@ const parseMarkdownContent = (content) => {
       category: metaDataMatch[3].trim(),
       suggestedUrl: metaDataMatch[4].trim(),
       metaTitle: metaDataMatch[5].trim(),
-      metaDescription: cleanText(metaDataMatch[6].trim()),
+      metaDescription: cleanText(metaDataMatch[6]),
     };
     content = content.replace(metaDataRegex, "");
   } else if (metaDataModifedArticleMatch) {
@@ -92,7 +92,7 @@ const parseMarkdownContent = (content) => {
       articleNumber: metaDataModifedArticleMatch[2].trim(),
       category: metaDataModifedArticleMatch[3].trim(),
       metaTitle: metaDataModifedArticleMatch[4].trim(),
-      metaDescription: cleanText(metaDataModifedArticleMatch[5].trim()),
+      metaDescription: cleanText(metaDataModifedArticleMatch[5]),
       oldUrl: metaDataModifedArticleMatch[6].trim(),
       suggestedUrl: metaDataModifedArticleMatch[7].trim(),
     };
@@ -170,7 +170,6 @@ const parseMarkdownContent = (content) => {
       imageName: cleanText(tagImageName.trim()),
     });
     contentParts.push({ type: "image", data: images[images.length - 1] });
-
     contentCursor = startOfNextPart;
     imageIndex++;
   }
