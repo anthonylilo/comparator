@@ -68,7 +68,11 @@ const parseMarkdownContent = (content) => {
   const images = [];
 
   const cleanText = (text) => {
-    return text.replace(/\\-/g, "-").replace(/\\\./g, ".").replace(/\\/g, "").trim();
+    return text
+      .replace(/\\-/g, "-")
+      .replace(/\\\./g, ".")
+      .replace(/\\/g, "")
+      .trim();
   };
 
   let metaDataImport = {};
@@ -157,7 +161,10 @@ const parseMarkdownContent = (content) => {
       .trim()
       .split(/\n+/);
     paragraphs.forEach((para) => {
-      if (para) contentParts.push({ type: "paragraph", data: cleanText(para) });
+      const cleanedText = cleanText(para);
+      if (cleanedText && cleanedText !== "__" && cleanedText !== "##") {
+        contentParts.push({ type: "paragraph", data: cleanedText });
+      }
     });
 
     const tags = tagMatches[imageIndex] || [];
@@ -176,7 +183,10 @@ const parseMarkdownContent = (content) => {
 
   const remainingText = content.slice(contentCursor).trim().split(/\n+/);
   remainingText.forEach((text) => {
-    if (text) contentParts.push({ type: "paragraph", data: cleanText(text) });
+    const cleanedText = cleanText(text);
+    if (cleanedText && cleanedText !== "__" && cleanedText !== "##") {
+      contentParts.push({ type: "paragraph", data: cleanedText });
+    }
   });
 
   return {

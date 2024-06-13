@@ -88,37 +88,39 @@ function ArticleForm({ reset, selectedFormat }) {
   return (
     <Container fluid="md">
       <Row className="justify-content-md-center text-center">
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Article URL</Form.Label>
-            <Form.Control
-              type="url"
-              placeholder="https://purina.cl/"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Redirect URLs</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              value={redirectUrls}
-              onChange={(e) => setRedirectUrls(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? "Loading..." : "Submit"}
-          </Button>
-          {loading && <ProgressBar animated now={100} className="mt-2" />}
-        </Form>
+        {!showAdditionalFields && (
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Article URL</Form.Label>
+              <Form.Control
+                type="url"
+                placeholder="https://purina.cl/"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Redirect URLs</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={redirectUrls}
+                onChange={(e) => setRedirectUrls(e.target.value)}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit" disabled={loading}>
+              {loading ? "Loading..." : "Submit"}
+            </Button>
+            {loading && <ProgressBar animated now={100} className="mt-2" />}
+          </Form>
+        )}
       </Row>
       {showAdditionalFields && (
         <>
-          <Row className="mt-3">
-            <h3>Article Content</h3>
-          </Row>
           <Row className="mt-3">
             <h1>{articleTitle}</h1>
           </Row>

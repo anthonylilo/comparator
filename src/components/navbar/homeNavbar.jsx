@@ -4,16 +4,11 @@ import {
   Button,
   Form,
   Image,
-  Row,
   Container,
-  Col,
 } from "react-bootstrap";
 import "../../assets/header.css";
 
 function HomeNavbar() {
-  const handleReset = () => {
-    window.location.reload();
-  };
   return (
     <Navbar expand="lg" className="header" >
       <Container fluid>
@@ -38,11 +33,6 @@ function HomeNavbar() {
               >
                 Enable the api :D
               </a>
-            </Nav.Item>
-            <Nav.Item>
-              <Button variant="danger" onClick={handleReset}>
-                Reset
-              </Button>
             </Nav.Item>
           </Nav>
           <Nav>
