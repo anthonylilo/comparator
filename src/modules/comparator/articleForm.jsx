@@ -121,26 +121,28 @@ function ArticleForm({ reset, selectedFormat }) {
       </Row>
       {showAdditionalFields && (
         <>
-          <Row className="mt-3">
-            <h1>{articleTitle}</h1>
-          </Row>
-          {banner && (
+          <div id="comparator">
             <Row className="mt-3">
-              <Col md={12} className="mb-3">
-                <CardsImages image={banner} />
-              </Col>
+              <h1>{articleTitle}</h1>
             </Row>
-          )}
-          <Row className="mt-3">
-            {articleContent.map((item, index) => (
-              <Col key={index} md={12} className="mb-3">
-                {item.type === "html" && (
-                  <div dangerouslySetInnerHTML={{ __html: item.content }} />
-                )}
-                {item.type === "image" && <CardsImages image={item} />}
-              </Col>
-            ))}
-          </Row>
+            {banner && (
+              <Row className="mt-3">
+                <Col md={12} className="mb-3">
+                  <CardsImages image={banner} />
+                </Col>
+              </Row>
+            )}
+            <Row className="mt-3">
+              {articleContent.map((item, index) => (
+                <Col key={index} md={12} className="mb-3">
+                  {item.type === "html" && (
+                    <div dangerouslySetInnerHTML={{ __html: item.content }} />
+                  )}
+                  {item.type === "image" && <CardsImages image={item} />}
+                </Col>
+              ))}
+            </Row>
+          </div>
           <Row className="mt-3">
             <MetaData
               title={title}
@@ -155,9 +157,11 @@ function ArticleForm({ reset, selectedFormat }) {
           <Row className="mt-3">
             <HttpsModule linkStatuses={linkStatuses} />
           </Row>
-          <Row className="mt-3">
-            <RedirectStatusesComponent redirectStatuses={redirectStatuses} />
-          </Row>
+          {redirectStatuses.length > 0 && (
+            <Row className="mt-3">
+              <RedirectStatusesComponent redirectStatuses={redirectStatuses} />
+            </Row>
+          )}
         </>
       )}
     </Container>

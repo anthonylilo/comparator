@@ -48,3 +48,9 @@
 .top:hover{
     background-color: #000000;
 }
+.equals{
+    background-color: pink;
+}
+.equals:hover{
+    background-color: thistle;
+}

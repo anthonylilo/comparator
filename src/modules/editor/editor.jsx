@@ -74,13 +74,15 @@ function Editor({ selectedFormat }) {
         {showMarkdownInput && selectedFormat === "markdown" && (
           <div className="justify-content-md-center text-center">
             <div className="mt-3">
-              {parsedContent.map((item, index) =>
-                item.type === "image" ? (
-                  <CardsImages key={index} image={item.data} />
-                ) : (
-                  <p key={index}>{item.data}</p>
-                )
-              )}
+              <div id="editor">
+                {parsedContent.map((item, index) =>
+                  item.type === "image" ? (
+                    <CardsImages key={index} image={item.data} />
+                  ) : (
+                    <p key={index}>{item.data}</p>
+                  )
+                )}
+              </div>
               <div className="mt-3">
                 <h5>Meta Information</h5>
                 {metaData && (
