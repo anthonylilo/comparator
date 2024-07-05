@@ -17,35 +17,36 @@ const MetaData = ({ title, metaDescription, url }) => {
 
   if ( MIN_CHAR_TITLE_SIZE) {
     titleColor = "danger";
-    titleMessage = "La cantidad de caracteres es menor a lo recomendado";
-  } else if (IDEAL_CHAR_TITLE_SIZE) {
+    titleMessage = "The number of characters is less than recommended";
+    } else if (IDEAL_CHAR_TITLE_SIZE) {
     titleColor = "primary";
-    titleMessage = "La cantidad de caracteres es la ideal";
-  }else if(WARNING_CHAR_TITLE_SIZE){
+    titleMessage = "The number of characters is ideal";
+    }else if(WARNING_CHAR_TITLE_SIZE){
     titleColor = "warning";
-    titleMessage = "Atencion: la cantidad de caracteres no es el ideal";
-  }
-  else if(MAX_CHAR_TITLE_SIZE) {
+    titleMessage = "Attention: the number of characters is not ideal";
+    }
+    else if(MAX_CHAR_TITLE_SIZE) {
     titleColor = "danger";
-    titleMessage = "La cantidad de caracteres supera lo recomendado";
-  }
-  if (MIN_CHAR_DESC_SIZE) {
+    titleMessage = "The number of characters exceeds the recommended amount";
+    }
+    if (MIN_CHAR_DESC_SIZE) {
     descriptionColor = "danger";
-    descriptionMessage = "Error deberia de contener  meta description";
-  } else if (IDEAL_CHAR_DESC_SIZE) {
-    descriptionColor =  "primary";
-    descriptionMessage = "La cantidad de caracteres es la ideal";
-  } else if(MAX_CHAR_DESC_SIZE) {
+    descriptionMessage = "Error: it should contain meta description";
+    } else if (IDEAL_CHAR_DESC_SIZE) {
+    descriptionColor = "primary";
+    descriptionMessage = "The number of characters is ideal";
+    } else if(MAX_CHAR_DESC_SIZE) {
     descriptionColor = "danger";
-    descriptionMessage = "La cantidad de caracteres supera lo recomendado";
+    descriptionMessage = "The number of characters exceeds the recommended amount";
+    
   }
 
   if(MAX_URL_SIZE){
     urlColor = "danger";
-    urlMessage = "La longitud de URL supera lo recomendado"
+    urlMessage = "The URL lenght surpases the recommended length"
   }else{
     urlColor = "primary";
-    urlMessage = "La longitud de URL es el recomendado"
+    urlMessage = "The URL Length is ok"
   }
 
   return (
