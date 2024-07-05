@@ -1,5 +1,6 @@
 import { Alert, ListGroup, Badge } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { Table, Container, Row } from "react-bootstrap";
 
 const MetaData = ({ title, metaDescription, url }) => {
   const titleLength = title ? title.length : 0;
@@ -50,35 +51,64 @@ const MetaData = ({ title, metaDescription, url }) => {
   }
 
   return (
-    <Alert variant="warning" className="mt-3">
-      <Alert.Heading>MetaData:</Alert.Heading>
-      <ListGroup>
-        <ListGroup.Item>
-          <Badge bg={titleColor} className="me-2">
-            {titleLength}
-          </Badge>
-          <span>Title: {title}</span>
-          <div className={`text-${titleColor}`}>{titleMessage}</div>
-          {descriptionColor.color}
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <Badge bg={descriptionColor} className="me-2">
-            {descriptionLength}
-          </Badge>
-          <span >Meta Description: {metaDescription}</span>
-          <div className={`text-${descriptionColor}`}>{descriptionMessage}</div>
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <Badge bg={urlColor} className="me-2">
-            {urlLength}
-          </Badge>
-          <span >URL: {url}</span>
-          <div className={`text-${urlColor}`}>{urlMessage   }</div>
-        </ListGroup.Item>
-      </ListGroup>
-    </Alert>
+    <Container>
+      <h3>MetaData:</h3>
+      <p>(Metatitle, Metadescription, URL lenght) </p>
+      <Container className="tableContainer">
+      <Table hover responsive className="schemaTable">
+        <tbody>
+          <tr>
+            <th>Title Length</th>
+            <td>
+              <Badge bg={titleColor} className="me-2">
+                {titleLength}
+              </Badge>
+            </td>
+          </tr>
+          <tr>
+            <th>Title</th>
+            <td>
+              <span>Title: {title}</span>
+              <div className={`text-${titleColor}`}>{titleMessage}</div>
+              {descriptionColor.color}
+            </td>
+          </tr>
+          <tr>
+            <th>Description Length</th>
+            <td>
+              <Badge bg={descriptionColor} className="me-2">
+                {descriptionLength}
+              </Badge>
+            </td>
+          </tr>
+          <tr>
+            <th>Meta Description</th>
+            <td>
+              <span>Meta Description: {metaDescription}</span>
+              <div className={`text-${descriptionColor}`}>{descriptionMessage}</div>
+            </td>
+          </tr>
+          <tr>
+            <th>URL Length</th>
+            <td>
+              <Badge bg={urlColor} className="me-2">
+                {urlLength}
+              </Badge>
+            </td>
+          </tr>
+          <tr>
+            <th>URL</th>
+            <td>
+              <span>URL: {url}</span>
+              <div className={`text-${urlColor}`}>{urlMessage}</div>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+      </Container>
+      </Container>
   );
-};
+};  
 
 MetaData.propTypes = {
   title: PropTypes.string.isRequired,

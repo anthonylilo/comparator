@@ -18,10 +18,11 @@ const SchemaViewer = ({ schema }) => {
   };
 
   return (
-    <Container>
+    <Container className="mt-3">
   <Row>
     <h3>Schema</h3>
-    <Table hover responsive className="schemaTable">
+    <Container className="tableContainer">
+    <Table hover responsive className="schemaTable schema">
       <tbody>
         <tr>
           <th>Type</th>
@@ -75,6 +76,7 @@ const SchemaViewer = ({ schema }) => {
         </tr>
         <tr>
           <th>Author</th>
+          <td></td>
         </tr>
         <tr>
           <td>Type</td>
@@ -128,6 +130,7 @@ const SchemaViewer = ({ schema }) => {
         </tr>
       </tbody>
     </Table>
+    </Container>
   </Row>
 </Container>
   );

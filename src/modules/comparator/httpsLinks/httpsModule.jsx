@@ -1,20 +1,31 @@
-import { Alert, ListGroup } from "react-bootstrap";
+import { Alert, Container, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
+import {Table, Row} from "react-bootstrap"
 
 const HttpsModule = ({ linkStatuses }) => {
   return (
-    <Alert variant="warning" className="mt-3">
-      <Alert.Heading>HTTP STATUS:</Alert.Heading>
-      <ListGroup>
-        {Object.entries(linkStatuses).map(([url, status], index) => (
-          <ListGroup.Item key={index}>
-            {url} - Status: {status}
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    </Alert>
+    <Container className="mt-3">
+      <h3>HTTP STATUS:</h3>
+      <Table hover responsive>
+        <thead>
+          <tr>
+            <th>URL</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(linkStatuses).map(([url, status], index) => (
+            <tr key={index}>
+              <td>{url}</td>
+              <td>{status}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Container>
   );
 };
+
 
 HttpsModule.propTypes = {
   linkStatuses: PropTypes.object.isRequired,
