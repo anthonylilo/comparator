@@ -86,3 +86,13 @@ h3 {
   width: 100%;
   height: 100%;
 }
+.schemaTable{
+  text-align: left;
+}
+.schemaTable td{
+  padding-left: 30px;
+}
+
+.schemaTable tr{
+border-bottom: 1px solid #E0E0E0;  
+}

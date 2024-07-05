@@ -19,118 +19,117 @@ const SchemaViewer = ({ schema }) => {
 
   return (
     <Container>
-      <Row>
-        <h3>Schema</h3>
-        <Table striped bordered hover responsive>
-          <tbody>
-            <tr>
-              <th>Type</th>
-              <td>{schemaData["@type"]}</td>
-            </tr>
-            <tr>
-              <th>Headline</th>
-              <td>{schemaData.headline}</td>
-            </tr>
-            <tr>
-              <th>Description</th>
-              <td>{schemaData.description}</td>
-            </tr>
-          </tbody>
-        </Table>
+  <Row>
+    <h3>Schema</h3>
+    <Table hover responsive className="schemaTable">
+      <tbody>
+        <tr>
+          <th>Type</th>
+          <td>{schemaData["@type"]}</td>
+        </tr>
+        <tr>
+          <th>Headline</th>
+          <td>{schemaData.headline}</td>
+        </tr>
+        <tr>
+          <th>Description</th>
+          <td>{schemaData.description}</td>
+        </tr>
         {schemaData.image && (
-          <Table striped bordered hover responsive>
-            <tbody>
-              <tr>
-                <th>Image URL</th>
-                <td>
-                  {Array.isArray(schemaData.image) ? (
-                    schemaData.image.map((img, idx) => (
-                      <div key={idx}>
-                        <a href={img} target="_blank" rel="noopener noreferrer">
-                          {img}
-                        </a>
-                      </div>
-                    ))
-                  ) : (
-                    <a
-                      href={
-                        schemaData.image.url
-                          ? schemaData.image.url
-                          : schemaData.image
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {schemaData.image.url
-                        ? schemaData.image.url
-                        : schemaData.image}
+          <tr>
+            <th>Image URL</th>
+            <td>
+              {Array.isArray(schemaData.image) ? (
+                schemaData.image.map((img, idx) => (
+                  <div key={idx}>
+                    <a href={img} target="_blank" rel="noopener noreferrer">
+                      {img}
                     </a>
-                  )}
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        )}
-        <Table striped bordered hover responsive>
-          <tbody>
-            <tr>
-              <th>Published Date</th>
-              <td>{formatDate(schemaData.datePublished)}</td>
-            </tr>
-            <tr>
-              <th>Modified Date</th>
-              <td>{formatDate(schemaData.dateModified)}</td>
-            </tr>
-            <tr>
-              <th>Author Type</th>
-              <td>{getSafeProperty(schemaData, ["author", "@type"])}</td>
-            </tr>
-            <tr>
-              <th>Author Name</th>
-              <td>{getSafeProperty(schemaData, ["author", "name"])}</td>
-            </tr>
-            <tr>
-              <th>Publisher Type</th>
-              <td>{getSafeProperty(schemaData, ["publisher", "@type"])}</td>
-            </tr>
-            <tr>
-              <th>Publisher Name</th>
-              <td>{getSafeProperty(schemaData, ["publisher", "name"])}</td>
-            </tr>
-            {getSafeProperty(schemaData, ["publisher", "logo", "url"]) && (
-              <tr>
-                <th>Publisher Logo</th>
-                <td>
-                  <a
-                    href={schemaData.publisher.logo.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {schemaData.publisher.logo.url}
-                  </a>
-                </td>
-              </tr>
-            )}
-            <tr>
-              <th>Main Entity of Page</th>
-              <td>
+                  </div>
+                ))
+              ) : (
                 <a
                   href={
-                    getSafeProperty(schemaData.mainEntityOfPage, ["@id"]) ||
-                    schemaData.mainEntityOfPage
+                    schemaData.image.url
+                      ? schemaData.image.url
+                      : schemaData.image
                   }
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {getSafeProperty(schemaData.mainEntityOfPage, ["@id"]) ||
-                    schemaData.mainEntityOfPage}
+                  {schemaData.image.url
+                    ? schemaData.image.url
+                    : schemaData.image}
                 </a>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </Row>
-    </Container>
+              )}
+            </td>
+          </tr>
+        )}
+        <tr>
+          <td>Published Date</td>
+          <td>{formatDate(schemaData.datePublished)}</td>
+        </tr>
+        <tr>
+          <th>Modified Date</th>
+          <td>{formatDate(schemaData.dateModified)}</td>
+        </tr>
+        <tr>
+          <th>Author</th>
+        </tr>
+        <tr>
+          <td>Type</td>
+          <td>{getSafeProperty(schemaData, ["author", "@type"])}</td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td>{getSafeProperty(schemaData, ["author", "name"])}</td>
+        </tr>
+        <tr>
+          <th>Publisher</th>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Type</td>
+          <td>{getSafeProperty(schemaData, ["publisher", "@type"])}</td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td>{getSafeProperty(schemaData, ["publisher", "name"])}</td>
+        </tr>
+        {getSafeProperty(schemaData, ["publisher", "logo", "url"]) && (
+          <tr>
+            <td>Logo</td>
+            <td>
+              <a
+                href={schemaData.publisher.logo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {schemaData.publisher.logo.url}
+              </a>
+            </td>
+          </tr>
+        )}
+        <tr>
+          <th>Main Entity of Page</th>
+          <td>
+            <a
+              href={
+                getSafeProperty(schemaData.mainEntityOfPage, ["@id"]) ||
+                schemaData.mainEntityOfPage
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {getSafeProperty(schemaData.mainEntityOfPage, ["@id"]) ||
+                schemaData.mainEntityOfPage}
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </Table>
+  </Row>
+</Container>
   );
 };
 
