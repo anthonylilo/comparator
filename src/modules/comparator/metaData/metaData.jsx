@@ -58,7 +58,7 @@ const MetaData = ({ title, metaDescription, url }) => {
       <Table hover responsive className="schemaTable">
         <tbody>
           <tr>
-            <th>Title Length</th>
+            <th>Meta Title Length</th>
             <td>
               <Badge bg={titleColor} className="me-2">
                 {titleLength}
@@ -66,7 +66,7 @@ const MetaData = ({ title, metaDescription, url }) => {
             </td>
           </tr>
           <tr>
-            <th>Title</th>
+            <th>Meta Title</th>
             <td>
               <span>Title: {title}</span>
               <div className={`text-${titleColor}`}>{titleMessage}</div>

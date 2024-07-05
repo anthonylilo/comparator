@@ -67,7 +67,7 @@ const SchemaViewer = ({ schema }) => {
           </tr>
         )}
         <tr>
-          <td>Published Date</td>
+          <th>Published Date</th>
           <td>{formatDate(schemaData.datePublished)}</td>
         </tr>
         <tr>
