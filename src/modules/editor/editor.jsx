@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Form } from "react-bootstrap";
+import { Container, Row, Form, Button } from "react-bootstrap";
 import { handleFileChange } from "./fileUtils/fileUtils";
 import CardsImages from "../../components/cards/cardsImages";
 import SchemaViewer from "../../components/schema/SchemaViewer";
+import CopyButton from "../../components/copyToClipboard/copyButton";
 
 function Editor({ selectedFormat }) {
   const [content, setContent] = useState("");
@@ -53,7 +54,10 @@ function Editor({ selectedFormat }) {
         {showEditor && selectedFormat === "html" && (
           <div className="mt-3 justify-content-md-center text-center">
             {parsedContent.map((item, index) => (
-              <div key={index} dangerouslySetInnerHTML={{ __html: item }} />
+              <div key={index} className="d-flex align-items-center">
+                <div dangerouslySetInnerHTML={{ __html: item }} className="flex-grow-1" />
+                <CopyButton text={item} />
+              </div>
             ))}
             {metaData && (
               <div className="mt-3">
@@ -75,13 +79,16 @@ function Editor({ selectedFormat }) {
           <div className="justify-content-md-center text-center">
             <div className="mt-3">
               <div id="editor">
-                {parsedContent.map((item, index) =>
-                  item.type === "image" ? (
-                    <CardsImages key={index} image={item.data} />
-                  ) : (
-                    <p key={index}>{item.data}</p>
-                  )
-                )}
+                {parsedContent.map((item, index) => (
+                  <div key={index} className="d-flex align-items-center">
+                    {item.type === "image" ? (
+                      <CardsImages image={item.data} className="flex-grow-1" />
+                    ) : (
+                      <p className="flex-grow-1">{item.data}</p>
+                    )}
+                    <CopyButton text={item.data} />
+                  </div>
+                ))}
               </div>
               <div className="mt-3">
                 <h5>Meta Information</h5>
