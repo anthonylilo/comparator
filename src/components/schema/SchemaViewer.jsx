@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Container, Row } from "react-bootstrap";
-
+import CopyButton from "../../components/copyToClipboard/copyButton";
 const SchemaViewer = ({ schema }) => {
   const schemaData = schema["@graph"] ? schema["@graph"][0] : schema;
   if (!schemaData) {
