@@ -115,22 +115,16 @@ function ArticleForm({ reset, selectedFormat }) {
             <Button variant="primary" type="submit" disabled={loading}>
               {loading ? "Loading..." : "Submit"}
             </Button>
-            {loading && <ProgressBar animated now={100} className="mt-2" />}
+            {loading && <ProgressBar variant="success" animated now={100} className="mt-2" />}
           </Form>
         )}
       </Row>
       {showAdditionalFields && (
-        <>
+        <Row className="mt-3">
           <div id="comparator">
-            <Row className="mt-3">
-              <h1>{articleTitle}</h1>
-            </Row>
+            <h1>{articleTitle}</h1>
             {banner && (
-              <Row className="mt-3">
-                <Col md={12} className="mb-3">
-                  <CardsImages image={banner} />
-                </Col>
-              </Row>
+              <CardsImages image={banner} />
             )}
             <Row className="mt-3">
               {articleContent.map((item, index) => (
@@ -162,7 +156,7 @@ function ArticleForm({ reset, selectedFormat }) {
               <RedirectStatusesComponent redirectStatuses={redirectStatuses} />
             </Row>
           )}
-        </>
+        </Row>
       )}
     </Container>
   );

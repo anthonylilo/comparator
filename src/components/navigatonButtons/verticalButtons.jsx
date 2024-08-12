@@ -6,7 +6,8 @@ import {
   faEquals,
 } from "@fortawesome/free-solid-svg-icons";
 import TooltipButton from "./TooltipButton";
-import { compareContent } from "../../modules/equals/equals";
+import ModalLoading from "../modal/modal";
+import compareContent from "../../modules/equals/equals";
 import "./VerticalButtons.css";
 
 const VerticalButtons = () => {
@@ -34,11 +35,29 @@ const VerticalButtons = () => {
     };
   }, []);
 
-  const handleEqualsClick = () => {
-    const editorContent = document.getElementById("editor").innerText;
-    const comparatorContent = document.getElementById("comparator").innerHTML;
-    const result = compareContent(editorContent, comparatorContent);
-    alert(result ? "The contents are equal." : "The contents are not equal.");
+  const [modalText, setModalText] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const handleEqualsClick = async () => {
+    setModalText("Realizando comparación, por favor espere :D");
+    setShowModal(true);
+
+    setTimeout(async () => {
+      const editorContent = document.getElementById("editor").innerText;
+      const comparatorContent = document.getElementById("comparator").innerHTML;
+
+      const result = await compareContent(editorContent, comparatorContent);
+      if (result) {
+        setModalText("No se encontraron diferencias en el contenido :)");
+      } else {
+        setModalText(
+          "Se encontraron diferencias en el contenido :( por favor verifique"
+        );
+      }
+
+      setTimeout(() => {
+        setShowModal(false);
+      }, 3000);
+    }, 100);
   };
 
   return (
@@ -49,6 +68,7 @@ const VerticalButtons = () => {
         className="placeholder-button equals"
         tooltip="Equals"
       />
+      <ModalLoading text={modalText} show={showModal} onClose={() => setShowModal(false)} />
       <a
         href="https://cors-anywhere.herokuapp.com/"
         target="_blank"
