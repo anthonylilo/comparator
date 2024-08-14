@@ -192,6 +192,12 @@ const parseMarkdownContent = (content) => {
     }
   });
 
+  const saveContentToLocalStorage = (contentParts) => {
+    localStorage.setItem("editorContent", JSON.stringify(contentParts));
+  };
+
+  saveContentToLocalStorage(contentParts);
+
   return {
     content: contentParts,
     metaDataImport,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Form, Button } from "react-bootstrap";
+import { Container, Row, Form, Col } from "react-bootstrap";
 import { handleFileChange } from "./fileUtils/fileUtils";
 import CardsImages from "../../components/cards/cardsImages";
 import SchemaViewer from "../../components/schema/SchemaViewer";
@@ -84,9 +84,15 @@ function Editor({ selectedFormat }) {
                     {item.type === "image" ? (
                       <CardsImages image={item.data} className="flex-grow-1" />
                     ) : (
-                      <p className="flex-grow-1">{item.data}</p>
+                      <Row>
+                        <Col md={10}>
+                          <p className="flex-grow-1">{item.data}</p>
+                        </Col>
+                        <Col md={2}>
+                          <CopyButton text={item.data} />
+                        </Col>
+                      </Row>
                     )}
-                    <CopyButton text={item.data} />
                   </div>
                 ))}
               </div>

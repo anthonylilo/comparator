@@ -69,6 +69,7 @@ const handleSubmitLogic = async (
     const articleTitle = $(".article-internal-title span").text();
     setTitle(title);
     setMetaDescription(metaDescription);
+    //NOTE: This is the title of the article
     setArticleTitle(articleTitle);
 
     // Extraer banner
@@ -123,7 +124,14 @@ const handleSubmitLogic = async (
       }
     }
 
+    //NOTE: ESTE EMPIEZA DESDE EL H5
     setArticleContent(contentArray);
+
+    const saveContentToLocalStorage = (contentArray) => {
+      localStorage.setItem("articleContent", JSON.stringify(contentArray));
+    };
+  
+    saveContentToLocalStorage(contentArray);
 
     // Check invalid links
     const baseUrl = new URL(url.trim()).origin;

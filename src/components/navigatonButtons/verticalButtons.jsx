@@ -25,6 +25,8 @@ const VerticalButtons = () => {
     }
   };
   const handleReset = () => {
+    localStorage.removeItem("editorContent");
+    localStorage.removeItem("articleContent");
     window.location.reload();
   };
 
@@ -42,10 +44,19 @@ const VerticalButtons = () => {
     setShowModal(true);
 
     setTimeout(async () => {
-      const editorContent = document.getElementById("editor").innerText;
-      const comparatorContent = document.getElementById("comparator").innerHTML;
+      const storedEditorContent = JSON.parse(localStorage.getItem("editorContent"));
+      const storedArticleContent = JSON.parse(localStorage.getItem("articleContent"));
 
-      const result = await compareContent(editorContent, comparatorContent);
+      if (!storedEditorContent) {
+        setModalText("No se encontró contenido del editor");
+        setShowModal(false);
+        return;
+      } else if(!storedArticleContent) {
+        setModalText("No se encontró contenido de la web");
+        setShowModal(false);
+      }
+
+      const result = await compareContent(storedEditorContent, storedArticleContent);
       if (result) {
         setModalText("No se encontraron diferencias en el contenido :)");
       } else {
