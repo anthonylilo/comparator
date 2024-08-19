@@ -1,30 +1,45 @@
-# Hello mother fuckers.
+# Bienvenidos a NSB
 
-Esta es nuestra iniciativa :D
+Esta documentación está destinada a los desarrolladores interesados en colaborar, mejorar y mantener la aplicación NSB.
 
-Esta documentacion es para los developers que deseen trabajar/mejorar esta idea.
+## Descripción del Proyecto
 
-Extructura de las carpetas:
+NSB es una aplicación desarrollada en React que tiene como objetivo optimizar el tiempo en la verificación de la creación de artículos en los proyectos de Purina, Nutrition y Profesional. Este proyecto sigue una arquitectura modular, diseñada para facilitar tanto la escalabilidad como la reutilización de componentes.
 
-Pages: Es son routes level pages que el usuario puede interactuar. (Home screen example. Show content to the user) Esta carpeta puede llegar a tener subcarpetas, si es que corresponde a la home page. (En este caso no aplica)
+## Estructura de Carpetas
 
-Components: Buttons, forms. Todo los componentes reutilizables que son pequeños pero son reutilizables. (Buena idea crear una carpeta dentro de ui para todos los smalls components)
+La estructura del proyecto está organizada de manera modular y reusable, facilitando el mantenimiento y la escalabilidad de la aplicación:
 
-Hooks: Esto es para poder tener todos nuestros hooks guardado de forma separada.
+**Pages:** Contiene las páginas accesibles desde las rutas principales con las que el usuario interactúa directamente, como la pantalla de inicio. Cada página puede tener subcarpetas si hay subpáginas relacionadas.
 
-Services: Esta se refiere a cualquier servicio externo de consumo. (Si usas next js tendrias que usar otra estructura)
+**Modules:** Incluye componentes complejos que forman las vistas de la aplicación. Estos módulos encapsulan funcionalidades específicas, y pueden consistir en múltiples componentes y servicios.
 
-Utils: Se puede utilizar para funciones recicables.
+**Components:** Almacena todos los componentes reutilizables a nivel global de la aplicación, como inputs, formularios y tablas. Dentro de esta carpeta, se recomienda crear subcarpetas dentro de "ui" para los componentes más pequeños y reutilizables.
 
-Librerias adicionales usadas:
+**Hooks:** Contiene hooks personalizados, facilitando su reutilización y mantenimiento en diferentes partes de la aplicación.
 
-- Node v20.10.0
-- React v18.2.0
-- Vite v5.1.0
-- Axios v1.6.7
-- React Bootstrap (https://react-bootstrap.netlify.app) Bootstrap: v5.3.3 - React Bootstrap: v2.10.1
-- Cheerio (https://cheerio.js.org) v1.0.0-rc.12
-- React-json-view (https://www.npmjs.com/package/react-json-view) v^1.21.3
-- Express v^4.18.3
-- Http proxy middleware v^2.0.6
-- Mammoth v^1.7.2
+**Utils:** Aquí se encuentran las funciones utilitarias que pueden ser utilizadas en diversas partes de la aplicación, promoviendo la reutilización de código.
+
+**Assets:** Almacena todos los recursos de la aplicación, como estilos (CSS/SASS) e imágenes.
+
+## Librerías y Herramientas Utilizadas
+
+La aplicación utiliza diversas librerías para manejar diferentes aspectos de su funcionalidad. A continuación se presenta una lista de las principales:
+
+- **Node v20.10.0:** Entorno de ejecución para JavaScript en el lado del servidor.
+- **React v18.2.0:** Biblioteca para la construcción de interfaces de usuario.
+- **Vite v5.1.0:** Herramienta de desarrollo y construcción rápida para proyectos web modernos.
+- **Axios v1.6.7:** Cliente HTTP basado en promesas para el navegador y Node.js.
+- **React Bootstrap v2.10.1:** Componentes de Bootstrap para React, basado en Bootstrap v5.3.3.
+- **Cheerio v1.0.0-rc.12:** Biblioteca rápida y flexible para analizar y manipular HTML.
+- **React-json-view v1.21.3:** Componente de React para visualizar y editar datos JSON.
+- **Express v4.18.3:** Framework web rápido, minimalista y flexible para Node.js.
+- **Http proxy middleware v2.0.6:** Middleware para configurar proxies en aplicaciones Node.js.
+- **Mammoth v1.7.2:** Herramienta para convertir documentos DOCX a HTML sin perder la semántica.
+- **ckeditor5-react v6.2.0:** Editor de texto enriquecido para aplicaciones React.
+- **Fortawesome v6.5.2:** Conjunto de iconos vectoriales y herramientas relacionadas.
+- **Cors v2.8.5:** Middleware para habilitar CORS (Cross-Origin Resource Sharing) en aplicaciones Express.
+- **Diff-match-patch v1.0.5:** Biblioteca para comparar y parchear texto.
+- **Dompurify v3.1.6:** Biblioteca para limpiar HTML y prevenir ataques XSS.
+- **Htmlparser2 v9.1.0:** Biblioteca rápida y flexible para analizar HTML y XML.
+- **Marked v13.0.2:** Analizador y compilador de Markdown, rápido y eficiente.
