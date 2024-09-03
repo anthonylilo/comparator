@@ -5,7 +5,7 @@ const TooltipButton = ({ icon, onClick, tooltip, className }) => {
     return (
         <button className={`tooltip-button ${className}`} onClick={onClick}>
             <FontAwesomeIcon icon={icon} />
-            <span className="tooltip-text">{tooltip}</span>
+            {tooltip && <span className="tooltip-text">{tooltip}</span>}
         </button>
     );
 };

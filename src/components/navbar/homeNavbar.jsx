@@ -6,11 +6,13 @@ import {
   Image,
   Container,
 } from "react-bootstrap";
-import "../../assets/header.css";
+import "../../assets/styles/header.css";
+import DarkToggler from "./darkToggler/themeToggler";
+
 
 function HomeNavbar() {
   return (
-    <Navbar expand="lg" className="header" >
+    <Navbar expand="lg" className="header">
       <Container fluid>
         <Navbar.Brand href="./">Nestlé Sync Box</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -19,9 +21,9 @@ function HomeNavbar() {
             <Nav.Item>
               <Form.Select aria-label="Default select example">
                 <option>Select the project</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="1">Purina</option>
+                <option value="2">Unifier</option>
+                <option value="3">Nestlé Professional</option>
               </Form.Select>
             </Nav.Item>
             <Nav.Item>
@@ -38,7 +40,7 @@ function HomeNavbar() {
           <Nav>
             <Image
               className="float-end"
-              src="https://i.ibb.co/wRw4ZLh/NSB-Squad.jpg"
+              src="https://i.ibb.co/FWSZ6WG/nsb-png.png"
               fluid
             />
           </Nav>

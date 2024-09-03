@@ -1,0 +1,28 @@
+import {faMoon} from "@fortawesome/free-solid-svg-icons";
+import TooltipButton from "../../navigatonButtons/TooltipButton";
+import React, { useState, useEffect } from 'react';
+
+function DarkToggler() {
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-bs-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
+  return (
+    <TooltipButton
+      icon={faMoon}
+      onClick={toggleTheme}
+      className="placeholder-button darkMode"
+      tooltip={null}
+    />
+  
+  );
+}
+
+export default DarkToggler;
