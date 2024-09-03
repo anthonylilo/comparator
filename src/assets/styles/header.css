@@ -6,7 +6,27 @@
 .nav-item{
     margin: 0% 20px;
 }
-
+.nav-item p{
+    color: white;
+    font-weight: 800;
+}
+.nav-item a{
+    color: white;
+    text-decoration: none;
+}
+.navbar-nav{
+    align-items: center;
+}
 .navbar-nav img{
     height: 90px;
+}
+
+.sub-header{
+    padding-top: 30px;
+    background-color: var(--sub-header-bg);
+    color: white;
+    align-items: center;
+}
+nav.sub-header.navbar.navbar-expand-lg{
+    padding: 15px 0px 15px 0px;
 }

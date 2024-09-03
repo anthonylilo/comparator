@@ -1,10 +1,5 @@
-:root {
-  --bg-color: #099aa4;
-  --text-color: black;
-  --card-color:#FFFFFF;
-  --header-color:#FFFFFF;
-  --table-color:#FFFFFF;
-}
+/* :root {
+} */
 
 [data-theme="light"]{
   --bg-color: #099aa4;
@@ -12,6 +7,7 @@
   --card-color:#FFFFFF;
   --header-color:#FFFFFF;
   --table-color:#FFFFFF;
+  --sub-header-bg:#005D63;
 }
 
 [data-theme='dark'] {
@@ -20,6 +16,7 @@
   --card-color:#252525;
   --header-color:#505050;
   --table-color:#FFFFFF12;
+  --sub-header-bg:#303030;
 }
 
 body {
@@ -39,6 +36,9 @@ body {
 h2,
 h3 {
   text-align: left;
+  font-weight: 700;
+}
+.navbar-brand{
   font-weight: 700;
 }
 

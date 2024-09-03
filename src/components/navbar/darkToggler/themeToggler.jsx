@@ -1,3 +1,5 @@
+import {faMoon} from "@fortawesome/free-solid-svg-icons";
+import TooltipButton from "../../navigatonButtons/TooltipButton";
 import React, { useState, useEffect } from 'react';
 
 function DarkToggler() {
@@ -13,12 +15,13 @@ function DarkToggler() {
   };
 
   return (
-    <div>
-      <button onClick={toggleTheme}>
-        Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
-      </button>
-      {/* Your Routes and Views */}
-    </div>
+    <TooltipButton
+      icon={faMoon}
+      onClick={toggleTheme}
+      className="placeholder-button darkMode"
+      tooltip={null}
+    />
+  
   );
 }
 

@@ -4,6 +4,7 @@ import ArticleForm from "../modules/comparator/articleForm";
 import Editor from "../modules/editor/editor";
 import HomeNavbar from "../components/navbar/homeNavbar";
 import VerticalButtons from "../components/navigatonButtons/verticalButtons";
+import SubNavbar from "../components/navbar/subNavbar";
 
 export default function HomePage({dark}) {
   const [selectedFormat, setSelectedFormat] = useState("markdown");
@@ -15,6 +16,7 @@ export default function HomePage({dark}) {
   return (
     <>
       <HomeNavbar />
+      <SubNavbar/>
       <Container>
         <Container className="main" fluid>
           <Row className="text-center">

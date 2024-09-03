@@ -54,3 +54,11 @@
 .equals:hover{
     background-color: thistle;
 }
+.darkMode{
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+.darkMode:hover{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}

@@ -36,14 +36,11 @@ function HomeNavbar() {
                 Enable the api :D
               </a>
             </Nav.Item>
-            <Nav.Item>
-              <DarkToggler></DarkToggler>
-            </Nav.Item>
           </Nav>
           <Nav>
             <Image
               className="float-end"
-              src="https://i.ibb.co/wRw4ZLh/NSB-Squad.jpg"
+              src="https://i.ibb.co/FWSZ6WG/nsb-png.png"
               fluid
             />
           </Nav>
