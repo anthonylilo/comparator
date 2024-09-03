@@ -5,7 +5,7 @@ import Editor from "../modules/editor/editor";
 import HomeNavbar from "../components/navbar/homeNavbar";
 import VerticalButtons from "../components/navigatonButtons/verticalButtons";
 
-export default function HomePage() {
+export default function HomePage({dark}) {
   const [selectedFormat, setSelectedFormat] = useState("markdown");
 
   const handleFormatChange = (e) => {

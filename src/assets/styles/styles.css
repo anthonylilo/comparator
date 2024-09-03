@@ -1,19 +1,25 @@
 :root {
-  --bg-color: #f2f2f2;
+  --bg-color: #099aa4;
   --text-color: black;
+  --card-color:#FFFFFF;
+  --header-color:#FFFFFF;
+  --table-color:#FFFFFF;
+}
 
-
-  /* Purina Sytles */
-  --purina-bg: #E82F2F;
-
-  /* Unifier Styles */
-  --unifier-bg:#099aa4;
-
+[data-theme="light"]{
+  --bg-color: #099aa4;
+  --text-color: black;
+  --card-color:#FFFFFF;
+  --header-color:#FFFFFF;
+  --table-color:#FFFFFF;
 }
 
 [data-theme='dark'] {
   --bg-color: black;
   --text-color: white;
+  --card-color:#252525;
+  --header-color:#505050;
+  --table-color:#FFFFFF12;
 }
 
 body {
@@ -100,7 +106,7 @@ h3 {
 
 .main {
   margin-top: 2.5rem;
-  background-color: white;
+  background-color: var(--card-color);
   padding: 4rem;
 }
 
@@ -111,12 +117,20 @@ h3 {
 .tableContainer{
   border-radius: 0px 10px 10px 10px;
   border: 1px solid #0000004D;
+  background-color: var(--table-color);
 }
 .schemaTable{
   text-align: left;
 }
+.schemaTable th,td,tr{
+  background-color: #00000000;
+  color: var(--text-color);
+}
 .schemaTable td{
   padding-left: 30px;
+  background-color: #00000000;
+  color: var(--text-color);
+  
 }
 .schema tr{
   border: 4px #E0E0E0;

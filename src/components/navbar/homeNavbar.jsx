@@ -6,11 +6,13 @@ import {
   Image,
   Container,
 } from "react-bootstrap";
-import "../../assets/header.css";
+import "../../assets/styles/header.css";
+import DarkToggler from "./darkToggler/themeToggler";
+
 
 function HomeNavbar() {
   return (
-    <Navbar expand="lg" className="header" >
+    <Navbar expand="lg" className="header">
       <Container fluid>
         <Navbar.Brand href="./">Nestlé Sync Box</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -33,6 +35,9 @@ function HomeNavbar() {
               >
                 Enable the api :D
               </a>
+            </Nav.Item>
+            <Nav.Item>
+              <DarkToggler></DarkToggler>
             </Nav.Item>
           </Nav>
           <Nav>

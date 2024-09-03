@@ -1,5 +1,6 @@
 .header{
-    background-color: white;
+    background-color: var(--header-color);
+    color: var(--text-color);
 }
 
 .nav-item{
