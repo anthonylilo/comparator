@@ -37,6 +37,19 @@ function Editor({ selectedFormat }) {
     }
   };
 
+  const groupedContent = parsedContent.reduce((acc, item) => {
+    if (item.type === "image") {
+      acc.push({ type: "image", data: item.data });
+    } else {
+      if (acc.length === 0 || acc[acc.length - 1].type === "image") {
+        acc.push({ type: "paragraphs", data: [item.data] });
+      } else {
+        acc[acc.length - 1].data.push(item.data);
+      }
+    }
+    return acc;
+  }, []);
+
   return (
     <Container fluid="md">
       <Row>
@@ -79,17 +92,19 @@ function Editor({ selectedFormat }) {
           <div className="justify-content-md-center text-center">
             <div className="mt-3">
               <div id="editor">
-                {parsedContent.map((item, index) => (
+                {groupedContent.map((item, index) => (
                   <div key={index} className="d-flex align-items-center">
                     {item.type === "image" ? (
                       <CardsImages image={item.data} className="flex-grow-1" />
                     ) : (
                       <Row>
-                        <Col md={10}>
-                          <p className="flex-grow-1">{item.data}</p>
-                        </Col>
+                          <Col md={10}>
+                          {item.data.map((paragraph, paraIndex) => (
+                            <p key={paraIndex} className="flex-grow-1">{paragraph}</p>
+                          ))}
+                          </Col>
                         <Col md={2}>
-                          <CopyButton text={item.data} />
+                          <CopyButton text={item.data.join('\n\n')} />
                         </Col>
                       </Row>
                     )}

@@ -5,8 +5,12 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 
 const CopyButton = ({ text }) => {
   const handleCopy = () => {
+    const formattedText = text
+      .replace(/\n{2,}/g, '\n\n')
+      .trim();
+
     navigator.clipboard
-      .writeText(text)
+      .writeText(formattedText)
       .then(() => {
         console.log("Copied");
       })
