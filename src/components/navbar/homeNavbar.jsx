@@ -26,16 +26,6 @@ function HomeNavbar() {
                 <option value="3">Nestlé Professional</option>
               </Form.Select>
             </Nav.Item>
-            <Nav.Item>
-              <a
-                className="text-center btn btn-primary"
-                href="https://cors-anywhere.herokuapp.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Enable the api :D
-              </a>
-            </Nav.Item>
           </Nav>
           <Nav>
             <Image
