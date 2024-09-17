@@ -16,6 +16,15 @@ import DarkToggler from "./darkToggler/themeToggler";
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse className="justify-content-around" id="basic-navbar-nav">
             <Nav>
+            <Nav.Item>
+                <a
+                  className="text-center "
+                  href="#"
+                  rel="noopener noreferrer"
+                >
+                  Redirection Validation
+                </a>
+              </Nav.Item>
               <Nav.Item>
                 <a
                   className="text-center "
