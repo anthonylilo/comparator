@@ -10,7 +10,7 @@ const TooltipButton = ({ icon, onClick, className, tooltip, iconType }) => {
       ) : (
         <FontAwesomeIcon icon={icon} />
       )}
-      <div className="tooltip-text">{tooltip}</div>
+      
     </button>
   );
 };

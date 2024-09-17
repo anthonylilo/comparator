@@ -25,6 +25,8 @@ export default function HomePage({}) {
       <HomeNavbar />
       <SubNavbar/>
       <Container>
+        <div className="containerWrapper">
+          <h1>PURINA</h1>
         <Container className="main" fluid>
           <Row className="text-center pt-4 pb-4">
             <h3>Select your output format:</h3>
@@ -44,8 +46,9 @@ export default function HomePage({}) {
             </Col>
           </Row>
         </Container>
+    </div >
       </Container>
-      <VerticalButtons />
+    <VerticalButtons />
     </>
   );
 }

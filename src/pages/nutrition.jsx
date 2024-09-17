@@ -23,6 +23,8 @@ export default function Nutrition(className="Nutrition") {
       <HomeNavbar />
       <SubNavbar/>
       <Container>
+      <div className="containerWrapper">
+      <h1>Baby and me.</h1>
         <Container className="main" fluid>
           <Row className="text-center pt-4 pb-4">
             <h3>Select your output format:</h3>
@@ -42,6 +44,7 @@ export default function Nutrition(className="Nutrition") {
             </Col>
           </Row>
         </Container>
+        </div>
       </Container>
       <VerticalButtons />
     </>
