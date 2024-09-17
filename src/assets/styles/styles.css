@@ -80,6 +80,7 @@ h1{
 	text-transform: uppercase;
 	position: sticky;
 	top: 0.5em;
+  user-select: none;
 
 }
 h2,
