@@ -5,7 +5,7 @@ import HomePage from './pages/home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/styles/styles.css';
 import Nutrition from './pages/nutrition';
-import Proffessional from './pages/nestlePro';
+import Professional from './pages/nestlePro';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/comparator/" element={<HomePage />} />
         <Route path="/comparator/nutrition" element={<Nutrition />} />
-        <Route path="/comparator/proffessional" element={<Proffessional />} />
+        <Route path="/comparator/professional" element={<Professional />} />
       </Routes>
     </Router>
   </React.StrictMode>,

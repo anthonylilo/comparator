@@ -24,7 +24,7 @@ export default function Nutrition(className="Nutrition") {
       <SubNavbar/>
       <Container>
         <Container className="main" fluid>
-          <Row className="text-center">
+          <Row className="text-center pt-4 pb-4">
             <h3>Select your output format:</h3>
             <Form.Select onChange={handleFormatChange} value={selectedFormat}>
               <option value="markdown">Markdown</option>

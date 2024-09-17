@@ -14,7 +14,7 @@ function BrandPicker() {
     } else if (selectedValue === "2") {
       navigate('/comparator/nutrition');
     } else if (selectedValue === "3") {
-      navigate('/comparator/proffessional');
+      navigate('/comparator/professional');
     }
   };
 
@@ -22,7 +22,7 @@ function BrandPicker() {
     <Form.Select aria-label="Select the project" onChange={handleSelectChange}>
       <option>Select the project</option>
       <option value="1">Purina</option>
-      <option value="2">Unifier</option>
+      <option value="2">Baby and me</option>
       <option value="3">Nestlé Professional</option>
     </Form.Select>
   );
