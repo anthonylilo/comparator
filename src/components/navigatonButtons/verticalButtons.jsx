@@ -5,6 +5,10 @@ import {
   faCircleCheck,
   faEquals,
 } from "@fortawesome/free-solid-svg-icons";
+import CompareIcon from '../../assets/images/compare.svg';
+import ResetIcon from '../../assets/images/reset.svg';
+import ArrowIcon from '../../assets/images/arrow-up.svg';
+import EnableIcon from '../../assets/images/enable.svg';
 import TooltipButton from "./TooltipButton";
 import ModalLoading from "../modal/modal";
 import compareContent from "../../modules/equals/equals";
@@ -74,10 +78,11 @@ const VerticalButtons = () => {
   return (
     <div className="vertical-buttons">
       <TooltipButton
-        icon={faEquals}
+        icon={CompareIcon}
         onClick={handleEqualsClick}
         className="placeholder-button equals"
         tooltip="Equals"
+        iconType='svg'
       />
       <ModalLoading text={modalText} show={showModal} onClose={() => setShowModal(false)} />
       <a
@@ -86,22 +91,25 @@ const VerticalButtons = () => {
         rel="noopener noreferrer"
       >
         <TooltipButton
-          icon={faCircleCheck}
+          icon={EnableIcon}
           className="placeholder-button api"
           tooltip="Enable API"
+          iconType="svg"
         />
       </a>
       <TooltipButton
-        icon={faRotateRight}
+        icon={ResetIcon}
         onClick={handleReset}
         className="placeholder-button reset"
         tooltip="Reset"
+        iconType="svg"
       />
       <TooltipButton
-        icon={faArrowTurnUp}
+        icon={ArrowIcon}
         onClick={scrollToTop}
         className="scroll-button top"
         tooltip="Scroll to Top"
+        iconType="svg"
       />
     </div>
   );

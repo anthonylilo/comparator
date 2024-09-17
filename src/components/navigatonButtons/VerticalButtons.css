@@ -28,6 +28,9 @@
     justify-content: center;
     align-items: center;
 }
+.vertical-buttons img{
+    width: 1.6rem;
+}
 
 .api{
     background-color: #0075FF;
@@ -43,16 +46,16 @@
     background-color: #bb2d3b;
 }
 .top{
-    background-color: #282929;
+    background-color: #0000004D;
 }
 .top:hover{
-    background-color: #000000;
+    background-color: #4a4a4a;
 }
 .equals{
-    background-color: pink;
+    background-color: #000000;
 }
 .equals:hover{
-    background-color: thistle;
+    background-color: rgba(0, 0, 0, 0.693);
 }
 .darkMode{
     background-color: var(--bg-color);
