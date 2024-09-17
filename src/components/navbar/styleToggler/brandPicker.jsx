@@ -14,7 +14,7 @@ function BrandPicker() {
     } else if (selectedValue === "2") {
       navigate('/comparator/nutrition');
     } else if (selectedValue === "3") {
-      navigate('/nestle-professional');
+      navigate('/comparator/proffessional');
     }
   };
 

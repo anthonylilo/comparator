@@ -55,10 +55,10 @@
     background-color: thistle;
 }
 .darkMode{
-    background-color: var(--text-color);
-    color: var(--bg-color);
+    background-color: var(--bg-color);
+    color: var(--bg-color--text-color);
 }
 .darkMode:hover{
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }

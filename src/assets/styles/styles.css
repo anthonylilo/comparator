@@ -28,7 +28,11 @@
   --text-color: #000000; /* Unifier-specific light theme text */
   --sub-header-bg:#005D63;
 }
-
+[data-project="proffessional"][data-theme="light"] {
+  --bg-color: #EBA742; /* Unifier-specific light theme background */
+  --text-color: #000000; /* Unifier-specific light theme text */
+  --sub-header-bg:#97661e;
+}
 /* Project-specific dark theme styles */
 [data-project="purina"][data-theme="dark"] {
   --bg-color: #731616;
@@ -38,6 +42,10 @@
 
 [data-project="unifier"][data-theme="dark"] {
   --bg-color: #002244; /* Unifier-specific dark theme background */
+  --text-color: #FFFFFF; /* Unifier-specific dark theme text */
+}
+[data-project="proffessional"][data-theme="dark"] {
+  --bg-color: #573f19; /* Unifier-specific dark theme background */
   --text-color: #FFFFFF; /* Unifier-specific dark theme text */
 }
 body {
