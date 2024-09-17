@@ -1,3 +1,24 @@
-:root{
-    --purina-bg: #E82F2F;
+[data-theme="light"]{
+    --bg-purina-color: #a40909;
+    --text-color: black;
+    --card-color:#FFFFFF;
+    --header-color:#FFFFFF;
+    --table-color:#FFFFFF;
+    --sub-header-bg:#005D63;
+    --img-info-bg:#005D63;
+  }
+  
+  [data-theme='dark'] {
+    --bg-color: black;
+    --text-color: white;
+    --card-color:#252525;
+    --header-color:#505050;
+    --table-color:#FFFFFF12;
+    --sub-header-bg:#303030;
+    --img-info-bg:#00000099;
+    --img-card-box: #FFFFFF12;
+}
+body {
+    background-color: var(--bg-purina-color);
+    color: var(--text-color);
 }

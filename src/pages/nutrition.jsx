@@ -6,12 +6,11 @@ import HomeNavbar from "../components/navbar/homeNavbar";
 import VerticalButtons from "../components/navigatonButtons/verticalButtons";
 import SubNavbar from "../components/navbar/subNavbar";
 
-export default function HomePage({}) {
+export default function Nutrition(className="Nutrition") {
   useEffect(() => {
     // Set the project based on the current project selection
-    document.documentElement.setAttribute('data-project', 'purina'); // For Purina
+    document.documentElement.setAttribute('data-project', 'unifier'); // For Purina
     // document.documentElement.setAttribute('data-project', 'unifier'); // For Unifier
-    // document.documentElement.setAttribute('data-project', 'nestle-professional'); // For Nestlé Professional
   }, []);
   const [selectedFormat, setSelectedFormat] = useState("markdown");
 
@@ -38,7 +37,7 @@ export default function HomePage({}) {
               <Editor selectedFormat={selectedFormat} />
             </Col>
             <Col md={6}>
-              <h3>Comparator</h3>
+              <h3>Comparator Nutrition</h3>
               <ArticleForm selectedFormat={selectedFormat} />
             </Col>
           </Row>
