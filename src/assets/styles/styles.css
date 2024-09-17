@@ -18,26 +18,32 @@
   --img-info-bg:#00000099;
   --img-card-box: #FFFFFF12;
 }
-[data-project="purina"] {
-  --project-primary-color: #F6421B;
-  --project-secondary-color: #FFD700;
+[data-project="purina"][data-theme="light"] {
+  --bg-color: #E82F2F; /* Purina-specific light theme background */
+  --text-color: #000000; /* Purina-specific light theme text */
+  --sub-header-bg:#cd1717;
 }
 
-[data-project="unifier"] {
-  --project-primary-color: #4A90E2;
-  --project-secondary-color: #D0021B;
+[data-project="unifier"][data-theme="light"] {
+  --bg-color: #099aa4; /* Unifier-specific light theme background */
+  --text-color: #000000; /* Unifier-specific light theme text */
+  --sub-header-bg:#005D63;
 }
 
-[data-project="nestle-professional"] {
-  --project-primary-color: #005D63;
-  --project-secondary-color: #FFD700;
+/* Project-specific dark theme styles */
+[data-project="purina"][data-theme="dark"] {
+  --bg-color: #731616;
+  --text-color: #FFFFFF; /* Purina-specific dark theme text */
+  --sub-header-bg:#303030;
 }
 
+[data-project="unifier"][data-theme="dark"] {
+  --bg-color: #002244; /* Unifier-specific dark theme background */
+  --text-color: #FFFFFF; /* Unifier-specific dark theme text */
+}
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
-}
-body {
   margin: 0;
   padding: 0;
   font-family: Inter, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -45,7 +51,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg-color);
 }
 h2,
 h3 {
@@ -54,7 +59,7 @@ h3 {
 }
 .navbar-brand{
   font-weight: 700;
-  color: var(--project-primary-color);
+  color: var(--text-color);
 }
 
 /** Card Image */
@@ -116,7 +121,7 @@ h3 {
 }
 
 .card_BorderLine {
-  border: 1px solid var(--project-primary-color);
+  border: 1px solid var(--bg-color);
   width: 80%;
 }
 /** End Card Image */

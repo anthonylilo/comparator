@@ -9,7 +9,8 @@ import SubNavbar from "../components/navbar/subNavbar";
 export default function HomePage({}) {
   useEffect(() => {
     // Set the project based on the current project selection
-    document.documentElement.setAttribute('data-project', 'purina'); // For Purina
+    document.documentElement.setAttribute('data-theme', 'light'); // For Purina
+    document.documentElement.setAttribute('data-project', 'purina');
     // document.documentElement.setAttribute('data-project', 'unifier'); // For Unifier
     // document.documentElement.setAttribute('data-project', 'nestle-professional'); // For Nestlé Professional
   }, []);
