@@ -24,7 +24,7 @@ export default function Professional(className="Professional") {
       <SubNavbar/>
       <Container>
       <div className="containerWrapper">
-      <h1>Professional.</h1>
+      <h1>Professional</h1>
         <Container className="main" fluid>
         <h2 className="text-center">Nestlé Professional</h2>
           <Row className="text-center pt-4 pb-4">
