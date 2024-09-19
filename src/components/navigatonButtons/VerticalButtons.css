@@ -7,7 +7,7 @@
     flex-direction: column;
     align-items: center;
     /* transition: opacity 0.5s, background-color 0.5s; */
-    padding: 10px;
+    padding: 20px;
     border-top-left-radius: 1.1rem;;
     border-bottom-left-radius: 1.1rem;
     background-color: var(--card-color);
@@ -28,6 +28,9 @@
     justify-content: center;
     align-items: center;
 }
+.vertical-buttons img{
+    width: 1.6rem;
+}
 
 .api{
     background-color: #0075FF;
@@ -43,22 +46,22 @@
     background-color: #bb2d3b;
 }
 .top{
-    background-color: #282929;
+    background-color: #b3b3b3;
 }
 .top:hover{
-    background-color: #000000;
+    background-color: #4a4a4a;
 }
 .equals{
-    background-color: pink;
+    background-color: #000000;
 }
 .equals:hover{
-    background-color: thistle;
+    background-color: rgba(0, 0, 0, 0.693);
 }
 .darkMode{
-    background-color: var(--text-color);
-    color: var(--bg-color);
+    background-color: var(--bg-color);
+    color: var(--bg-color--text-color);
 }
 .darkMode:hover{
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }

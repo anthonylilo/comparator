@@ -1,13 +1,18 @@
+// TooltipButton.js
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './TooltipButton.css';
 
-const TooltipButton = ({ icon, onClick, tooltip, className }) => {
-    return (
-        <button className={`tooltip-button ${className}`} onClick={onClick}>
-            <FontAwesomeIcon icon={icon} />
-            {tooltip && <span className="tooltip-text">{tooltip}</span>}
-        </button>
-    );
+const TooltipButton = ({ icon, onClick, className, tooltip, iconType }) => {
+  return (
+    <button className={`tooltip-button ${className}`} onClick={onClick} title={tooltip}>
+      {iconType === 'svg' ? (
+        <img src={icon} alt={tooltip} />
+      ) : (
+        <FontAwesomeIcon icon={icon} />
+      )}
+      
+    </button>
+  );
 };
 
 export default TooltipButton;

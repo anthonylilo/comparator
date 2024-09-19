@@ -6,13 +6,11 @@ import HomeNavbar from "../components/navbar/homeNavbar";
 import VerticalButtons from "../components/navigatonButtons/verticalButtons";
 import SubNavbar from "../components/navbar/subNavbar";
 
-export default function HomePage({}) {
+export default function Nutrition(className="Nutrition") {
   useEffect(() => {
     // Set the project based on the current project selection
-    document.documentElement.setAttribute('data-theme', 'light'); // For Purina
-    document.documentElement.setAttribute('data-project', 'purina');
+    document.documentElement.setAttribute('data-project', 'unifier'); // For Purina
     // document.documentElement.setAttribute('data-project', 'unifier'); // For Unifier
-    // document.documentElement.setAttribute('data-project', 'nestle-professional'); // For Nestlé Professional
   }, []);
   const [selectedFormat, setSelectedFormat] = useState("markdown");
 
@@ -25,8 +23,8 @@ export default function HomePage({}) {
       <HomeNavbar />
       <SubNavbar/>
       <Container>
-        <div className="containerWrapper">
-          <h1>Purina</h1>
+      <div className="containerWrapper">
+      <h1>Baby and me</h1>
         <Container className="main" fluid>
           <Row className="text-center pt-4 pb-4">
             <h3>Select your output format:</h3>
@@ -41,14 +39,14 @@ export default function HomePage({}) {
               <Editor selectedFormat={selectedFormat} />
             </Col>
             <Col md={6}>
-              <h3>Comparator</h3>
+              <h3>Comparator Nutrition</h3>
               <ArticleForm selectedFormat={selectedFormat} />
             </Col>
           </Row>
         </Container>
-    </div >
+        </div>
       </Container>
-    <VerticalButtons />
+      <VerticalButtons />
     </>
   );
 }

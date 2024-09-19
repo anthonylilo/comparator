@@ -1,13 +1,10 @@
-/* :root {
-} */
-
 [data-theme="light"]{
-  --bg-color: #099aa4;
   --text-color: black;
   --card-color:#FFFFFF;
   --header-color:#FFFFFF;
   --table-color:#FFFFFF;
   --sub-header-bg:#005D63;
+  --img-info-bg:#005D63;
 }
 
 [data-theme='dark'] {
@@ -17,13 +14,43 @@
   --header-color:#505050;
   --table-color:#FFFFFF12;
   --sub-header-bg:#303030;
+  --img-info-bg:#00000099;
+  --img-card-box: #FFFFFF12;
+}
+[data-project="purina"][data-theme="light"] {
+  --bg-color: #E82F2F; /* Purina-specific light theme background */
+  --text-color: #000000; /* Purina-specific light theme text */
+  --sub-header-bg:#cd1717;
 }
 
+[data-project="unifier"][data-theme="light"] {
+  --bg-color: #099aa4; /* Unifier-specific light theme background */
+  --text-color: #000000; /* Unifier-specific light theme text */
+  --sub-header-bg:#005D63;
+}
+[data-project="professional"][data-theme="light"] {
+  --bg-color: #EBA742; /* Unifier-specific light theme background */
+  --text-color: #000000; /* Unifier-specific light theme text */
+  --sub-header-bg:#97661e;
+}
+/* Project-specific dark theme styles */
+[data-project="purina"][data-theme="dark"] {
+  --bg-color: #731616;
+  --text-color: #FFFFFF; /* Purina-specific dark theme text */
+  --sub-header-bg:#303030;
+}
+
+[data-project="unifier"][data-theme="dark"] {
+  --bg-color: #002244; /* Unifier-specific dark theme background */
+  --text-color: #FFFFFF; /* Unifier-specific dark theme text */
+}
+[data-project="professional"][data-theme="dark"] {
+  --bg-color: #573f19; /* Unifier-specific dark theme background */
+  --text-color: #FFFFFF; /* Unifier-specific dark theme text */
+}
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
-}
-body {
   margin: 0;
   padding: 0;
   font-family: Inter, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -31,7 +58,33 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg-color);
+}
+.mainContainer{
+	min-height: 100vh;
+	padding: 2em;
+}
+.containerWrapper{
+  width: 100%;
+	margin-inline: auto;
+	display: flex;
+	align-items: flex-start;
+}
+h1{
+  margin-top: 2.5rem;
+  font-size: 2.7rem;
+  margin-block: 0 0.25em;
+	color: hsla(0, 0%, 100%, 0.3);
+	transform-origin: center;
+	rotate: 180deg;
+	writing-mode: vertical-lr;
+	text-transform: uppercase;
+	position: sticky;
+	top: 0.5em;
+  user-select: none;
+
+}
+h1::after {
+	content: ".";
 }
 h2,
 h3 {
@@ -40,6 +93,7 @@ h3 {
 }
 .navbar-brand{
   font-weight: 700;
+  color: var(--text-color);
 }
 
 /** Card Image */
@@ -61,15 +115,17 @@ h3 {
 }
 
 .card_Background_Color {
-  background-color: #595959 !important;
+  background-color: var(--img-info-bg) !important;
 }
 
 .card_Image_Size {
   padding: 2%;
+  border-radius: 0px 0px 15px 0px;
 }
 
 .card_Image_Dimension {
   padding: 2%;
+  border-radius: 0px 0px 0px 15px;
 }
 
 .card-body {
@@ -87,7 +143,7 @@ h3 {
 }
 
 .list-group-item {
-  background-color: #f2f2f2;
+  background-color: var(--img-card-box);
 }
 
 .list-group-flush > .list-group-item {
@@ -95,11 +151,11 @@ h3 {
 }
 
 .bg_Color_Line {
-  background-color: #f2f2f2;
+  background-color: var(--img-card-box);
 }
 
 .card_BorderLine {
-  border: 1px solid grey;
+  border: 1px solid var(--bg-color);
   width: 80%;
 }
 /** End Card Image */

@@ -7,7 +7,7 @@ import {
   Container,
 } from "react-bootstrap";
 import "../../assets/styles/header.css";
-import DarkToggler from "./darkToggler/themeToggler";
+import BrandPicker from "./styleToggler/brandPicker";
 
 
 function HomeNavbar() {
@@ -19,22 +19,7 @@ function HomeNavbar() {
         <Navbar.Collapse className="justify-content-between" id="basic-navbar-nav">
           <Nav>
             <Nav.Item>
-              <Form.Select aria-label="Default select example">
-                <option>Select the project</option>
-                <option value="1">Purina</option>
-                <option value="2">Unifier</option>
-                <option value="3">Nestlé Professional</option>
-              </Form.Select>
-            </Nav.Item>
-            <Nav.Item>
-              <a
-                className="text-center btn btn-primary"
-                href="https://cors-anywhere.herokuapp.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Enable the api :D
-              </a>
+              <BrandPicker/>
             </Nav.Item>
           </Nav>
           <Nav>
