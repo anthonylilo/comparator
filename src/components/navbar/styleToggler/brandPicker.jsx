@@ -10,11 +10,11 @@ function BrandPicker() {
     
     // Navigate to different routes based on selected value
     if (selectedValue === "1") {
-      navigate('/comparator');
+      navigate('/comparator/');
     } else if (selectedValue === "2") {
-      navigate('/comparator/nutrition');
+      navigate('/comparator/nutrition/');
     } else if (selectedValue === "3") {
-      navigate('/comparator/professional');
+      navigate('/comparator/professional/');
     }
   };
 

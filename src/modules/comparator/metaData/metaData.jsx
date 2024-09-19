@@ -68,7 +68,7 @@ const MetaData = ({ title, metaDescription, url }) => {
           <tr>
             <th>Meta Title</th>
             <td>
-              <span>Title: {title}</span>
+              <span>{title}</span>
               <div className={`text-${titleColor}`}>{titleMessage}</div>
               {descriptionColor.color}
             </td>
@@ -84,7 +84,7 @@ const MetaData = ({ title, metaDescription, url }) => {
           <tr>
             <th>Meta Description</th>
             <td>
-              <span>Meta Description: {metaDescription}</span>
+              <span>{metaDescription}</span>
               <div className={`text-${descriptionColor}`}>{descriptionMessage}</div>
             </td>
           </tr>
@@ -99,7 +99,7 @@ const MetaData = ({ title, metaDescription, url }) => {
           <tr>
             <th>URL</th>
             <td>
-              <span>URL: {url}</span>
+              <span>{url}</span>
               <div className={`text-${urlColor}`}>{urlMessage}</div>
             </td>
           </tr>

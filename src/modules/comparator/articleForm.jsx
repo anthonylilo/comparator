@@ -85,6 +85,8 @@ function ArticleForm({ reset, selectedFormat }) {
     }
   }, [reset]);
 
+  const placeHolderOption = window.location.pathname;
+
   return (
     <Container fluid="md">
       <Row className="justify-content-md-center text-center">
@@ -94,7 +96,7 @@ function ArticleForm({ reset, selectedFormat }) {
               <Form.Label>Article URL</Form.Label>
               <Form.Control
                 type="url"
-                placeholder="https://purina.cl/"
+                placeholder={placeHolderOption === "/comparator/" ? "https://purina.cl/" : placeHolderOption === "/comparator/nutrition" ? "https://www.babyandme.com" : "https://nestleprofessional-latam.com/pais/"} 
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 required
