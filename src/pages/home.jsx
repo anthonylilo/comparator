@@ -26,7 +26,7 @@ export default function HomePage({}) {
       <SubNavbar/>
       <Container>
         <div className="containerWrapper">
-          <h1>Purina</h1>
+          <h1 className="brandBackgroundHeading">Purina</h1>
         <Container className="main" fluid>
           <Row className="text-center pt-4 pb-4">
             <h3>Select your output format:</h3>

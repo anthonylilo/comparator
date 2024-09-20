@@ -69,7 +69,7 @@ body {
 	display: flex;
 	align-items: flex-start;
 }
-h1{
+h1.brandBackgroundHeading{
   margin-top: 2.5rem;
   font-size: 2.7rem;
   margin-block: 0 0.25em;
@@ -83,7 +83,7 @@ h1{
   user-select: none;
 
 }
-h1::after {
+h1.brandBackgroundHeading::after {
 	content: ".";
 }
 h2,
