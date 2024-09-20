@@ -192,3 +192,11 @@ h3 {
   border: 4px #E0E0E0;
 /* background-color: #962323e5; */
 }
+
+.highlight-added {
+  background-color: #d4fcbc; /* Color para contenido añadido */
+}
+
+.highlight-removed {
+  background-color: #ffbcbc; /* Color para contenido eliminado */
+}

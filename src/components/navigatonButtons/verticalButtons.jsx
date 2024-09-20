@@ -5,10 +5,10 @@ import {
   faCircleCheck,
   faEquals,
 } from "@fortawesome/free-solid-svg-icons";
-import CompareIcon from '../../assets/images/compare.svg';
-import ResetIcon from '../../assets/images/reset.svg';
-import ArrowIcon from '../../assets/images/arrow-up.svg';
-import EnableIcon from '../../assets/images/enable.svg';
+import CompareIcon from "../../assets/images/compare.svg";
+import ResetIcon from "../../assets/images/reset.svg";
+import ArrowIcon from "../../assets/images/arrow-up.svg";
+import EnableIcon from "../../assets/images/enable.svg";
 import TooltipButton from "./TooltipButton";
 import ModalLoading from "../modal/modal";
 import compareContent from "../../modules/equals/equals";
@@ -43,35 +43,71 @@ const VerticalButtons = () => {
 
   const [modalText, setModalText] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const highlightDifferences = (diffs) => {
+    if (!Array.isArray(diffs)) {
+      console.error("El parámetro 'diffs' debe ser un array.");
+      return "";
+    }
+
+    return diffs
+      .map(([operation, text]) => {
+        if (operation === 1) {
+          // Inserción (contenido nuevo)
+          return `<span style="background-color: #d4fcbc;">${text}</span>`;
+        } else if (operation === -1) {
+          // Eliminación (contenido eliminado)
+          return `<span style="background-color: #ffbcbc;">${text}</span>`;
+        } else {
+          return text; // No hay cambios
+        }
+      })
+      .join("");
+  };
+
   const handleEqualsClick = async () => {
     setModalText("Realizando comparación, por favor espere :D");
     setShowModal(true);
 
     setTimeout(async () => {
-      const storedEditorContent = JSON.parse(localStorage.getItem("editorContent"));
-      const storedArticleContent = JSON.parse(localStorage.getItem("articleContent"));
+      const storedEditorContent = JSON.parse(
+        localStorage.getItem("editorContent")
+      );
+      const storedArticleContent = JSON.parse(
+        localStorage.getItem("articleContent")
+      );
 
       if (!storedEditorContent) {
         setModalText("No se encontró contenido del editor");
         setShowModal(false);
         return;
-      } else if(!storedArticleContent) {
+      } else if (!storedArticleContent) {
         setModalText("No se encontró contenido de la web");
         setShowModal(false);
+        return;
       }
 
-      const result = await compareContent(storedEditorContent, storedArticleContent);
-      if (result) {
-        setModalText("No se encontraron diferencias en el contenido :)");
-      } else {
-        setModalText(
-          "Se encontraron diferencias en el contenido :( por favor verifique"
+      try {
+        // Llamar a la función compareContent desde equals.js
+        const isEqual = await compareContent(
+          storedEditorContent,
+          storedArticleContent
         );
-      }
 
-      setTimeout(() => {
-        setShowModal(false);
-      }, 3000);
+        if (isEqual) {
+          setModalText("No se encontraron diferencias en el contenido :)");
+        } else {
+          setModalText(
+            "Se encontraron diferencias en el contenido :( por favor verifique"
+          );
+        }
+      } catch (error) {
+        console.error("Error al comparar contenido:", error);
+        setModalText("Ocurrió un error al comparar el contenido.");
+      } finally {
+        setTimeout(() => {
+          setShowModal(false);
+        }, 3000);
+      }
     }, 100);
   };
 
@@ -82,9 +118,13 @@ const VerticalButtons = () => {
         onClick={handleEqualsClick}
         className="placeholder-button equals"
         tooltip="Equals"
-        iconType='svg'
+        iconType="svg"
       />
-      <ModalLoading text={modalText} show={showModal} onClose={() => setShowModal(false)} />
+      <ModalLoading
+        text={modalText}
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      />
       <a
         href="https://cors-anywhere.herokuapp.com/"
         target="_blank"

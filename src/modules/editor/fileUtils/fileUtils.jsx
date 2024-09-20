@@ -88,8 +88,6 @@ const parseMarkdownContent = (content) => {
 
   const images = [];
 
-  console.log(content);
-
   let metaDataImport = {};
   const metaDataMatch = metaDataRegex.exec(content);
   const metaDataMatch1 = metaDataRegex1.exec(content);
@@ -97,7 +95,6 @@ const parseMarkdownContent = (content) => {
   const metaDataModifedArticleMatch1 = metaDataModifedArticle1.exec(content);
   const metaDataModifedArticleMatch2 = metaDataModifedArticle2.exec(content);
   const metaDataModifedArticleMatch3 = metaDataModifedArticle3.exec(content);
-  console.log(metaDataModifedArticleMatch3);
   const redireccionesMatch = redirectionsRegex.exec(content);
 
   if (metaDataMatch) {

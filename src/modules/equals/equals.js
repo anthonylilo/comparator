@@ -36,13 +36,7 @@ const cleanHTML = (html) => {
   clean = clean.replace(/^(?!<h\d|<a|<p|<li|<ul|<strong|<img).+$/gm, "");
   clean = clean.replace(/^\s*[\r\n]/gm, "");
   clean = clean.replace(/ id="[^"]*"/g, "");
-  clean = clean.replace(/(<ul>)(<li>.*?<\/li>)+(<\/ul>)/g, (match, p1, p2, p3) => {
-    const listItems = p2.match(/<li>.*?<\/li>/g);
-    if (listItems) {
-      return `${p1}${listItems.join('')}${p3}`;
-    }
-    return match;
-  });
+  clean = clean.replace(/<\/ul>\s*<ul>/g, "");
   return clean;
 };
 
@@ -73,7 +67,10 @@ const cleanHTMLCompare = (html) => {
   clean = clean.replace(/(<\/h[1-5]>)(?!<p>|<\/div>)/g, "$1");
   clean = clean.replace(/<p>\s*(<h[1-5]>)/g, "$1");
   clean = clean.replace(/(<\/h[1-5]>)\s*<\/p>/g, "$1");
-  clean = clean.replace(/^(?!<h\d|<a|<p|<li|<ul|<strong|<img).+$/gm, "<p>$&</p>");
+  clean = clean.replace(
+    /^(?!<h\d|<a|<p|<li|<ul|<strong|<img).+$/gm,
+    "<p>$&</p>"
+  );
   clean = clean.replace(/<p>\s*<\/p>/g, "");
   return clean;
 };
@@ -100,7 +97,11 @@ const processArray = (arraySaved) => {
       }
     } else if (item.type === "paragraph") {
       if (currentParagraph !== "") {
-        currentParagraph += markdownToHTML(item.data);
+        groupedContent.push({
+          type: currentParagraph.includes("<") ? "html" : "paragraph",
+          data: currentParagraph,
+        });
+        currentParagraph = markdownToHTML(item.data);
       } else {
         currentParagraph = markdownToHTML(item.data);
       }
@@ -150,7 +151,6 @@ const compareContent = async (editorContent, comparatorContent) => {
   }
 
   const cleanedEditorHTML = editorHTML.map((html) => cleanHTML(html));
-  console.log(cleanedEditorHTML);
   const cleanedComparatorHTML = processedComparatorContent.map((item) => {
     if (item.type === "html") {
       return cleanHTMLCompare(item.data);
@@ -168,55 +168,29 @@ const compareContent = async (editorContent, comparatorContent) => {
 
   // Comparar elemento por elemento
   const dmp = new DiffMatchPatch();
-  const diffs = normalizedEditorHTML.map((editorItem, index) => {
-    const comparatorItem = normalizedComparatorHTML[index] || "";
-    const diff = dmp.diff_main(editorItem, comparatorItem);
-    dmp.diff_cleanupSemantic(diff);
-    return diff;
-  });
-
-  console.log(diffs);
+  const diffs = dmp.diff_main(
+    normalizedEditorHTML.join(""),
+    normalizedComparatorHTML.join("")
+  );
+  dmp.diff_cleanupSemantic(diffs);
 
   // Generar el resultado de las diferencias
-  const editorDiffs = diffs.map((diff) =>
-    diff
-      .map((part) =>
-        part[0] === 0
-          ? part[1]
-          : part[0] === -1
-          ? `<span style="background-color: red">${part[1]}</span>`
-          : ""
-      )
-      .join("")
-  );
-
-  const comparatorDiffs = diffs.map((diff) =>
-    diff
-      .map((part) =>
-        part[0] === 0
-          ? part[1]
-          : part[0] === 1
-          ? `<span style="background-color: red">${part[1]}</span>`
-          : ""
-      )
-      .join("")
-  );
-
-  // Aplicar las diferencias en el DOM del editor
-  const editorElement = document.getElementById("editor");
-  const editorChildren = editorElement.children;
-
-  for (let i = 0; i < editorChildren.length; i++) {
-    const child = editorChildren[i];
-    if (child.tagName.toLowerCase() === "p") {
-      const index = normalizedEditorHTML.findIndex((html) =>
-        html.includes(child.innerHTML)
-      );
-      if (index !== -1) {
-        child.innerHTML = editorDiffs[index];
+  const highlightDifferences = diffs
+    .map(([operation, text]) => {
+      if (operation === 1) {
+        // Inserción
+        return `<span class="highlight-added">${text}</span>`;
+      } else if (operation === -1) {
+        // Eliminación
+        return `<span class="highlight-removed">${text}</span>`;
       }
-    }
-  }
+      return text; // Sin cambios
+    })
+    .join("");
+
+  // Aplicar las diferencias en el DOM del comparador
+  document.getElementById("editor").innerHTML = highlightDifferences;
+  document.getElementById("comparator").innerHTML = highlightDifferences;
 
   return (
     JSON.stringify(normalizedEditorHTML) ===
