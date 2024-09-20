@@ -24,8 +24,9 @@ export default function Nutrition(className="Nutrition") {
       <SubNavbar/>
       <Container>
       <div className="containerWrapper">
-      <h1>Baby and me</h1>
+      <h1 className="brandBackgroundHeading">Baby and me</h1>
         <Container className="main" fluid>
+          <h2 className="text-center">Nestlé Baby and Me</h2>
           <Row className="text-center pt-4 pb-4">
             <h3>Select your output format:</h3>
             <Form.Select onChange={handleFormatChange} value={selectedFormat}>
