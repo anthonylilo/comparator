@@ -96,7 +96,7 @@ function ArticleForm({ reset, selectedFormat }) {
               <Form.Label>Article URL</Form.Label>
               <Form.Control
                 type="url"
-                placeholder={placeHolderOption === "/comparator/" ? "https://purina.cl/" : placeHolderOption === "/comparator/nutrition" ? "https://www.babyandme.com" : "https://nestleprofessional-latam.com/pais/"} 
+                placeholder={placeHolderOption === "/comparator" ? "https://purina.cl/" : placeHolderOption === "/comparator/nutrition" ? "https://www.babyandme.com" : "https://nestleprofessional-latam.com/pais/"} 
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 required
