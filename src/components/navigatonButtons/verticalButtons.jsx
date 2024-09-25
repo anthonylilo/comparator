@@ -43,26 +43,6 @@ const VerticalButtons = () => {
 
   const [modalText, setModalText] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const highlightDifferences = (diffs) => {
-    if (!Array.isArray(diffs)) {
-      console.error("El parámetro 'diffs' debe ser un array.");
-      return "";
-    }
-
-    return diffs
-      .map(([operation, text]) => {
-        if (operation === 1) {
-          // Inserción (contenido nuevo)
-          return `<span style="background-color: #d4fcbc;">${text}</span>`;
-        } else if (operation === -1) {
-          // Eliminación (contenido eliminado)
-          return `<span style="background-color: #ffbcbc;">${text}</span>`;
-        } else {
-          return text; // No hay cambios
-        }
-      })
-      .join("");
-  };
 
   const handleEqualsClick = async () => {
     setModalText("Realizando comparación, por favor espere :D");

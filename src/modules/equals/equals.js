@@ -130,6 +130,8 @@ const compareContent = async (editorContent, comparatorContent) => {
   const processedEditorContent = processArray(editorContent);
   const processedComparatorContent = processArray(comparatorContent);
 
+  console.log(processedEditorContent);
+
   if (
     processedComparatorContent.length > 0 &&
     processedComparatorContent[0].type === "html" &&
@@ -166,7 +168,7 @@ const compareContent = async (editorContent, comparatorContent) => {
     normalizeHTML(html)
   );
 
-  // Comparar elemento por elemento
+  // Comparar elemento por elemento usando DiffMatchPatch
   const dmp = new DiffMatchPatch();
   const diffs = dmp.diff_main(
     normalizedEditorHTML.join(""),
@@ -174,23 +176,37 @@ const compareContent = async (editorContent, comparatorContent) => {
   );
   dmp.diff_cleanupSemantic(diffs);
 
-  // Generar el resultado de las diferencias
-  const highlightDifferences = diffs
+  // Generar diferencias para el editor
+  const editorDifferences = diffs
     .map(([operation, text]) => {
-      if (operation === 1) {
-        // Inserción
-        return `<span class="highlight-added">${text}</span>`;
-      } else if (operation === -1) {
-        // Eliminación
+      if (operation === -1) {
+        // Texto eliminado resaltado en editor
         return `<span class="highlight-removed">${text}</span>`;
+      } else if (operation === 0) {
+        // Texto sin cambios
+        return text;
       }
-      return text; // Sin cambios
+      return ""; // Ignorar inserciones en el editor
     })
     .join("");
 
-  // Aplicar las diferencias en el DOM del comparador
-  document.getElementById("editor").innerHTML = highlightDifferences;
-  document.getElementById("comparator").innerHTML = highlightDifferences;
+  // Generar diferencias para el comparador
+  const comparatorDifferences = diffs
+    .map(([operation, text]) => {
+      if (operation === 1) {
+        // Texto añadido resaltado en comparador
+        return `<span class="highlight-added">${text}</span>`;
+      } else if (operation === 0) {
+        // Texto sin cambios
+        return text;
+      }
+      return ""; // Ignorar eliminaciones en el comparador
+    })
+    .join("");
+
+  // Actualizar el contenido HTML del editor y del comparador
+  document.getElementById("editor").innerHTML = editorDifferences;
+  document.getElementById("comparator").innerHTML = comparatorDifferences;
 
   return (
     JSON.stringify(normalizedEditorHTML) ===
