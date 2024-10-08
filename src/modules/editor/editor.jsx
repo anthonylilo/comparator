@@ -89,7 +89,7 @@ function Editor({ selectedFormat }) {
           </div>
         )}
         {showMarkdownInput && selectedFormat === "markdown" && (
-          <div className="justify-content-md-center text-center">
+          <div className="justify-content-md-center">
             <div className="mt-3">
               <div id="editor">
                 {groupedContent.map((item, index) => (

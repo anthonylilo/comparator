@@ -8,7 +8,8 @@ const markdownToHTML = (markdown) => {
     /^.+\.jpg\nTitle: .+\nAlt Text: .+\n/gm,
     ""
   );
-  return marked(filteredMarkdown);
+  const html = filteredMarkdown.replace(/__(.*?)__/g, "<strong>$1</strong>");
+  return marked(html);
 };
 
 const cleanHTML = (html) => {
@@ -33,10 +34,11 @@ const cleanHTML = (html) => {
   clean = clean.replace(/\d+\.\d+ KB\d+ x \d+.+?\.webp\?itok=\w+/g, "");
   clean = clean.replace(/^[^<]*(?=<p>)/gm, "");
   clean = clean.replace(/(?<=<\/h\d>)[^<]*/gm, "");
-  clean = clean.replace(/^(?!<h\d|<a|<p|<li|<ul|<strong|<img).+$/gm, "");
   clean = clean.replace(/^\s*[\r\n]/gm, "");
   clean = clean.replace(/ id="[^"]*"/g, "");
   clean = clean.replace(/<\/ul>\s*<ul>/g, "");
+  clean = clean.replace(/<li>\s*<\/li>/g, "");
+  clean = clean.replace(/<li>\s*(.*?)\s*<\/li>/g, "<li>$1</li>");
   return clean;
 };
 
@@ -87,35 +89,91 @@ const normalizeHTML = (html) => {
 const processArray = (arraySaved) => {
   let groupedContent = [];
   let currentParagraph = "";
+  let isList = false;
+  let listItems = [];
+  let precedingParagraph = null;
 
-  arraySaved.forEach((item) => {
-    if (item.type === "html") {
-      if (currentParagraph !== "") {
-        currentParagraph += item.data || item.content;
-      } else {
-        currentParagraph = item.data || item.content;
-      }
-    } else if (item.type === "paragraph") {
-      if (currentParagraph !== "") {
+  arraySaved.forEach((item, index) => {
+    const itemData = item.data || "";
+
+    // Procesar listas que empiezan con "-"
+    if (item.type === "paragraph" && itemData.trim().startsWith("-")) {
+      isList = true;
+      const listItem = itemData.trim().replace(/^-\s*/, "");
+      listItems.push(`<li>${markdownToHTML(listItem).replace(/<p>|<\/p>/g, '')}</li>`);
+    } else if (isList) {
+      // Si llegamos a un elemento que no es lista pero hemos procesado una lista
+      if (precedingParagraph) {
+        // Si había un párrafo antes de la lista, lo agregamos primero
         groupedContent.push({
-          type: currentParagraph.includes("<") ? "html" : "paragraph",
-          data: currentParagraph,
+          type: "html",
+          data: `<p>${markdownToHTML(precedingParagraph)}</p>`,
         });
-        currentParagraph = markdownToHTML(item.data);
-      } else {
-        currentParagraph = markdownToHTML(item.data);
+        precedingParagraph = null;
       }
-    } else if (item.type === "image") {
-      if (currentParagraph !== "") {
+
+      groupedContent.push({
+        type: "html",
+        data: `<ul>${listItems.join("")}</ul>`,
+      });
+
+      isList = false;
+      listItems = [];
+    }
+
+    // Si no estamos en una lista, procesar los párrafos
+    if (!isList) {
+      if (item.type === "html") {
+        currentParagraph = itemData || item.content;
+      } else if (item.type === "paragraph") {
+        if (itemData.trim().startsWith("-")) {
+          // Detectar si este es el comienzo de una lista
+          isList = true;
+          listItems.push(
+            `<li>${markdownToHTML(itemData.replace(/^-\s*/, ""))}</li>`
+          );
+        } else if (currentParagraph !== "") {
+          groupedContent.push({
+            type: currentParagraph.includes("<") ? "html" : "paragraph",
+            data: currentParagraph,
+          });
+          currentParagraph = markdownToHTML(item.data);
+        } else {
+          // Aquí guardamos el párrafo que debe preceder a la lista
+          groupedContent.push({
+            type: "html",
+            data: `${markdownToHTML(itemData)}`,
+          });
+          currentParagraph = "";
+        }
+      } else if (item.type === "image") {
+        if (currentParagraph !== "") {
+          groupedContent.push({
+            type: currentParagraph.includes("<") ? "html" : "paragraph",
+            data: currentParagraph,
+          });
+          currentParagraph = "";
+        }
+      }
+    }
+
+    // Al final del array, si hay una lista, agruparla
+    if (index === arraySaved.length - 1 && isList) {
+      if (precedingParagraph) {
         groupedContent.push({
-          type: currentParagraph.includes("<") ? "html" : "paragraph",
-          data: currentParagraph,
+          type: "html",
+          data: `<p>${markdownToHTML(precedingParagraph)}</p>`,
         });
-        currentParagraph = "";
       }
+
+      groupedContent.push({
+        type: "html",
+        data: `<ul>${listItems.join("")}</ul>`,
+      });
     }
   });
 
+  // Asegurarse de agregar cualquier párrafo final no procesado
   if (currentParagraph !== "") {
     groupedContent.push({
       type: currentParagraph.includes("<") ? "html" : "paragraph",
@@ -129,8 +187,6 @@ const processArray = (arraySaved) => {
 const compareContent = async (editorContent, comparatorContent) => {
   const processedEditorContent = processArray(editorContent);
   const processedComparatorContent = processArray(comparatorContent);
-
-  console.log(processedEditorContent);
 
   if (
     processedComparatorContent.length > 0 &&
@@ -153,6 +209,7 @@ const compareContent = async (editorContent, comparatorContent) => {
   }
 
   const cleanedEditorHTML = editorHTML.map((html) => cleanHTML(html));
+  console.log("cleanHTML: ", cleanedEditorHTML);
   const cleanedComparatorHTML = processedComparatorContent.map((item) => {
     if (item.type === "html") {
       return cleanHTMLCompare(item.data);
@@ -175,6 +232,8 @@ const compareContent = async (editorContent, comparatorContent) => {
     normalizedComparatorHTML.join("")
   );
   dmp.diff_cleanupSemantic(diffs);
+
+  console.log(diffs);
 
   // Generar diferencias para el editor
   const editorDifferences = diffs
