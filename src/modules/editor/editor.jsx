@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Form, Col } from "react-bootstrap";
-import { handleFileChange } from "./fileUtils/fileUtils";
+import { handleFileChange } from "../../services/fileUtils";
 import CardsImages from "../../components/cards/cardsImages";
 import SchemaViewer from "../../components/schema/SchemaViewer";
 import CopyButton from "../../components/copyToClipboard/copyButton";

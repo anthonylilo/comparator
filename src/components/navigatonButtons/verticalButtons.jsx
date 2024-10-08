@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  faArrowTurnUp,
-  faRotateRight,
-  faCircleCheck,
-  faEquals,
-} from "@fortawesome/free-solid-svg-icons";
 import CompareIcon from "../../assets/images/compare.svg";
 import ResetIcon from "../../assets/images/reset.svg";
 import ArrowIcon from "../../assets/images/arrow-up.svg";
 import EnableIcon from "../../assets/images/enable.svg";
 import TooltipButton from "./TooltipButton";
 import ModalLoading from "../modal/modal";
-import compareContent from "../../modules/equals/equals";
+import compareContent from "../../services/equals";
 import "./VerticalButtons.css";
 
 const VerticalButtons = () => {
@@ -45,7 +39,7 @@ const VerticalButtons = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleEqualsClick = async () => {
-    setModalText("Realizando comparación, por favor espere :D");
+    setModalText("Making comparison, please wait :D");
     setShowModal(true);
 
     setTimeout(async () => {
@@ -57,11 +51,11 @@ const VerticalButtons = () => {
       );
 
       if (!storedEditorContent) {
-        setModalText("No se encontró contenido del editor");
+        setModalText("Error: Transformed text not found");
         setShowModal(false);
         return;
       } else if (!storedArticleContent) {
-        setModalText("No se encontró contenido de la web");
+        setModalText("Error: Web text was not found.");
         setShowModal(false);
         return;
       }
@@ -74,15 +68,15 @@ const VerticalButtons = () => {
         );
 
         if (isEqual) {
-          setModalText("No se encontraron diferencias en el contenido :)");
+          setModalText("No differences in content were found :)");
         } else {
           setModalText(
-            "Se encontraron diferencias en el contenido :( por favor verifique"
+            "Differences were found in the contents :( please verify"
           );
         }
       } catch (error) {
-        console.error("Error al comparar contenido:", error);
-        setModalText("Ocurrió un error al comparar el contenido.");
+        console.error("Error:", error);
+        setModalText("An error occurred while comparing the content.");
       } finally {
         setTimeout(() => {
           setShowModal(false);

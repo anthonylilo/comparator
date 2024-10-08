@@ -1,9 +1,6 @@
 import {
     Navbar,
     Nav,
-    Button,
-    Form,
-    Image,
     Container,
   } from "react-bootstrap";
   import "../../assets/styles/header.css";

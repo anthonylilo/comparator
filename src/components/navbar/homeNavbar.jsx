@@ -1,8 +1,6 @@
 import {
   Navbar,
   Nav,
-  Button,
-  Form,
   Image,
   Container,
 } from "react-bootstrap";

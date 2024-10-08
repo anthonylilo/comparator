@@ -8,13 +8,13 @@ import {
 } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useArticleFormHooks } from "./hooks/useArticleFormHooks";
-import handleSubmitLogic from "./utils/handleSubmitLogic";
+import handleSubmitLogic from "../../services/handleSubmitLogic";
 import CardsImages from "../../components/cards/cardsImages";
-import InvalidLinksComponent from "./invalidLinks/invalidLinks";
-import HttpsModule from "./httpsLinks/httpsModule";
+import InvalidLinksComponent from "../../components/invalidLinks/invalidLinks";
+import HttpsModule from "../../components/httpsLinks/httpsModule";
 import SchemaViewer from "../../components/schema/SchemaViewer";
-import MetaData from "./metaData/metaData";
-import RedirectStatusesComponent from "./redirectStatus/redirectStatuseComponent";
+import MetaData from "../../components/metaData/metaData";
+import RedirectStatusesComponent from "../../components/redirectStatus/redirectStatuseComponent";
 
 function ArticleForm({ reset, selectedFormat }) {
   const {
