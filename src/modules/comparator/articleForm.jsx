@@ -93,25 +93,12 @@ function ArticleForm({ reset, selectedFormat }) {
         {!showAdditionalFields && (
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Article URL</Form.Label>
               <Form.Control
                 type="url"
                 placeholder={placeHolderOption === "/comparator" ? "https://purina.cl/" : placeHolderOption === "/comparator/nutrition" ? "https://www.babyandme.com" : "https://nestleprofessional-latam.com/pais/"} 
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 required
-              />
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Redirect URLs</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={redirectUrls}
-                onChange={(e) => setRedirectUrls(e.target.value)}
               />
             </Form.Group>
             <Button variant="primary" type="submit" disabled={loading}>
