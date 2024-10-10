@@ -22,104 +22,104 @@ const parseMarkdownContent = (content, selectedFormat) => {
   const tagRegex =
     /__ETIQUETAS DE IMAGEN:\s*__\s*__Alt Text:\s*__\s*(.*?)\s*__Title:\s*__\s*(.*?)\s*__Nombre de la imagen:\s*__\s*(.*?)\s*__FIN DE ETIQUETAS__/gs;
   const schemaRegex = /__DATOS ESTRUCTURADOS:\s*__\s*([\s\S]*?)<\/script>/i;
-  //Without suggest url
-  const metaDataRegex =
-    /\s*MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:\s*__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__FIN DE SEO\s*__/;
-  const metaDataRegex1 =
-    /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:\s*__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO__#/;
-  //Suggest url
-  const metaDataModifedArticle =
-    /\s*MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*\[.*?\]\((.*?)\)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO\s*__/;
-  const metaDataModifedArticle1 =
-    /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*\[.*?\]\((.*?)\)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO__#/;
-  const metaDataModifedArticle2 =
-    /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:\s*__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*(https:\/\/[^\s]+)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO__/;
-  const metaDataModifedArticle3 =
-    /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:\s*(.*?)\s*__Meta Title:\s*(.*?)\s*__Meta Description:\s*(.*?)\s*__URL ACTUAL:\s*([^ ]+)\s*__URL SUGERIDA:\s*([^ ]+)\s*__FIN DE SEO__/;
-
-  //Redirections
+  const metaDataPatterns = [
+    {
+      regex:
+        /\s*MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:\s*__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__FIN DE SEO\s*__/,
+      keys: [
+        "market",
+        "articleNumber",
+        "category",
+        "suggestedUrl",
+        "metaTitle",
+        "metaDescription",
+      ],
+    },
+    {
+      regex:
+        /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:\s*__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO__#/,
+      keys: [
+        "market",
+        "articleNumber",
+        "category",
+        "metaTitle",
+        "metaDescription",
+        "suggestedUrl",
+      ],
+    },
+    {
+      regex:
+        /\s*MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*\[.*?\]\((.*?)\)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO\s*__/,
+      keys: [
+        "market",
+        "articleNumber",
+        "category",
+        "metaTitle",
+        "metaDescription",
+        "oldUrl",
+        "suggestedUrl",
+      ],
+    },
+    {
+      regex:
+        /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*\[.*?\]\((.*?)\)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO__#/,
+      keys: [
+        "market",
+        "articleNumber",
+        "category",
+        "metaTitle",
+        "metaDescription",
+        "oldUrl",
+        "suggestedUrl",
+      ],
+    },
+    {
+      regex:
+        /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:\s*__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*(https:\/\/[^\s]+)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO__/,
+      keys: [
+        "market",
+        "articleNumber",
+        "category",
+        "metaTitle",
+        "metaDescription",
+        "oldUrl",
+        "suggestedUrl",
+      ],
+    },
+    {
+      regex:
+        /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:\s*(.*?)\s*__Meta Title:\s*(.*?)\s*__Meta Description:\s*(.*?)\s*__URL ACTUAL:\s*([^ ]+)\s*__URL SUGERIDA:\s*([^ ]+)\s*__FIN DE SEO__/,
+      keys: [
+        "market",
+        "articleNumber",
+        "category",
+        "metaTitle",
+        "metaDescription",
+        "oldUrl",
+        "suggestedUrl",
+      ],
+    },
+  ];
   const redirectionsRegex =
     /__REDIRECCIONES:\s*__\s*((?:\[.*?\]\(.*?\)\s*)*)__FIN DE REDIRECCIONES\s*__/;
 
   const images = [];
 
   let metaDataImport = {};
-  const metaDataMatch = metaDataRegex.exec(content);
-  const metaDataMatch1 = metaDataRegex1.exec(content);
-  const metaDataModifedArticleMatch = metaDataModifedArticle.exec(content);
-  const metaDataModifedArticleMatch1 = metaDataModifedArticle1.exec(content);
-  const metaDataModifedArticleMatch2 = metaDataModifedArticle2.exec(content);
-  const metaDataModifedArticleMatch3 = metaDataModifedArticle3.exec(content);
-  const redireccionesMatch = redirectionsRegex.exec(content);
+  for (const { regex, keys } of metaDataPatterns) {
+    const match = regex.exec(content);
 
-  if (metaDataMatch) {
-    metaDataImport = {
-      market: metaDataMatch[1].trim(),
-      articleNumber: metaDataMatch[2].trim(),
-      category: metaDataMatch[3].trim(),
-      suggestedUrl: metaDataMatch[4].trim(),
-      metaTitle: metaDataMatch[5].trim(),
-      metaDescription: cleanText(metaDataMatch[6]),
-    };
-    content = content.replace(metaDataRegex, "");
-  } else if (metaDataMatch1) {
-    metaDataImport = {
-      market: metaDataMatch1[1].trim(),
-      articleNumber: metaDataMatch1[2].trim(),
-      category: metaDataMatch1[3].trim(),
-      metaTitle: metaDataMatch1[4].trim(),
-      metaDescription: cleanText(metaDataMatch1[5]),
-      suggestedUrl: metaDataMatch1[6].trim(),
-    };
-    content = content.replace(metaDataRegex1, "");
-  } else if (metaDataModifedArticleMatch) {
-    metaDataImport = {
-      market: metaDataModifedArticleMatch[1].trim(),
-      articleNumber: metaDataModifedArticleMatch[2].trim(),
-      category: metaDataModifedArticleMatch[3].trim(),
-      metaTitle: metaDataModifedArticleMatch[4].trim(),
-      metaDescription: cleanText(metaDataModifedArticleMatch[5]),
-      oldUrl: metaDataModifedArticleMatch[6].trim(),
-      suggestedUrl: metaDataModifedArticleMatch[7].trim(),
-    };
-    content = content.replace(metaDataModifedArticle, "");
-  } else if (metaDataModifedArticleMatch1) {
-    metaDataImport = {
-      market: metaDataModifedArticleMatch1[1].trim(),
-      articleNumber: metaDataModifedArticleMatch1[2].trim(),
-      category: metaDataModifedArticleMatch1[3].trim(),
-      metaTitle: metaDataModifedArticleMatch1[4].trim(),
-      metaDescription: cleanText(metaDataModifedArticleMatch1[5]),
-      oldUrl: metaDataModifedArticleMatch1[6].trim(),
-      suggestedUrl: metaDataModifedArticleMatch1[7].trim(),
-    };
-    content = content.replace(metaDataModifedArticle1, "");
-  } else if (metaDataModifedArticleMatch2) {
-    metaDataImport = {
-      market: metaDataModifedArticleMatch2[1].trim(),
-      articleNumber: metaDataModifedArticleMatch2[2].trim(),
-      category: metaDataModifedArticleMatch2[3].trim(),
-      metaTitle: metaDataModifedArticleMatch2[4].trim(),
-      metaDescription: cleanText(metaDataModifedArticleMatch2[5]),
-      oldUrl: metaDataModifedArticleMatch2[6].trim(),
-      suggestedUrl: metaDataModifedArticleMatch2[7].trim(),
-    };
-    content = content.replace(metaDataModifedArticle2, "");
-  } else if (metaDataModifedArticleMatch3) {
-    metaDataImport = {
-      market: metaDataModifedArticleMatch3[1].trim(),
-      articleNumber: metaDataModifedArticleMatch3[2].trim(),
-      category: metaDataModifedArticleMatch3[3].trim(),
-      metaTitle: metaDataModifedArticleMatch3[4].trim(),
-      metaDescription: cleanText(metaDataModifedArticleMatch3[5]),
-      oldUrl: metaDataModifedArticleMatch3[6].trim(),
-      suggestedUrl: metaDataModifedArticleMatch3[7].trim(),
-    };
-    content = content.replace(metaDataModifedArticle3, "");
-  } else {
-    console.log("No hay meta datos");
+    if (match) {
+      metaDataImport = keys.reduce((acc, key, index) => {
+        acc[key] = (match[index + 1] || "").trim();
+        return acc;
+      }, {});
+      content = content.replace(regex, "");
+      break;
+    }
   }
 
+  const redireccionesMatch = redirectionsRegex.exec(content);
   const redirections = [];
   if (redireccionesMatch) {
     const rawRedirections = redireccionesMatch[1].trim().split("\n");
@@ -215,43 +215,69 @@ const parseMarkdownContent = (content, selectedFormat) => {
 
   if (selectedFormat === "html") {
     function convertToHTML(contentParts) {
-      return contentParts.map((part) => {
-        if (part.type === "paragraph") {
-          // Manejo de encabezados y texto
-          const headerMatch = part.data.match(/^(#{1,6})\s*(.+)$/);
-          if (headerMatch) {
-            const headerLevel = headerMatch[1].length;
-            const headerText = headerMatch[2];
+      const listItems = [];
+      return contentParts
+        .map((part) => {
+          if (part.type === "paragraph") {
+            if (part.data.startsWith("- ")) {
+              const listItemText = part.data.replace(/^- (.+)$/, "$1");
+              const formattedText = listItemText.replace(
+                /__(.*?)__/g,
+                "<strong>$1</strong>"
+              );
+              listItems.push(`<li>${formattedText}</li>`);
+              const isLastItem =
+                contentParts.indexOf(part) === contentParts.length - 1;
+              if (
+                isLastItem ||
+                contentParts[contentParts.indexOf(part) + 1].data.startsWith(
+                  "- "
+                )
+              ) {
+                return null;
+              }
+
+              const ul = `<ul>${listItems.join("")}</ul>`;
+              listItems.length = 0;
+              return {
+                type: "paragraph",
+                data: ul,
+              };
+            }
+
+            const headerMatch = part.data.match(/^(#{1,6})\s*(.+)$/);
+            if (headerMatch) {
+              const headerLevel = headerMatch[1].length;
+              const headerText = headerMatch[2];
+              return {
+                type: "paragraph",
+                data: `<h${headerLevel}>${headerText}</h${headerLevel}>`,
+              };
+            }
+
+            const hyperlinkFormattedText = part.data.replace(
+              /\[(.*?)\]\((.*?)\)/g,
+              '<a href="$2" target="_blank">$1</a>'
+            );
+
+            const formattedText = hyperlinkFormattedText.replace(
+              /__(.*?)__/g,
+              "<strong>$1</strong>"
+            );
+
             return {
               type: "paragraph",
-              data: `<h${headerLevel}>${headerText}</h${headerLevel}>`,
+              data: `<p>${formattedText}</p>`,
+            };
+          } else if (part.type === "image") {
+            return {
+              type: "image",
+              data: part.data,
             };
           }
-
-          // Manejo de hipervínculos
-          const hyperlinkFormattedText = part.data.replace(
-            /\[(.*?)\]\((.*?)\)/g,
-            '<a href="$2" target="_blank">$1</a>'
-          );
-
-          // Manejo de negritas
-          const formattedText = hyperlinkFormattedText.replace(
-            /__(.*?)__/g,
-            "<strong>$1</strong>"
-          );
-
-          return {
-            type: "paragraph",
-            data: `<p>${formattedText}</p>`,
-          };
-        } else if (part.type === "image") {
-          return {
-            type: "image",
-            data: part.data,
-          };
-        }
-        return part;
-      });
+          return part;
+        })
+        .filter(Boolean);
     }
 
     const convertedContent = convertToHTML(contentParts);
