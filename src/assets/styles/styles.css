@@ -200,3 +200,10 @@ h3 {
 .highlight-removed {
   background-color: #ffbcbc; /* Color para contenido eliminado */
 }
+
+/**Alert**/
+
+.alert{
+  width: 100%;
+  height: 60px;
+}
