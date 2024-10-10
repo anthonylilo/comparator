@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Form, Col } from "react-bootstrap";
+import { Container, Row, Form, Col, ProgressBar } from "react-bootstrap";
 import { handleFileChange } from "../../services/fileUtils";
 import CardsImages from "../../components/cards/cardsImages";
 import SchemaViewer from "../../components/schema/SchemaViewer";
@@ -11,6 +11,8 @@ function Editor({ selectedFormat }) {
   const [metaData, setMetaData] = useState({});
   const [redirections, setRedirections] = useState([]);
   const [showMarkdownInput, setShowMarkdownInput] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     setShowMarkdownInput(false);
@@ -18,12 +20,23 @@ function Editor({ selectedFormat }) {
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
-    const result = await handleFileChange(file, selectedFormat);
-    setParsedContent(result.content);
-    setSchema(result.schema);
-    setMetaData(result.metaDataImport);
-    setRedirections(result.redirections || []);
-    setShowMarkdownInput(true);
+    if (file) {
+      setLoading(true);
+      setProgress(0);
+
+      try {
+        const result = await handleFileChange(file, selectedFormat);
+        setParsedContent(result.content);
+        setSchema(result.schema);
+        setMetaData(result.metaDataImport);
+        setRedirections(result.redirections || []);
+        setShowMarkdownInput(true);
+      } catch (error) {
+        console.error("Error loading file:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   const groupedContent = parsedContent.reduce((acc, item) => {
@@ -51,6 +64,14 @@ function Editor({ selectedFormat }) {
                 accept=".docx"
               />
             </Form.Group>
+            {loading && (
+              <ProgressBar
+                variant="success"
+                animated
+                now={100}
+                className="mt-2"
+              />
+            )}
           </div>
         )}
         {showMarkdownInput && (

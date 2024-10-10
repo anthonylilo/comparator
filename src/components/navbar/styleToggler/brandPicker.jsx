@@ -19,6 +19,8 @@ function BrandPicker() {
 
     // Guardar selección en localStorage
     localStorage.setItem("selectedBrand", selectedValue);
+    localStorage.removeItem("editorContent");
+    localStorage.removeItem("articleContent");
 
     // Navegar a diferentes rutas
     if (selectedValue === "1") {

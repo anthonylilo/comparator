@@ -16,7 +16,7 @@ import DarkToggler from "./darkToggler/themeToggler";
             <Nav.Item>
                 <a
                   className="text-center "
-                  href="#"
+                  href="/comparator/redirection-validation"
                   rel="noopener noreferrer"
                 >
                   Redirection Validation
@@ -25,7 +25,7 @@ import DarkToggler from "./darkToggler/themeToggler";
               <Nav.Item>
                 <a
                   className="text-center "
-                  href="#"
+                  href="/comparator/http-checker"
                   rel="noopener noreferrer"
                 >
                   Https Status Checker
@@ -34,7 +34,7 @@ import DarkToggler from "./darkToggler/themeToggler";
               <Nav.Item>
                 <a
                   className="text-center "
-                  href="#"
+                  href="/comparator/meta-data-checker"
                   rel="noopener noreferrer"
                 >
                   MetaData Checker
