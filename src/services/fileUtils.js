@@ -23,34 +23,117 @@ export const handleFileChange = async (file, selectedFormat) => {
 };
 
 const parseHtmlContent = (content) => {
+  content = content.replace(/<a id="_Hlk\d+"><\/a>/g, "");
+  content = content.replace(/\s*<p><strong>CONTENT:<\/strong><\/p>\s*/, "");
+  const cleanText = (text) => {
+    return text
+      .replace(/&nbsp;/g, " ")
+      .replace(/\s+/g, " ")
+      .replace(/(\r\n|\n|\r)/gm, " ")
+      .trim();
+  };
+  const tagRegex =
+    /<p><strong>ETIQUETAS DE IMAGEN:[^<]*<\/strong>\s*<\/p>\s*<p><strong>Alt Text:<\/strong>\s*([^<]+(?:\n|\r|\s)*[^<]*)<br\s*\/?>\s*<strong>Title:<\/strong>\s*([^<]+(?:\n|\r|\s)*[^<]*)\s*<br\s*\/?>\s*<strong>Nombre de la imagen:<\/strong>\s*([^<]+(?:\n|\r|\s)*[^<]*)<\/p>\s*<p><strong>FIN DE ETIQUETAS<\/strong><\/p>/g;
+  const schemaRegex =
+    /<p><strong>DATOS ESTRUCTURADOS:<\/strong><\/p>\s*<p>&lt;script[^>]*&gt;<\/p>([\s\S]*?)<p>&lt;\/script&gt;<\/p>/i;
   const metaDataRegex =
-    /<p>MERCADO:\s*(.*?)<\/p>\s*<p>ARTÍCULO No:\s*(.*?)<\/p>\s*<p><strong>SEO:<\/strong><\/p>\s*<p><strong>CATEGORÍA:<\/strong>\s*(.*?)<\/p>\s*<p><strong>URL SUGERIDA:<\/strong>\s*<a href="(.*?)">(.*?)<\/a><\/p>\s*<p><strong>Meta Title:<\/strong>\s*(.*?)<\/p>\s*<p><strong>Meta Description:<\/strong>\s*(.*?)<\/p>/;
+    /<p>\s*MERCADO:\s*(.*?)\s*<\/p>\s*<p>\s*ARTÍCULO No:\s*(.*?)\s*<\/p>\s*<p><strong>SEO:<\/strong><\/p>\s*<p><strong>CATEGORÍA:<\/strong>\s*(.*?)\s*<\/p>\s*<p><strong>URL SUGERIDA:<\/strong>\s*<a href="(.*?)">(.*?)<\/a><\/p>\s*<p><strong>Meta Title:<\/strong>\s*(.*?)\s*(?:<br \/>|<\/p>)\s*<strong>Meta Description:<\/strong>\s*(.*?)\s*<\/p>\s*<p><strong>FIN DE SEO<\/strong><\/p>\s*/;
 
-  const metaDataMatch = metaDataRegex.exec(content);
-  let metaData = {};
+  const metaDataMatch = metaDataRegex.exec(cleanText(content));
+  let metaDataImport = {};
   if (metaDataMatch) {
-    metaData = {
-      market: metaDataMatch[1],
-      articleNumber: metaDataMatch[2],
-      category: metaDataMatch[3],
-      suggestedUrl: metaDataMatch[4],
-      metaTitle: metaDataMatch[5],
-      metaDescription: metaDataMatch[6],
+    metaDataImport = {
+      market: metaDataMatch[1].trim(),
+      articleNumber: metaDataMatch[2].trim(),
+      category: metaDataMatch[3].trim(),
+      suggestedUrl: metaDataMatch[4].trim(),
+      metaTitle: metaDataMatch[5].trim(),
+      metaDescription: cleanText(metaDataMatch[6]),
     };
-    // Remove metadata from content
     content = content.replace(metaDataRegex, "");
   }
 
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(content, "text/html");
-
-  const contentParts = [];
-  const contentNodes = doc.body.childNodes;
-  for (const node of contentNodes) {
-    contentParts.push(node.outerHTML);
+  let schema = "";
+  const schemaMatch = schemaRegex.exec(content);
+  if (schemaMatch) {
+    schema = schemaMatch[1]
+      .replace(/<p>/g, "")
+      .replace(/<\/p>/g, "")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/\\(["\\/bfnrt])/g, "$1")
+      .replace(/\n/g, "")
+      .trim();
+    try {
+      schema = JSON.parse(schema);
+      if (
+        schema.image &&
+        Array.isArray(schema.image) &&
+        schema.image.length > 0
+      ) {
+        schema.image = [schema.image[0]];
+      }
+    } catch (e) {
+      console.error("Error parsing schema JSON:", e);
+    }
+    content = content.replace(schemaRegex, "");
   }
 
-  return { metaData, content: contentParts };
+  // Extraer etiquetas de imagen
+  let tagMatch;
+  let tagMatches = [];
+  while ((tagMatch = tagRegex.exec(cleanText(content))) !== null) {
+    tagMatches.push(tagMatch);
+  }
+
+  content = content.replace(tagRegex, "");
+
+  // Parsear el HTML
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(content, "text/html");
+  const childNodes = Array.from(doc.body.childNodes);
+
+  let images = [];
+  let contentParts = [];
+  let imageIndex = 0;
+
+  childNodes.forEach((node) => {
+    if (node.nodeName === "P" && node.querySelector("img")) {
+      const imgTag = node.querySelector("img");
+      const imgSrc = imgTag.getAttribute("src");
+
+      const tags = tagMatches[imageIndex] || [];
+      const [_, tagAltText = "", tagTitle = "", tagImageName = ""] = tags;
+
+      images.push({
+        src: imgSrc.trim(),
+        alt: tagAltText.trim(),
+        title: tagTitle.trim(),
+        imageName: tagImageName.trim(),
+      });
+
+      contentParts.push({
+        type: "image",
+        data: images[images.length - 1],
+      });
+      imageIndex++;
+    } else if (
+      node.nodeName === "P" ||
+      node.nodeName === "H1" ||
+      node.nodeName === "H2" ||
+      node.nodeName === "H3" ||
+      node.nodeName === "H4" ||
+      node.nodeName === "H5"
+    ) {
+      const outerHTML = node.outerHTML.trim().split(/\n/);
+      if (outerHTML) {
+        contentParts.push({ type: "html", data: outerHTML });
+      }
+    }
+  });
+
+  const redirections = [];
+  return { content: contentParts, metaDataImport, schema, redirections };
 };
 
 const parseMarkdownContent = (content) => {
@@ -79,8 +162,8 @@ const parseMarkdownContent = (content) => {
     /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*\[.*?\]\((.*?)\)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO__#/;
   const metaDataModifedArticle2 =
     /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:\s*__\s*__CATEGORÍA:\s*__\s*(.*?)\s*__Meta Title:\s*__\s*(.*?)\s*__Meta Description:\s*__\s*([\s\S]*?)\s*__URL ACTUAL:\s*__\s*(https:\/\/[^\s]+)\s*__URL SUGERIDA:\s*__\s*\[.*?\]\((.*?)\)\s*__FIN DE SEO__/;
-  const metaDataModifedArticle3 = 
-    /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:\s*(.*?)\s*__Meta Title:\s*(.*?)\s*__Meta Description:\s*(.*?)\s*__URL ACTUAL:\s*([^ ]+)\s*__URL SUGERIDA:\s*([^ ]+)\s*__FIN DE SEO__/;  
+  const metaDataModifedArticle3 =
+    /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(.*?)\s*__SEO:.*?__\s*__CATEGORÍA:\s*(.*?)\s*__Meta Title:\s*(.*?)\s*__Meta Description:\s*(.*?)\s*__URL ACTUAL:\s*([^ ]+)\s*__URL SUGERIDA:\s*([^ ]+)\s*__FIN DE SEO__/;
 
   //Redirections
   const redirectionsRegex =
@@ -161,7 +244,7 @@ const parseMarkdownContent = (content) => {
       suggestedUrl: metaDataModifedArticleMatch3[7].trim(),
     };
     content = content.replace(metaDataModifedArticle3, "");
-  }else{
+  } else {
     console.log("No hay meta datos");
   }
 

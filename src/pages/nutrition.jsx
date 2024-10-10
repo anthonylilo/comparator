@@ -8,11 +8,9 @@ import SubNavbar from "../components/navbar/subNavbar";
 
 export default function Nutrition(className="Nutrition") {
   useEffect(() => {
-    // Set the project based on the current project selection
-    document.documentElement.setAttribute('data-project', 'unifier'); // For Purina
-    // document.documentElement.setAttribute('data-project', 'unifier'); // For Unifier
+    document.documentElement.setAttribute('data-project', 'unifier');
   }, []);
-  const [selectedFormat, setSelectedFormat] = useState("markdown");
+  const [selectedFormat, setSelectedFormat] = useState("html");
 
   const handleFormatChange = (e) => {
     setSelectedFormat(e.target.value);
@@ -30,8 +28,7 @@ export default function Nutrition(className="Nutrition") {
           <Row className="text-center pt-4 pb-4">
             <h3>Select your output format:</h3>
             <Form.Select onChange={handleFormatChange} value={selectedFormat}>
-              <option value="markdown">Markdown</option>
-              { /* <option value="html">HTML</option> */ }
+              <option value="html">HTML</option>
             </Form.Select>
           </Row>
           <Row>
