@@ -6,7 +6,7 @@ import HomeNavbar from "../components/navbar/homeNavbar";
 import VerticalButtons from "../components/navigatonButtons/verticalButtons";
 import SubNavbar from "../components/navbar/subNavbar";
 
-export default function HomePage({}) {
+export default function Purina({}) {
   useEffect(() => {
     // Set the project based on the current project selection
     document.documentElement.setAttribute('data-theme', 'light'); // For Purina
