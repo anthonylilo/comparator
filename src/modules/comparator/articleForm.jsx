@@ -92,7 +92,7 @@ function ArticleForm({ reset, selectedFormat }) {
       <Row className="justify-content-md-center text-center">
         {!showAdditionalFields && (
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
               <Form.Control
                 type="url"
                 placeholder={placeHolderOption === "/comparator" ? "https://purina.cl/" : placeHolderOption === "/comparator/nutrition" ? "https://www.babyandme.com" : "https://nestleprofessional-latam.com/pais/"} 
