@@ -1,62 +1,56 @@
-import {
-    Navbar,
-    Nav,
-    Container,
-  } from "react-bootstrap";
-  import "../../assets/styles/header.css";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import "../../assets/styles/header.css";
 import DarkToggler from "./darkToggler/themeToggler";
-  
-  function SubNavbar() {
-    return (
-      <Navbar expand="lg" className="sub-header">
-        <Container fluid>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse className="justify-content-around" id="basic-navbar-nav">
-            <Nav>
+
+function SubNavbar() {
+  return (
+    <Navbar expand="lg" className="sub-header">
+      <Container fluid>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse
+          className="justify-content-around"
+          id="basic-navbar-nav"
+        >
+          <Nav>
             <Nav.Item>
-                <a
-                  className="text-center "
-                  href="/comparator/redirection-validation"
-                  rel="noopener noreferrer"
-                >
-                  Redirection Validation
-                </a>
-              </Nav.Item>
-              <Nav.Item>
-                <a
-                  className="text-center "
-                  href="/comparator/http-checker"
-                  rel="noopener noreferrer"
-                >
-                  Https Status Checker
-                </a>
-              </Nav.Item>
-              <Nav.Item>
-                <a
-                  className="text-center "
-                  href="/comparator/meta-data-checker"
-                  rel="noopener noreferrer"
-                >
-                  MetaData Checker
-                </a>
-              </Nav.Item>
-              <Nav.Item>
-                <a
-                  className="text-center "
-                  href="#"
-                  rel="noopener noreferrer"
-                >
-                  Text Comparator
-                </a>
-              </Nav.Item>
-            </Nav>
-            <Nav>
-                <DarkToggler></DarkToggler>
+              <a
+                className="text-center "
+                href="/comparator/redirection-validation"
+                rel="noopener noreferrer"
+              >
+                Redirection Validation
+              </a>
+            </Nav.Item>
+            <Nav.Item>
+              <a
+                className="text-center "
+                href="/comparator/http-checker"
+                rel="noopener noreferrer"
+              >
+                Https Status Checker
+              </a>
+            </Nav.Item>
+            <Nav.Item>
+              <a
+                className="text-center "
+                href="/comparator/meta-data-checker"
+                rel="noopener noreferrer"
+              >
+                MetaData Checker
+              </a>
+            </Nav.Item>
+            <Nav.Item>
+              <a className="text-center " href="#" rel="noopener noreferrer">
+                Text Comparator
+              </a>
+            </Nav.Item>
           </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    );
-  }
-  export default SubNavbar;
-  
+          <Nav>
+            <DarkToggler></DarkToggler>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
+export default SubNavbar;

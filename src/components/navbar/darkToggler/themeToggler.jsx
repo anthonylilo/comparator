@@ -16,10 +16,11 @@ function DarkToggler() {
 
   return (
     <TooltipButton
-      icon={faMoon}
+    iconType="fontawesome"  
+    faIcon={faMoon}
       onClick={toggleTheme}
       className="placeholder-button darkMode"
-      tooltip={null}
+      tooltip={"Switch theme"}
     />
   
   );

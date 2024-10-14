@@ -101,11 +101,11 @@ const VerticalButtons = () => {
   return (
     <div className="vertical-buttons">
       <TooltipButton
-        icon={CompareIcon}
+        iconSrc={CompareIcon}
+        iconType="custom"
         onClick={handleEqualsClick}
         className="placeholder-button equals"
-        tooltip="Equals"
-        iconType="svg"
+        tooltip="Comparate"
       />
       <ModalLoading
         text={modalText}
@@ -118,25 +118,25 @@ const VerticalButtons = () => {
         rel="noopener noreferrer"
       >
         <TooltipButton
-          icon={EnableIcon}
+          iconType="custom"
+          iconSrc={EnableIcon}
           className="placeholder-button api"
           tooltip="Enable API"
-          iconType="svg"
         />
       </a>
       <TooltipButton
-        icon={ResetIcon}
+        iconSrc={ResetIcon}
+        iconType="custom"
         onClick={handleReset}
         className="placeholder-button reset"
         tooltip="Reset"
-        iconType="svg"
       />
       <TooltipButton
-        icon={ArrowIcon}
+        iconSrc={ArrowIcon}
+        iconType="custom"
         onClick={scrollToTop}
         className="scroll-button top"
         tooltip="Scroll to Top"
-        iconType="svg"
       />
     </div>
   );
