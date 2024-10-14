@@ -92,9 +92,9 @@ function Editor({ selectedFormat }) {
                 ))}
               </div>
               <div className="mt-3">
-                <h5>Meta Information</h5>
+                <h3>MetaData:</h3>
                 <Container className="tableContainer">
-                  <Table hover responsive className="schemaTable schema">
+                  <Table id="metaTags" hover responsive className="schemaTable schema">
                     <thead>
                       <tr>
                         <th>Meta Tag</th>
