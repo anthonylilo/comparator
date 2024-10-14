@@ -29,11 +29,15 @@ export default function HomePage({}) {
           <h1 className="brandBackgroundHeading">Purina</h1>
         <Container className="main" fluid>
           <Row className="text-center pt-4 pb-4">
-            <h3>Select your output format:</h3>
-            <Form.Select className="type-selector" onChange={handleFormatChange} value={selectedFormat}>
-              <option value="markdown">Markdown</option>
-              <option value="html">HTML</option>
-            </Form.Select>
+            <Col md={12}>
+              <h3>Select your output format:</h3>
+              <Container fluid="md">
+                <Form.Select className="type-selector" onChange={handleFormatChange} value={selectedFormat}>
+                  <option value="markdown">Markdown</option>
+                  <option value="html">HTML</option>
+                </Form.Select>
+              </Container>
+            </Col>
           </Row>
           <Row>
             <Col md={6}>

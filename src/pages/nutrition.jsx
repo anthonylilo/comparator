@@ -24,12 +24,15 @@ export default function Nutrition(className="Nutrition") {
       <div className="containerWrapper">
       <h1 className="brandBackgroundHeading">Baby and me</h1>
         <Container className="main" fluid>
-          <h2 className="text-center">Nestlé Baby and Me</h2>
           <Row className="text-center pt-4 pb-4">
-            <h3>Select your output format:</h3>
-            <Form.Select className="type-selector" onChange={handleFormatChange} value={selectedFormat}>
-              <option value="html">HTML</option>
-            </Form.Select>
+            <Col md={12}>
+              <h3>Select your output format:</h3>
+              <Container fluid="md">
+                <Form.Select className="type-selector" onChange={handleFormatChange} value={selectedFormat}>
+                  <option value="html">HTML</option>
+                </Form.Select>
+              </Container>
+            </Col>
           </Row>
           <Row>
             <Col md={6}>
