@@ -2,13 +2,15 @@
     background-color: var(--header-color);
     color: var(--text-color);
 }
-
 .nav-item{
     margin: 0% 20px;
 }
 .nav-item p{
     color: white;
     font-weight: 800;
+}
+a.text-center.nav-link.active{
+    color: var(--brand-heading);
 }
 .nav-item a{
     color: white;
@@ -20,7 +22,6 @@
 .navbar-nav img{
     height: 90px;
 }
-
 .sub-header{
     padding-top: 30px;
     background-color: var(--sub-header-bg);
@@ -28,5 +29,8 @@
     align-items: center;
 }
 nav.sub-header.navbar.navbar-expand-lg{
-    padding: 15px 0px 15px 0px;
+    /* padding: 15px 0px 15px 0px; */
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
