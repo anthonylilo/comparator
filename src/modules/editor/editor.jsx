@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Container, Row, Form, Col } from "react-bootstrap";
+import { Container, Row, Form, Col } from "react-bootstrap";
 import { handleFileChange } from "../../services/fileUtils";
 import CardsImages from "../../components/cards/cardsImages";
 import SchemaViewer from "../../components/schema/SchemaViewer";
@@ -92,50 +92,35 @@ function Editor({ selectedFormat }) {
                 ))}
               </div>
               <div className="mt-3">
-                <h3>MetaData:</h3>
-                <Container className="tableContainer">
-                  <Table id="metaTags" hover responsive className="schemaTable schema">
-                    <thead>
-                      <tr>
-                        <th>Meta Tag</th>
-                        <th>Value</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th>Market:</th>
-                        <td>{metaData.market}</td>
-                      </tr>
-                      <tr>
-                        <th>Article Number:</th>
-                        <td>{metaData.articleNumber}</td>
-                      </tr>
-                      <tr>
-                        <th>Category:</th>
-                        <td>{metaData.category}</td>
-                      </tr>
-                      <tr>
-                        <th>Actual url:</th>
-                        {metaData.oldUrl && (
-                          <td>{metaData.oldUrl}</td>
-                        )}
-                      </tr>
-                      <tr>
-                        <th>Suggested URL:</th>
-                        <td>{metaData.suggestedUrl}</td>
-                      </tr>
-                      <tr>
-                        <th>Meta Title:</th>
-                        <td>{metaData.metaTitle}</td>
-                      </tr>
-                      <tr>
-                        <th>Meta Description:</th>
-                        <td>{" "}
-                          {metaData.metaDescription}</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </Container>
+                <h5>Meta Information</h5>
+                {metaData && (
+                  <>
+                    <p>
+                      <strong>Market:</strong> {metaData.market}
+                    </p>
+                    <p>
+                      <strong>Article Number:</strong> {metaData.articleNumber}
+                    </p>
+                    <p>
+                      <strong>Category:</strong> {metaData.category}
+                    </p>
+                            {metaData.oldUrl && (
+                      <p>
+                        <strong>Actual url:</strong> {metaData.oldUrl}
+                      </p>
+                            )}
+                    <p>
+                      <strong>Suggested URL:</strong> {metaData.suggestedUrl}
+                    </p>
+                    <p>
+                      <strong>Meta Title:</strong> {metaData.metaTitle}
+                    </p>
+                    <p>
+                      <strong>Meta Description:</strong>{" "}
+                      {metaData.metaDescription}
+                    </p>
+                  </>
+                )}
               </div>
               <div className="mt-3">
                 {redirections.length > 0 && (
