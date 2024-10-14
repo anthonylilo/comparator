@@ -21,32 +21,35 @@
   --bg-color: #E82F2F; /* Purina-specific light theme background */
   --text-color: #000000; /* Purina-specific light theme text */
   --sub-header-bg:#cd1717;
+  --brand-heading:#ffffff4d;
 }
 
 [data-project="unifier"][data-theme="light"] {
   --bg-color: #099aa4; /* Unifier-specific light theme background */
   --text-color: #000000; /* Unifier-specific light theme text */
   --sub-header-bg:#005D63;
+  --brand-heading:#ffffff4d;
 }
 [data-project="professional"][data-theme="light"] {
   --bg-color: #EBA742; /* Unifier-specific light theme background */
   --text-color: #000000; /* Unifier-specific light theme text */
   --sub-header-bg:#97661e;
+  --brand-heading:#ffffff4d;
 }
 /* Project-specific dark theme styles */
 [data-project="purina"][data-theme="dark"] {
-  --bg-color: #731616;
   --text-color: #FFFFFF; /* Purina-specific dark theme text */
   --sub-header-bg:#303030;
+  --brand-heading: #E82F2F;
 }
 
 [data-project="unifier"][data-theme="dark"] {
-  --bg-color: #002244; /* Unifier-specific dark theme background */
   --text-color: #FFFFFF; /* Unifier-specific dark theme text */
+  --brand-heading: #099AA4;
 }
 [data-project="professional"][data-theme="dark"] {
-  --bg-color: #573f19; /* Unifier-specific dark theme background */
   --text-color: #FFFFFF; /* Unifier-specific dark theme text */
+  --brand-heading: #EBA742;
 }
 body {
   background-color: var(--bg-color);
@@ -73,7 +76,7 @@ h1.brandBackgroundHeading{
   margin-top: 2.5rem;
   font-size: 2.7rem;
   margin-block: 0 0.25em;
-	color: hsla(0, 0%, 100%, 0.3);
+	color: var(--brand-heading);
 	transform-origin: center;
 	rotate: 180deg;
 	writing-mode: vertical-lr;
