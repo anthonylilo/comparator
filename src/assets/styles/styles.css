@@ -183,6 +183,7 @@ h3 {
   color: var(--text-color);
 }
 .schemaTable td{
+  text-wrap: pretty;
   padding-left: 30px;
   background-color: #00000000;
   color: var(--text-color);
