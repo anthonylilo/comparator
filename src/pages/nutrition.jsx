@@ -27,7 +27,7 @@ export default function Nutrition(className="Nutrition") {
           <h2 className="text-center">Nestlé Baby and Me</h2>
           <Row className="text-center pt-4 pb-4">
             <h3>Select your output format:</h3>
-            <Form.Select onChange={handleFormatChange} value={selectedFormat}>
+            <Form.Select className="type-selector" onChange={handleFormatChange} value={selectedFormat}>
               <option value="html">HTML</option>
             </Form.Select>
           </Row>
