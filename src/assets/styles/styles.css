@@ -95,6 +95,12 @@ h3 {
   font-weight: 700;
   color: var(--text-color);
 }
+.form-control, .form-select{
+  border-radius: 0%;
+}
+.type-selector{
+  width: 34%;
+}
 
 /** Card Image */
 .card {
