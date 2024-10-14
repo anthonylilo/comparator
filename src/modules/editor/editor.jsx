@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Form, Col } from "react-bootstrap";
+import { Table, Container, Row, Form, Col } from "react-bootstrap";
 import { handleFileChange } from "../../services/fileUtils";
 import CardsImages from "../../components/cards/cardsImages";
 import SchemaViewer from "../../components/schema/SchemaViewer";
@@ -92,35 +92,73 @@ function Editor({ selectedFormat }) {
                 ))}
               </div>
               <div className="mt-3">
-                <h5>Meta Information</h5>
-                {metaData && (
-                  <>
-                    <p>
-                      <strong>Market:</strong> {metaData.market}
-                    </p>
-                    <p>
-                      <strong>Article Number:</strong> {metaData.articleNumber}
-                    </p>
-                    <p>
-                      <strong>Category:</strong> {metaData.category}
-                    </p>
-                    {metaData.oldUrl && (
-                      <p>
-                        <strong>Actual url:</strong> {metaData.oldUrl}
-                      </p>
-                    )}
-                    <p>
-                      <strong>Suggested URL:</strong> {metaData.suggestedUrl}
-                    </p>
-                    <p>
-                      <strong>Meta Title:</strong> {metaData.metaTitle}
-                    </p>
-                    <p>
-                      <strong>Meta Description:</strong>{" "}
-                      {metaData.metaDescription}
-                    </p>
-                  </>
-                )}
+                <h5>Meta Information 9</h5>         
+                  <Table hover responsive className="schemaTable schema">
+                        <tbody>
+                          <tr>
+                            <th>Meta Information </th>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div>
+                                <div>Market:</div>
+                              </div>
+                            </td>
+                            <td>{metaData.market}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div>
+                                <div>Article Number:</div>
+                              </div>
+                            </td>
+                            <td>{metaData.articleNumber}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div>
+                                <div>Category:</div>
+                              </div>
+                            </td>
+                            <td>{metaData.category}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div>
+                                <div>Actual url:</div>
+                              </div>
+                            </td>
+                            {metaData.oldUrl && (
+                              <td>{metaData.oldUrl}</td>
+                            )}
+                          </tr>
+                          <tr>
+                            <td>
+                              <div>
+                                <div>Suggested URL:</div>
+                              </div>
+                            </td>
+                            <td>{metaData.suggestedUrl}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div>
+                                <div>Meta Title:</div>
+                              </div>
+                            </td>
+                            <td>{metaData.metaTitle}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div>
+                                <div>Meta Description:</div>
+                              </div>
+                            </td>
+                            <td>{" "}
+                              {metaData.metaDescription}</td>
+                          </tr>
+                        </tbody>
+                      </Table>              
               </div>
               <div className="mt-3">
                 {redirections.length > 0 && (
