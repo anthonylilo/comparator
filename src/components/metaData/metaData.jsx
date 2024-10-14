@@ -58,26 +58,12 @@ const MetaData = ({ title, metaDescription, url }) => {
       <Table hover responsive className="schemaTable">
         <tbody>
           <tr>
-            <th>Meta Title Length</th>
-            <td>
-              <Badge bg={titleColor} className="me-2">
-                {titleLength}
-              </Badge>
-            </td>
-          </tr>
-          <tr>
             <th>Meta Title</th>
             <td>
               <span>{title}</span>
               <div className={`text-${titleColor}`}>{titleMessage}</div>
-              {descriptionColor.color}
-            </td>
-          </tr>
-          <tr>
-            <th>Description Length</th>
-            <td>
-              <Badge bg={descriptionColor} className="me-2">
-                {descriptionLength}
+              {descriptionColor.color}<Badge bg={titleColor} className="me-2">
+                {titleLength}
               </Badge>
             </td>
           </tr>
@@ -85,22 +71,18 @@ const MetaData = ({ title, metaDescription, url }) => {
             <th>Meta Description</th>
             <td>
               <span>{metaDescription}</span>
-              <div className={`text-${descriptionColor}`}>{descriptionMessage}</div>
-            </td>
-          </tr>
-          <tr>
-            <th>URL Length</th>
-            <td>
-              <Badge bg={urlColor} className="me-2">
-                {urlLength}
-              </Badge>
+              <div className={`text-${descriptionColor}`}>{descriptionMessage} <Badge bg={descriptionColor} className="me-2">
+                {descriptionLength}
+              </Badge></div>
             </td>
           </tr>
           <tr>
             <th>URL</th>
             <td>
               <span>{url}</span>
-              <div className={`text-${urlColor}`}>{urlMessage}</div>
+              <div className={`text-${urlColor}`}>{urlMessage} <Badge bg={urlColor} className="me-2">
+                {urlLength}
+              </Badge></div>
             </td>
           </tr>
         </tbody>
