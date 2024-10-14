@@ -92,7 +92,7 @@ const VerticalButtons = () => {
         iconType="custom"
         onClick={handleEqualsClick}
         className="placeholder-button equals"
-        tooltip="Equals"
+        tooltip="Comparate"
       />
       <ModalLoading
         text={modalText}

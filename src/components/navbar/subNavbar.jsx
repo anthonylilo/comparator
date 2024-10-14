@@ -14,43 +14,37 @@ import DarkToggler from "./darkToggler/themeToggler";
           <Navbar.Collapse className="justify-content-around" id="basic-navbar-nav">
             <Nav>
             <Nav.Item>
-                <a
-                  className="text-center "
-                  href="#"
-                  rel="noopener noreferrer"
+              <Nav.Link href="#redirections" rel="noopener noreferrer" className="text-center">Redirection Validation</Nav.Link> 
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                className="text-center"
+                href="#urlStatus"
+                rel="noopener noreferrer"
                 >
-                  Redirection Validation
-                </a>
-              </Nav.Item>
-              <Nav.Item>
-                <a
-                  className="text-center "
-                  href="#"
-                  rel="noopener noreferrer"
+                Https Status Checker
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                className="text-center"
+                href="#metaTags"
+                rel="noopener noreferrer"
                 >
-                  Https Status Checker
-                </a>
-              </Nav.Item>
-              <Nav.Item>
-                <a
-                  className="text-center "
-                  href="#"
-                  rel="noopener noreferrer"
-                >
-                  MetaData Checker
-                </a>
-              </Nav.Item>
-              <Nav.Item>
-                <a
-                  className="text-center "
-                  href="#"
-                  rel="noopener noreferrer"
-                >
-                  Text Comparator
-                </a>
-              </Nav.Item>
-            </Nav>
-            <Nav>
+                MetaData Checker
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                className="text-center"
+                href="#"
+                rel="noopener noreferrer"
+              >
+                Text Comparator
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+          <Nav>
                 <DarkToggler></DarkToggler>
           </Nav>
           </Navbar.Collapse>
