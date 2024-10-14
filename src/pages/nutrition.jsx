@@ -33,11 +33,11 @@ export default function Nutrition(className="Nutrition") {
           </Row>
           <Row>
             <Col md={6}>
-              <h3>Editor</h3>
+              <h3>Content Workspace</h3>
               <Editor selectedFormat={selectedFormat} />
             </Col>
             <Col md={6}>
-              <h3>Comparator Nutrition</h3>
+              <h3>Site Analyzer</h3>
               <ArticleForm selectedFormat={selectedFormat} />
             </Col>
           </Row>
