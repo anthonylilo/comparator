@@ -82,7 +82,7 @@ h1.brandBackgroundHeading{
 	writing-mode: vertical-lr;
 	text-transform: uppercase;
 	position: sticky;
-	top: 0.5em;
+	top: 3em;
   user-select: none;
 
 }
