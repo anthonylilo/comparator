@@ -6,13 +6,10 @@ import HomeNavbar from "../components/navbar/homeNavbar";
 import VerticalButtons from "../components/navigatonButtons/verticalButtons";
 import SubNavbar from "../components/navbar/subNavbar";
 
-export default function HomePage({}) {
+export default function Purina({}) {
   useEffect(() => {
-    // Set the project based on the current project selection
-    document.documentElement.setAttribute('data-theme', 'light'); // For Purina
-    document.documentElement.setAttribute('data-project', 'purina');
-    // document.documentElement.setAttribute('data-project', 'unifier'); // For Unifier
-    // document.documentElement.setAttribute('data-project', 'nestle-professional'); // For Nestlé Professional
+    document.documentElement.setAttribute("data-theme", "light");
+    document.documentElement.setAttribute("data-project", "purina");
   }, []);
   const [selectedFormat, setSelectedFormat] = useState("markdown");
 
@@ -23,36 +20,32 @@ export default function HomePage({}) {
   return (
     <>
       <HomeNavbar />
-      <SubNavbar/>
+      <SubNavbar />
       <Container>
         <div className="containerWrapper">
           <h1 className="brandBackgroundHeading">Purina</h1>
-        <Container className="main" fluid>
-          <Row className="text-center pt-4 pb-4">
-            <Col md={12}>
+          <Container className="main" fluid>
+            <Row className="text-center pt-4 pb-4">
               <h3>Select your output format:</h3>
-              <Container fluid="md">
-                <Form.Select className="type-selector" onChange={handleFormatChange} value={selectedFormat}>
-                  <option value="markdown">Markdown</option>
-                  <option value="html">HTML</option>
-                </Form.Select>
-              </Container>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-              <h3>Editor</h3>
-              <Editor selectedFormat={selectedFormat} />
-            </Col>
-            <Col md={6}>
-              <h3>Comparator</h3>
-              <ArticleForm selectedFormat={selectedFormat} />
-            </Col>
-          </Row>
-        </Container>
-    </div >
+              <Form.Select onChange={handleFormatChange} value={selectedFormat}>
+                <option value="markdown">Markdown</option>
+                <option value="html">HTML</option>
+              </Form.Select>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <h3>Editor</h3>
+                <Editor selectedFormat={selectedFormat} />
+              </Col>
+              <Col md={6}>
+                <h3>Comparator</h3>
+                <ArticleForm selectedFormat={selectedFormat} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
       </Container>
-    <VerticalButtons />
+      <VerticalButtons />
     </>
   );
 }

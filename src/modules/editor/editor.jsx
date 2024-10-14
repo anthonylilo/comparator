@@ -1,39 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Form, Col } from "react-bootstrap";
+import { Container, Row, Form, Col, ProgressBar } from "react-bootstrap";
 import { handleFileChange } from "../../services/fileUtils";
 import CardsImages from "../../components/cards/cardsImages";
 import SchemaViewer from "../../components/schema/SchemaViewer";
 import CopyButton from "../../components/copyToClipboard/copyButton";
 
 function Editor({ selectedFormat }) {
-  const [content, setContent] = useState("");
   const [parsedContent, setParsedContent] = useState([]);
   const [schema, setSchema] = useState(null);
   const [metaData, setMetaData] = useState({});
   const [redirections, setRedirections] = useState([]);
   const [showMarkdownInput, setShowMarkdownInput] = useState(false);
-  const [showEditor, setShowEditor] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     setShowMarkdownInput(false);
-    setShowEditor(false);
   }, [selectedFormat]);
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
-    const result = await handleFileChange(file, selectedFormat);
-    if (selectedFormat === "html") {
-      setParsedContent(result.content);
-      setSchema(result.schema);
-      setMetaData(result.metaDataImport);
-      setRedirections(result.redirections || []);
-      setShowEditor(true);
-    } else if (selectedFormat === "markdown") {
-      setParsedContent(result.content);
-      setSchema(result.schema);
-      setMetaData(result.metaDataImport);
-      setRedirections(result.redirections || []);
-      setShowMarkdownInput(true);
+    if (file) {
+      setLoading(true);
+      setProgress(0);
+
+      try {
+        const result = await handleFileChange(file, selectedFormat);
+        setParsedContent(result.content);
+        setSchema(result.schema);
+        setMetaData(result.metaDataImport);
+        setRedirections(result.redirections || []);
+        setShowMarkdownInput(true);
+      } catch (error) {
+        console.error("Error loading file:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -53,7 +55,7 @@ function Editor({ selectedFormat }) {
   return (
     <Container fluid="md">
       <Row>
-        {!showEditor && !showMarkdownInput && (
+        {!showMarkdownInput && (
           <div>
             <Form.Group controlId="formFile" className="mb-3 mt-3">
               <Form.Control
@@ -62,9 +64,17 @@ function Editor({ selectedFormat }) {
                 accept=".docx"
               />
             </Form.Group>
+            {loading && (
+              <ProgressBar
+                variant="success"
+                animated
+                now={100}
+                className="mt-2"
+              />
+            )}
           </div>
         )}
-        {showEditor && selectedFormat === "html" && (
+        {showMarkdownInput && (
           <div className="justify-content-md-center">
             <div className="mt-3">
               <div id="editor">
@@ -75,89 +85,20 @@ function Editor({ selectedFormat }) {
                     ) : (
                       <Row>
                         <Col md={10}>
-                          {item.data.map((paragraph, paraIndex) => (
-                            <div
-                              key={paraIndex}
-                              className="flex-grow-1"
-                              dangerouslySetInnerHTML={{ __html: paragraph }}
-                            />
-                          ))}
-                        </Col>
-                        <Col md={2}>
-                          <CopyButton text={item.data.join("\n\n")} />
-                        </Col>
-                      </Row>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <div className="mt-3">
-                <h5>Meta Information</h5>
-                {metaData && (
-                  <>
-                    <p>
-                      <strong>Market:</strong> {metaData.market}
-                    </p>
-                    <p>
-                      <strong>Article Number:</strong> {metaData.articleNumber}
-                    </p>
-                    <p>
-                      <strong>Category:</strong> {metaData.category}
-                    </p>
-                            {metaData.oldUrl && (
-                      <p>
-                        <strong>Actual url:</strong> {metaData.oldUrl}
-                      </p>
-                            )}
-                    <p>
-                      <strong>Suggested URL:</strong> {metaData.suggestedUrl}
-                    </p>
-                    <p>
-                      <strong>Meta Title:</strong> {metaData.metaTitle}
-                    </p>
-                    <p>
-                      <strong>Meta Description:</strong>{" "}
-                      {metaData.metaDescription}
-                    </p>
-                  </>
-                )}
-              </div>
-              <div className="mt-3">
-                {redirections.length > 0 && (
-                  <div>
-                    <h5>Redirections</h5>
-                    <ul>
-                      {redirections.map((redirect, index) => (
-                        <li key={index}>
-                          <a href={redirect.url}>{redirect.text}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-              <div className="mt-3">
-                {schema && <SchemaViewer schema={schema} />}
-              </div>
-            </div>
-          </div>
-        )}
-        {showMarkdownInput && selectedFormat === "markdown" && (
-          <div className="justify-content-md-center">
-            <div className="mt-3">
-              <div id="editor">
-                {groupedContent.map((item, index) => (
-                  <div key={index} className="d-flex align-items-center">
-                    {item.type === "image" ? (
-                      <CardsImages image={item.data} className="flex-grow-1" />
-                    ) : (
-                      <Row>
-                        <Col md={10}>
-                          {item.data.map((paragraph, paraIndex) => (
-                            <p key={paraIndex} className="flex-grow-1">
-                              {paragraph}
-                            </p>
-                          ))}
+                          {item.data.map((paragraph, paraIndex) =>
+                            typeof paragraph === "string" &&
+                            paragraph.startsWith("<") ? (
+                              <div
+                                key={paraIndex}
+                                className="flex-grow-1"
+                                dangerouslySetInnerHTML={{ __html: paragraph }}
+                              />
+                            ) : (
+                              <p key={paraIndex} className="flex-grow-1">
+                                {paragraph}
+                              </p>
+                            )
+                          )}
                         </Col>
                         <Col md={2}>
                           <CopyButton text={item.data.join("\n\n")} />

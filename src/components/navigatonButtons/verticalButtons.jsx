@@ -50,29 +50,42 @@ const VerticalButtons = () => {
         localStorage.getItem("articleContent")
       );
 
-      if (!storedEditorContent) {
+      if (!storedEditorContent && !storedArticleContent) {
+        setModalText("Error: There's not any content.");
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+        }, 3000);
+        return;
+      } else if (!storedEditorContent) {
         setModalText("Error: Transformed text not found");
-        setShowModal(false);
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+        }, 3000);
         return;
       } else if (!storedArticleContent) {
         setModalText("Error: Web text was not found.");
-        setShowModal(false);
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+        }, 3000);
         return;
       }
 
       try {
         // Llamar a la función compareContent desde equals.js
-        const isEqual = await compareContent(
+        const comparisonResult = await compareContent(
           storedEditorContent,
           storedArticleContent
         );
 
-        if (isEqual) {
-          setModalText("No differences in content were found :)");
-        } else {
+        if (comparisonResult.hasDifferences) {
           setModalText(
             "Differences were found in the contents :( please verify"
           );
+        } else {
+          setModalText("No differences in content were found :)");
         }
       } catch (error) {
         console.error("Error:", error);

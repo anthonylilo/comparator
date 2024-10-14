@@ -100,7 +100,9 @@ const processArray = (arraySaved) => {
     if (item.type === "paragraph" && itemData.trim().startsWith("-")) {
       isList = true;
       const listItem = itemData.trim().replace(/^-\s*/, "");
-      listItems.push(`<li>${markdownToHTML(listItem).replace(/<p>|<\/p>/g, '')}</li>`);
+      listItems.push(
+        `<li>${markdownToHTML(listItem).replace(/<p>|<\/p>/g, "")}</li>`
+      );
     } else if (isList) {
       // Si llegamos a un elemento que no es lista pero hemos procesado una lista
       if (precedingParagraph) {
@@ -209,7 +211,6 @@ const compareContent = async (editorContent, comparatorContent) => {
   }
 
   const cleanedEditorHTML = editorHTML.map((html) => cleanHTML(html));
-  console.log("cleanHTML: ", cleanedEditorHTML);
   const cleanedComparatorHTML = processedComparatorContent.map((item) => {
     if (item.type === "html") {
       return cleanHTMLCompare(item.data);
@@ -232,8 +233,6 @@ const compareContent = async (editorContent, comparatorContent) => {
     normalizedComparatorHTML.join("")
   );
   dmp.diff_cleanupSemantic(diffs);
-
-  console.log(diffs);
 
   // Generar diferencias para el editor
   const editorDifferences = diffs
@@ -267,10 +266,18 @@ const compareContent = async (editorContent, comparatorContent) => {
   document.getElementById("editor").innerHTML = editorDifferences;
   document.getElementById("comparator").innerHTML = comparatorDifferences;
 
-  return (
-    JSON.stringify(normalizedEditorHTML) ===
-    JSON.stringify(normalizedComparatorHTML)
-  );
+  const hasDifferences = diffs.some(([operation]) => operation !== 0);
+
+  if (hasDifferences) {
+    return { hasDifferences: true, editorDifferences, comparatorDifferences };
+  } else {
+    return {
+      hasDifferences: false,
+      areEqual:
+        JSON.stringify(normalizedEditorHTML) ===
+        JSON.stringify(normalizedComparatorHTML),
+    };
+  }
 };
 
 export default compareContent;
