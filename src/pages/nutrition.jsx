@@ -41,7 +41,7 @@ export default function Nutrition(className = "Nutrition") {
             <Row>
               <Col md={6}>
                 <h3>Content Workspace</h3>
-                <Editor selectedFormat={selectedFormat} />
+                <Editor selectedFormat={selectedFormat} projectName={"nutrition"}/>
               </Col>
               <Col md={6}>
                 <h3>Site Analyzer</h3>

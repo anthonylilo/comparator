@@ -42,7 +42,7 @@ export default function Professional(className = "Professional") {
             <Row>
               <Col md={6}>
                 <h3>Editor</h3>
-                <Editor selectedFormat={selectedFormat} />
+                <Editor selectedFormat={selectedFormat} projectName={"nestlePro"} />
               </Col>
               <Col md={6}>
                 <h3>Comparator NP</h3>
