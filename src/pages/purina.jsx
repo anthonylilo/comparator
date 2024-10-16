@@ -8,7 +8,6 @@ import SubNavbar from "../components/navbar/subNavbar";
 
 export default function Purina() {
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", "light");
     document.documentElement.setAttribute("data-project", "purina");
   }, []);
   const [selectedFormat, setSelectedFormat] = useState("markdown");
