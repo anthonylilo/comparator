@@ -35,13 +35,13 @@ const SchemaViewer = ({ schema }) => {
           <td>{schemaData["@type"]}</td>
         </tr>
         <tr>
-          <th>Headline
+          <th>Headline<br />
           [node:title]
           </th>
           <td>{schemaData.headline}</td>
         </tr>
         <tr>
-          <th>Description
+          <th>Description<br />
           [current-page:metatag:description]
           </th>
           <td>{schemaData.description}</td>
@@ -77,13 +77,13 @@ const SchemaViewer = ({ schema }) => {
           </tr>
         )}
         <tr>
-          <th>Published Date
+          <th>Published Date<br />
           [node:created:html_datetime]
           </th>
           <td>{formatDate(schemaData.datePublished)}</td>
         </tr>
         <tr>
-          <th>Modified Date
+          <th>Modified Date<br />
           [node:changed:html_datetime]
           </th>
           <td>{formatDate(schemaData.dateModified)}</td>
@@ -127,7 +127,7 @@ const SchemaViewer = ({ schema }) => {
           </tr>
         )}
         <tr>
-          <th>Main Entity of Page
+          <th>Main Entity of Page<br />
           [node:url]
           </th>
           <td>
