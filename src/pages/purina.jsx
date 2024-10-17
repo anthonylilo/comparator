@@ -6,9 +6,8 @@ import HomeNavbar from "../components/navbar/homeNavbar";
 import VerticalButtons from "../components/navigatonButtons/verticalButtons";
 import SubNavbar from "../components/navbar/subNavbar";
 
-export default function Purina({}) {
+export default function Purina() {
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", "light");
     document.documentElement.setAttribute("data-project", "purina");
   }, []);
   const [selectedFormat, setSelectedFormat] = useState("markdown");
@@ -35,7 +34,7 @@ export default function Purina({}) {
             <Row>
               <Col md={6}>
                 <h3>Editor</h3>
-                <Editor selectedFormat={selectedFormat} />
+                <Editor selectedFormat={selectedFormat} projectName={"purina"} />
               </Col>
               <Col md={6}>
                 <h3>Comparator</h3>

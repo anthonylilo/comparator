@@ -5,7 +5,7 @@ import CardsImages from "../../components/cards/cardsImages";
 import SchemaViewer from "../../components/schema/SchemaViewer";
 import CopyButton from "../../components/copyToClipboard/copyButton";
 
-function Editor({ selectedFormat }) {
+function Editor({ selectedFormat, projectName }) {
   const [parsedContent, setParsedContent] = useState([]);
   const [schema, setSchema] = useState(null);
   const [metaData, setMetaData] = useState({});
@@ -25,7 +25,7 @@ function Editor({ selectedFormat }) {
       setProgress(0);
 
       try {
-        const result = await handleFileChange(file, selectedFormat);
+        const result = await handleFileChange(file, selectedFormat, projectName);
         setParsedContent(result.content);
         setSchema(result.schema);
         setMetaData(result.metaDataImport);
