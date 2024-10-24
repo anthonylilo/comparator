@@ -184,19 +184,25 @@ h3 {
   height: 100%;
 }
 .tableContainer{
+  width: fit-content;
   border-radius: 0px 10px 10px 10px;
   border: 1px solid #0000004D;
   background-color: var(--table-color);
 }
-.schemaTable{
-  text-align: left;
+table th a, 
+table td a {
+  display: inline-block; /* Allows max-width to apply */
+  max-width: 200px; /* Set your desired maximum width */
+  overflow: hidden; /* Hide overflow content */
+  text-overflow: ellipsis; /* Show ellipsis for overflow */
+  white-space: nowrap; /* Prevent the text from wrapping */
 }
 .schemaTable th,td,tr{
   background-color: #00000000;
   color: var(--text-color);
+  overflow-x:hidden
 }
-.schemaTable td{
-  text-wrap: pretty;
+.schemaTable td,th{
   padding-left: 30px;
   background-color: #00000000;
   color: var(--text-color);
