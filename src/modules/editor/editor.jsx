@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Form, Col, ProgressBar } from "react-bootstrap";
 import { handleFileChange } from "../../services/fileUtils";
 import CardsImages from "../../components/cards/cardsImages";
+import MetaData from "../../components/metaData/metaData";
 import SchemaViewer from "../../components/schema/SchemaViewer";
 import CopyButton from "../../components/copyToClipboard/copyButton";
 
@@ -25,7 +26,11 @@ function Editor({ selectedFormat, projectName }) {
       setProgress(0);
 
       try {
-        const result = await handleFileChange(file, selectedFormat, projectName);
+        const result = await handleFileChange(
+          file,
+          selectedFormat,
+          projectName
+        );
         setParsedContent(result.content);
         setSchema(result.schema);
         setMetaData(result.metaDataImport);
@@ -109,35 +114,7 @@ function Editor({ selectedFormat, projectName }) {
                 ))}
               </div>
               <div className="mt-3">
-                <h5>Meta Information</h5>
-                {metaData && (
-                  <>
-                    <p>
-                      <strong>Market:</strong> {metaData.market}
-                    </p>
-                    <p>
-                      <strong>Article Number:</strong> {metaData.articleNumber}
-                    </p>
-                    <p>
-                      <strong>Category:</strong> {metaData.category}
-                    </p>
-                    {metaData.oldUrl && (
-                      <p>
-                        <strong>Actual url:</strong> {metaData.oldUrl}
-                      </p>
-                    )}
-                    <p>
-                      <strong>Suggested URL:</strong> {metaData.suggestedUrl}
-                    </p>
-                    <p>
-                      <strong>Meta Title:</strong> {metaData.metaTitle}
-                    </p>
-                    <p>
-                      <strong>Meta Description:</strong>{" "}
-                      {metaData.metaDescription}
-                    </p>
-                  </>
-                )}
+                {metaData && <MetaData metaData={metaData} />}
               </div>
               <div className="mt-3">
                 {redirections.length > 0 && (

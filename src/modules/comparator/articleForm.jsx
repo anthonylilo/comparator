@@ -45,6 +45,11 @@ function ArticleForm({ reset, selectedFormat }) {
   const [redirectUrls, setRedirectUrls] = useState("");
   const [redirectStatuses, setRedirectStatuses] = useState({});
   const [articleTitle, setArticleTitle] = useState("");
+  const metaData = {
+    title: title,
+    metaDescription: metaDescription,
+    suggestedUrl: url,
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,10 +97,19 @@ function ArticleForm({ reset, selectedFormat }) {
       <Row className="justify-content-md-center text-center">
         {!showAdditionalFields && (
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
+            <Form.Group
+              className="mb-3 mt-3"
+              controlId="exampleForm.ControlInput1"
+            >
               <Form.Control
                 type="url"
-                placeholder={placeHolderOption === "/comparator" ? "https://purina.cl/" : placeHolderOption === "/comparator/nutrition" ? "https://www.babyandme.com" : "https://nestleprofessional-latam.com/pais/"} 
+                placeholder={
+                  placeHolderOption === "/comparator"
+                    ? "https://purina.cl/"
+                    : placeHolderOption === "/comparator/nutrition"
+                    ? "https://www.babyandme.com"
+                    : "https://nestleprofessional-latam.com/pais/"
+                }
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 required
@@ -104,7 +118,14 @@ function ArticleForm({ reset, selectedFormat }) {
             <Button variant="primary" type="submit" disabled={loading}>
               {loading ? "Loading..." : "Submit"}
             </Button>
-            {loading && <ProgressBar variant="success" animated now={100} className="mt-2" />}
+            {loading && (
+              <ProgressBar
+                variant="success"
+                animated
+                now={100}
+                className="mt-2"
+              />
+            )}
           </Form>
         )}
       </Row>
@@ -112,9 +133,7 @@ function ArticleForm({ reset, selectedFormat }) {
         <Row className="mt-3">
           <div id="comparator">
             <h1>{articleTitle}</h1>
-            {banner && (
-              <CardsImages image={banner} />
-            )}
+            {banner && <CardsImages image={banner} />}
             <Row className="mt-3">
               {articleContent.map((item, index) => (
                 <Col key={index} md={12} className="mb-3">
@@ -127,11 +146,7 @@ function ArticleForm({ reset, selectedFormat }) {
             </Row>
           </div>
           <Row className="mt-3">
-            <MetaData
-              title={title}
-              metaDescription={metaDescription}
-              url={url}
-            />
+            <MetaData metaData={metaData} />
           </Row>
           {schema && <SchemaViewer schema={schema} />}
           {invalidLinks.length > 0 && (
