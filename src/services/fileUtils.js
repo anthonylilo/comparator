@@ -19,8 +19,18 @@ const parseMarkdownContent = (content, selectedFormat) => {
       .trim();
   };
   const imageRegex = /!\[(.*?)\]\((data:image\/[^)]+)\)/gs;
-  const tagRegex =
-    /__ETIQUETAS DE IMAGEN:\s*__\s*__Alt Text:\s*__\s*(.*?)\s*__Title:\s*__\s*(.*?)\s*__Nombre de la imagen:\s*__\s*(.*?)\s*__FIN DE ETIQUETAS__/gs;
+  const tagRegex = [
+    {
+      regex: 
+        /__ETIQUETAS DE IMAGEN:__\s*__URL ACTUAL:__\s*(https:\/\/[^\s]+)\s*__Alt Text:__\s*(.*?)\s*__Title:__\s*(.*?)\s*__Nombre de la imagen:__\s*(.*?)\s*__FIN DE ETIQUETAS__/gs,
+      keys: ["urlActual", "altText", "title", "imageName"],
+    },
+    {
+      regex:
+        /__ETIQUETAS DE IMAGEN:\s*__\s*__Alt Text:\s*__\s*(.*?)\s*__Title:\s*__\s*(.*?)\s*__Nombre de la imagen:\s*__\s*(.*?)\s*__FIN DE ETIQUETAS__/gs,
+      Keys: ["altText", "title", "imageName"],
+    },
+  ];
   const schemaRegex = /__DATOS ESTRUCTURADOS:\s*__\s*([\s\S]*?)<\/script>/i;
   const metaDataPatterns = [
     {
@@ -99,22 +109,48 @@ const parseMarkdownContent = (content, selectedFormat) => {
         "suggestedUrl",
       ],
     },
+    {
+      regex:
+        /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(\d+)\s*CATEGORÍA:\s*(.*?)\s*__SEO:__\s*__Title:__\s*(.*?)\s*\(\d+\s*caracteres\)\s*__Meta descripción:__\s*(.*?)\s*\(\d+\s*caracteres\)\s*__DESCRIPCIÓN INTRODUCTORIA ARTÍCULO:__\s*(.*?)\s*__URL SUGERIDA:__\s*(https:\/\/[^\s]+)\s*__FIN DE SEO__/,
+      keys: [
+        "market",
+        "articleNumber",
+        "category",
+        "metaTitle",
+        "metaDescription",
+        "descriptionIntro",
+        "suggestedUrl",
+      ],
+    },
+    {
+      regex:
+        /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(\d+)\s*CATEGORÍA:\s*(.*?)\s*__SEO:__\s*__Title:__\s*(.*?)\s*\(\d+\s*caracteres\)\s*__Meta descripción:__\s*(.*?)\s*\(\d+\s*caracteres\)\s*__DESCRIPCIÓN INTRODUCTORIA ARTÍCULO:__\s*(.*?)\s*__URL ACTUAL:__\s*(https:\/\/[^\s]+)\s*\s*__URL SUGERIDA:__\s*(https:\/\/[^\s]+)\s*__FIN DE SEO__/,
+      keys: [
+        "market",
+        "articleNumber",
+        "category",
+        "metaTitle",
+        "metaDescription",
+        "descriptionIntro",
+        "oldUrl",
+        "suggestedUrl",
+      ],
+    },
   ];
   const redirectionsRegex =
     /__REDIRECCIONES:\s*__\s*((?:\[.*?\]\(.*?\)\s*)*)__FIN DE REDIRECCIONES\s*__/;
 
-  const images = [];
-
   let metaDataImport = {};
   for (const { regex, keys } of metaDataPatterns) {
-    const match = regex.exec(content);
-
+    const cleanContent = cleanText(content);
+    const match = regex.exec(cleanContent);
     if (match) {
       metaDataImport = keys.reduce((acc, key, index) => {
         acc[key] = (match[index + 1] || "").trim();
         return acc;
       }, {});
-      content = content.replace(regex, "");
+
+      content = cleanContent.replace(match[0], "");
       break;
     }
   }
@@ -141,6 +177,7 @@ const parseMarkdownContent = (content, selectedFormat) => {
     schema = schemaMatch[1].trim();
     content = content.replace(schemaRegex, "");
     schema = schema
+      .replace("*Recomendación:*", "")
       .replace(/<script[^>]*>/i, "")
       .replace(/<\/script>/i, "")
       .replace(/\\/g, "")
@@ -162,28 +199,58 @@ const parseMarkdownContent = (content, selectedFormat) => {
     }
   }
 
-  let tagMatch;
+  let tagMatches = [];
+  tagRegex.forEach(({ regex }) => {
+    let tagMatch;
+    while ((tagMatch = regex.exec(content)) !== null) {
+      tagMatch = tagMatch.map((match, index) =>
+        index === 0 ? match : match.replace(/\\-/g, "-").replace(/\\\./g, ".")
+      );
+      tagMatches.push(tagMatch);
+    }
+  });
+  console.log(tagMatches);
+
+  tagRegex.forEach(({ regex }) => {
+    content = content.replace(regex, "");
+  });
+
   let imageIndex = 0;
-  const tagMatches = [];
-  while ((tagMatch = tagRegex.exec(content)) !== null) {
-    tagMatches.push(tagMatch);
-  }
-
-  content = content.replace(tagRegex, "");
-
-  const contentParts = [];
   let contentCursor = 0;
+  const contentParts = [];
+  const images = [];
   let match;
 
-  while ((match = imageRegex.exec(content)) !== null) {
-    const [fullMatch, altText, src] = match;
-    const endOfPreviousPart = match.index;
-    const startOfNextPart = imageRegex.lastIndex;
+  // Procesar imágenes en base64 o URL ACTUAL
+  while (
+    (match = imageRegex.exec(content)) !== null ||
+    tagMatches[imageIndex]
+  ) {
+    let src = "",
+      altText = "";
 
+    if (match) {
+      // Caso base64
+      const [fullMatch, base64AltText, base64Src] = match;
+      src = base64Src;
+      altText = base64AltText;
+    } else if (tagMatches[imageIndex]) {
+      // Caso URL ACTUAL
+      const [fullTag, urlActual, tagAltText, tagTitle, tagImageName] =
+        tagMatches[imageIndex];
+      src = urlActual;
+      altText = tagAltText;
+    }
+
+    const endOfPreviousPart = match ? match.index : content.length;
+    const startOfNextPart = match ? imageRegex.lastIndex : content.length;
+
+    // Separar párrafos anteriores a la imagen
     const paragraphs = content
       .slice(contentCursor, endOfPreviousPart)
       .trim()
       .split(/\n+/);
+
     paragraphs.forEach((para) => {
       const cleanedText = cleanText(para);
       if (cleanedText && cleanedText !== "__" && cleanedText !== "##") {
@@ -191,6 +258,7 @@ const parseMarkdownContent = (content, selectedFormat) => {
       }
     });
 
+    // Procesar tags de la imagen
     const tags = tagMatches[imageIndex] || [];
     const [, tagAltText = "", tagTitle = "", tagImageName = ""] = tags;
 
@@ -200,6 +268,7 @@ const parseMarkdownContent = (content, selectedFormat) => {
       title: cleanText(tagTitle.trim()),
       imageName: cleanText(tagImageName.trim()),
     });
+
     contentParts.push({ type: "image", data: images[images.length - 1] });
     contentCursor = startOfNextPart;
     imageIndex++;
