@@ -16,6 +16,7 @@ const parseMarkdownContent = (content, selectedFormat) => {
       .replace(/\\-/g, "-")
       .replace(/\\\./g, ".")
       .replace(/\\/g, "")
+      .replace(/\s*\(\d+\s+caracteres\)/g, "")
       .trim();
   };
   const imageRegex = /!\[(.*?)\]\((data:image\/[^)]+)\)/gs;

@@ -105,18 +105,24 @@ const MetaData = ({ metaData }) => {
                   </div>
                 </td>
               </tr>
-              <tr>
-                <th>Market</th>
-                <td>{market}</td>
-              </tr>
-              <tr>
-                <th>Article Number</th>
-                <td>{articleNumber}</td>
-              </tr>
-              <tr>
-                <th>Category</th>
-                <td>{category}</td>
-              </tr>
+              {market && (
+                <tr>
+                  <th>Market</th>
+                  <td>{market}</td>
+                </tr>
+              )}
+              {articleNumber && (
+                <tr>
+                  <th>Article Number</th>
+                  <td>{articleNumber}</td>
+                </tr>
+              )}
+              {category && (
+                <tr>
+                  <th>Category</th>
+                  <td>{category}</td>
+                </tr>
+              )}
               {oldUrl && (
                 <tr>
                   <th>Actual URL</th>
