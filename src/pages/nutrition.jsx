@@ -5,6 +5,7 @@ import Editor from "../modules/editor/editor";
 import HomeNavbar from "../components/navbar/homeNavbar";
 import VerticalButtons from "../components/navigatonButtons/verticalButtons";
 import SubNavbar from "../components/navbar/subNavbar";
+import ApiGuide from "../components/api-toggler/course.jsx";
 
 export default function Nutrition(className = "Nutrition") {
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function Nutrition(className = "Nutrition") {
           <Container className="main" fluid>
             <Row className="text-center pt-4 pb-4">
               <Col md={12}>
+              <ApiGuide />
                 <h3>Select your output format:</h3>
                 <Container fluid="md">
                   <Form.Select

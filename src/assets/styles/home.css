@@ -6,10 +6,10 @@
     --purple-variant-1: #4C409C;
     --purple-variant-2: #41339D;
 }
-h3{
+h3.home-header{
     font-weight: 400;
 }
-h3 strong{
+h3.home-header strong{
 font-weight: 600;
 p{
     word-break: break-all;
