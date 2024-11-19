@@ -15,19 +15,10 @@ function SubNavbar() {
             <Nav.Item>
               <a
                 className="text-center "
-                href="/comparator/redirection-validation"
-                rel="noopener noreferrer"
-              >
-                Redirection Validation
-              </a>
-            </Nav.Item>
-            <Nav.Item>
-              <a
-                className="text-center "
                 href="/comparator/http-checker"
                 rel="noopener noreferrer"
               >
-                Https Status Checker
+                URL Status Checker
               </a>
             </Nav.Item>
             <Nav.Item>
@@ -41,7 +32,7 @@ function SubNavbar() {
             </Nav.Item>
             <Nav.Item>
               <a className="text-center " href="#" rel="noopener noreferrer">
-                Text Comparator
+              Matrix Mirror
               </a>
             </Nav.Item>
           </Nav>

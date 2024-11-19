@@ -112,18 +112,6 @@ const VerticalButtons = () => {
         show={showModal}
         onClose={() => setShowModal(false)}
       />
-      <a
-        href="https://cors-anywhere.herokuapp.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <TooltipButton
-          iconType="custom"
-          iconSrc={EnableIcon}
-          className="placeholder-button api"
-          tooltip="Enable API"
-        />
-      </a>
       <TooltipButton
         iconSrc={ResetIcon}
         iconType="custom"
