@@ -2,9 +2,9 @@ import Carousel from 'react-bootstrap/Carousel';
 
 function HomeCarousel() {
   return (
-    <Carousel  data-bs-theme="dark" indicators={false}>
+    <Carousel  data-bs-theme="dark" indicators={true}>
       <Carousel.Item>
-        <div className="carousel-home d-flex align-items-center">
+        <div className="carousel-home d-flex justify-content-center align-items-center">
           <h3 className='home-header'>Welcome to <strong className='text-p-2'>Nestlé Sync Box</strong>🤩</h3>
           <ul className='text-p-1'>
             <li>Automated content convertion into a CMS-friendly format</li>
@@ -31,7 +31,7 @@ function HomeCarousel() {
         <div className="carousel-home d-flex justify-content-center align-items-left">
           <h3>URL Status Checker</h3>
           <p className='text-p-1'>Enter the article URL then submit</p>
-          <ul>
+          <ul className='text-p-1'>
             <li>Live Https Status and Redirect Checker</li>
           </ul>
           <p>Click on <strong className='text-p-2'>URL Status Checker</strong> in the tools panel to the right, to get started.</p>
@@ -41,7 +41,7 @@ function HomeCarousel() {
         <div className="carousel-home d-flex justify-content-center align-items-left">
           <h3>MetaData Checker</h3>
           <p className='text-p-1'>Enter the article URL then submit</p>
-          <ul>
+          <ul className='text-p-1'>
             <li>Live Meta Title, Meta Description and URL lenght</li>
             <li>Live characters per text and validation</li>
           </ul>
