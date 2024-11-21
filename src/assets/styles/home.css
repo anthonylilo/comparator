@@ -1,59 +1,163 @@
 [data-project="home"][data-theme="light"] {
     --bg-color: #9C90E9;
     --tools-heading: #C3BBFC;
-    --text-color: #000000; 
-    --sub-header-bg:#872ecb;
+    --text-color: #000000;
+    --left-card-bg: #FFFFFF;
+    --sub-header-bg: #872ecb;
     --brand-heading: #ffffff30;
     --purple-variant-1: #4C409C;
     --purple-variant-2: #41339D;
+    --btn-main: #8978F5;
+    --btn-secondary: #6E5BEB;
 }
-h3.home-header{
+
+[data-project="home"][data-theme="dark"] {
+    --bg-color: #1C1B2A;
+    /* Dark background, subtle purple tone */
+    --tools-heading: #A99EF0;
+    /* Softer variant for headings */
+    --text-color: #FFFFFF;
+    /* Light text for readability */
+    --left-card-bg: #2A2942;
+    /* Slightly brighter than background for cards */
+    --sub-header-bg: #5E23A0;
+    /* Darkened purple for headers */
+    --brand-heading: #ffffff50;
+    /* More opaque white for subtle brand accents */
+    --purple-variant-1: #6A5FB3;
+    /* Muted purple variant */
+    --purple-variant-2: #5E4FAD;
+    /* Darker purple variant for depth */
+    --btn-main: #5E4ABD;
+    /* Darker shade of #8978F5 */
+    --btn-secondary: #4C3AA3;
+    /* Darker shade of #6E5BEB */
+}
+
+h3.home-header {
     font-weight: 400;
+    line-height: 3rem;
 }
-h3.home-header strong{
-font-weight: 600;
-p{
-    word-break: break-all;
+
+h3.home-header strong {
+    font-weight: 600;
+
+    p {
+        word-break: break-all;
+    }
 }
+
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+    display: flex;
 }
-.carousel-item{
+
+.carousel-item {
     /* padding-bottom: 75px; */
     /* line-height: 15px; */
     flex-direction: column;
-    /* min-height: 300px; */
-}
-.text-p-1{
-    color: var(--purple-variant-1);
-}
-.text-p-2{
-    color: var(--purple-variant-2);
-}
-.card-wrapper{
-    margin-top: 2.5rem;
-}
-.home-left, .home-right{
-padding-top: 50px;
-padding-bottom: 50px;
-
-}
-.home-left{
-    background-color: white;
-    border-radius: 14px 0 0 14px;
-}
-.carousel-home{
-    flex-direction: column;
-    /* row-gap: 20px; */
-}
-.carousel-item{
+    justify-content: center;
+    min-height: 300px;
     padding-left: 125px;
     padding-right: 125px;
-}
-.home-right{
-    background-color: #41339d;
-    border-radius: 0 14px 14px 0;
+    min-height: 300px;
 }
 
-h3.tools-header{
+.text-p-1 {
+    color: var(--purple-variant-1);
+}
+
+.text-p-2 {
+    color: var(--purple-variant-2);
+}
+
+.card-wrapper {
+    margin-top: 2.5rem;
+    /* padding-top: 50px; */
+}
+
+.card--inner-wraper {
+    box-shadow: 1px 2px solid black;
+}
+
+.home-left,
+.home-right {
+    padding-bottom: 0px;
+
+}
+
+.home-left {
+    background-color: var(--left-card-bg);
+    border-radius: 25px 0 0 25px;
+}
+
+.carousel-home {
+    flex-direction: column;
+    min-height: 400px;
+    /* row-gap: 20px; */
+}
+
+.home-right {
+    background-color: #41339d;
+    border-radius: 0 25px 25px 0;
+    row-gap: 33px;
+}
+
+.home-right div.container>div.row {
+    row-gap: 20px;
+}
+
+h3.tools-header {
     color: var(--tools-heading);
-    font-weight: 400;
+    font-weight: semi-bold;
+}
+
+.dropdown.btn-group button,
+.dropdown.btn-group button:active,
+.btn {
+    border-color: var(--btn-secondary);
+}
+
+.dropdown.btn-group button:nth-child(1) {
+    background-color: var(--btn-main);
+}
+
+/* Select the second button */
+.dropdown.btn-group button:nth-child(2) {
+    background-color: var(--btn-secondary);
+}
+
+button.section-btn.btn,
+button.section-btn.btn:active {
+    background-color: var(--btn-main);
+    border-color: var(--btn-main);
+}
+
+button.section-btn.btn:hover {
+    background-color: var(--btn-secondary);
+}
+.dropdown-menu{
+    padding: 0 0.3rem 0 0.3rem;
+    row-gap: 4px;
+}
+.dropdown-menu .dropdown-item:nth-child(n - 3){
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: white;
+    font-weight: 500;
+}
+.dropdown-menu .dropdown-item:nth-child(1) {
+    background-color: #E82F2F;
+}
+.dropdown-menu .dropdown-item:nth-child(2) {
+    background-color: #099AA4;
+}
+.dropdown-menu .dropdown-item:nth-child(3) {
+    background-color: #FC9A08;
+}
+
+.section-btn {
+    min-width: 200px;
 }
