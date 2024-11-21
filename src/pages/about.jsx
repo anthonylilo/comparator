@@ -23,7 +23,7 @@ export default function AboutPage(className = "home") {
                 <HomeCarousel />
               </Col>
               <Col className="home-right" md={5}>
-                <h3>Tools:</h3>
+                <h3 className="tools-header">Tools:</h3>
               </Col>
             </Row>
           </Container>
