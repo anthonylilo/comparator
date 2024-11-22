@@ -24,7 +24,7 @@ function BrandPicker() {
 
     // Navegar a diferentes rutas
     if (selectedValue === "1") {
-      navigate("/comparator");
+      navigate("/comparator/purina");
     } else if (selectedValue === "2") {
       navigate("/comparator/nutrition");
     } else if (selectedValue === "3") {
@@ -49,7 +49,6 @@ function BrandPicker() {
       onChange={handleSelectChange}
       value={selectedBrand}
     >
-      <option value="0">Select the project</option>
       <option value="1">Purina</option>
       <option value="2">Baby and me</option>
       <option value="3">Nestlé Professional</option>

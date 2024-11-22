@@ -9,12 +9,14 @@ import Professional from './pages/nestlePro';
 import HttpChecker from './pages/httpChecker';
 import MetaData from './pages/metaData';
 import Redirection from './pages/redirection';
+import AboutPage from './pages/about'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/comparator" element={<Purina />} />
+        <Route path="/comparator" element={<AboutPage />} />
+        <Route path="/comparator/purina" element={<Purina />} />
         <Route path="/comparator/nutrition" element={<Nutrition />} />
         <Route path="/comparator/professional" element={<Professional />} />
         <Route path="/comparator/http-checker" element={<HttpChecker />} />

@@ -6,7 +6,9 @@ import {
 } from "react-bootstrap";
 import "../../assets/styles/header.css";
 import BrandPicker from "./styleToggler/brandPicker";
-
+import TooltipButton from "../navigatonButtons/TooltipButton";
+import "../navigatonButtons/TooltipButton.css";
+import EnableIcon from "../../assets/images/enable.svg";
 
 function HomeNavbar() {
   return (
@@ -17,7 +19,7 @@ function HomeNavbar() {
         <Navbar.Collapse className="justify-content-between" id="basic-navbar-nav">
           <Nav>
             <Nav.Item>
-              <BrandPicker/>
+              <BrandPicker />
             </Nav.Item>
           </Nav>
           <Nav>
