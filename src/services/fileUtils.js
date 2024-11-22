@@ -137,6 +137,19 @@ const parseMarkdownContent = (content, selectedFormat) => {
         "suggestedUrl",
       ],
     },
+    {
+      regex:
+        /MERCADO:\s*(.*?)\s*ARTÍCULO No:\s*(\d+)\s*CATEGORÍA:\s*(.*?)\s*__SEO:__\s*__Title:__\s*(.*?)\s*__Meta descripción:__\s*(.*?)\s*__DESCRIPCIÓN INTRODUCTORIA ARTÍCULO:__\s*(.*?)\s*__URL SUGERIDA:__\s*(https:\/\/[^\s]+)\s*__FIN DE SEO__/,
+      keys: [
+        "market",
+        "articleNumber",
+        "category",
+        "title",
+        "metaDescription",
+        "descriptionIntro",
+        "suggestedUrl",
+      ],
+    },
   ];
   const redirectionsRegex =
     /__REDIRECCIONES:\s*__\s*((?:\[.*?\]\(.*?\)\s*)*)__FIN DE REDIRECCIONES\s*__/;

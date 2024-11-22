@@ -214,11 +214,17 @@ table td a {
 }
 
 .highlight-added {
-  background-color: #d4fcbc; /* Color para contenido añadido */
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background-color: #d4fcbc;
 }
 
 .highlight-removed {
-  background-color: #ffbcbc; /* Color para contenido eliminado */
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background-color: #ffbcbc;
 }
 
 /**Alert**/

@@ -239,7 +239,7 @@ const compareContent = async (editorContent, comparatorContent) => {
     .map(([operation, text]) => {
       if (operation === -1) {
         // Texto eliminado resaltado en editor
-        return `<span class="highlight-removed">${text}</span>`;
+        return `<div class="highlight-removed">${text}</div>`;
       } else if (operation === 0) {
         // Texto sin cambios
         return text;
@@ -248,12 +248,14 @@ const compareContent = async (editorContent, comparatorContent) => {
     })
     .join("");
 
+  console.log(editorDifferences);
+
   // Generar diferencias para el comparador
   const comparatorDifferences = diffs
     .map(([operation, text]) => {
       if (operation === 1) {
         // Texto añadido resaltado en comparador
-        return `<span class="highlight-added">${text}</span>`;
+        return `<div class="highlight-added">${text}</div>`;
       } else if (operation === 0) {
         // Texto sin cambios
         return text;
