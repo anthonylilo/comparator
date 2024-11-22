@@ -33,7 +33,10 @@
     --btn-secondary: #4C3AA3;
     /* Darker shade of #6E5BEB */
 }
-
+.containerWrapper {
+    margin-top: 5rem;
+    /* padding-top: 50px; */
+}
 h3.home-header {
     font-weight: 400;
     line-height: 3rem;
@@ -46,7 +49,6 @@ h3.home-header strong {
         word-break: break-all;
     }
 }
-
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
@@ -61,7 +63,6 @@ h3.home-header strong {
     min-height: 300px;
     padding-left: 125px;
     padding-right: 125px;
-    min-height: 300px;
 }
 
 .text-p-1 {
@@ -71,12 +72,6 @@ h3.home-header strong {
 .text-p-2 {
     color: var(--purple-variant-2);
 }
-
-.card-wrapper {
-    margin-top: 2.5rem;
-    /* padding-top: 50px; */
-}
-
 .card--inner-wraper {
     box-shadow: 1px 2px solid black;
 }
@@ -86,18 +81,15 @@ h3.home-header strong {
     padding-bottom: 0px;
 
 }
-
 .home-left {
     background-color: var(--left-card-bg);
     border-radius: 25px 0 0 25px;
 }
-
 .carousel-home {
     flex-direction: column;
     min-height: 400px;
     /* row-gap: 20px; */
 }
-
 .home-right {
     background-color: #41339d;
     border-radius: 0 25px 25px 0;
@@ -107,33 +99,27 @@ h3.home-header strong {
 .home-right div.container>div.row {
     row-gap: 20px;
 }
-
 h3.tools-header {
     color: var(--tools-heading);
     font-weight: semi-bold;
 }
-
 .dropdown.btn-group button,
 .dropdown.btn-group button:active,
 .btn {
     border-color: var(--btn-secondary);
 }
-
 .dropdown.btn-group button:nth-child(1) {
     background-color: var(--btn-main);
 }
-
 /* Select the second button */
 .dropdown.btn-group button:nth-child(2) {
     background-color: var(--btn-secondary);
 }
-
 button.section-btn.btn,
 button.section-btn.btn:active {
     background-color: var(--btn-main);
     border-color: var(--btn-main);
 }
-
 button.section-btn.btn:hover {
     background-color: var(--btn-secondary);
 }
@@ -148,6 +134,7 @@ button.section-btn.btn:hover {
     color: white;
     font-weight: 500;
 }
+/* dropdown items */
 .dropdown-menu .dropdown-item:nth-child(1) {
     background-color: #E82F2F;
 }
@@ -157,7 +144,7 @@ button.section-btn.btn:hover {
 .dropdown-menu .dropdown-item:nth-child(3) {
     background-color: #FC9A08;
 }
-
 .section-btn {
     min-width: 200px;
+    text-align: left;
 }
