@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 function SplitBasicExample() {
     return (
-        <Container className='p-5 text-left'>
+        <Container className='px-5 pt-4 text-left'>
         <Row>
             <Col md={12}>
             <h3 className="tools-header">Tools:</h3>
