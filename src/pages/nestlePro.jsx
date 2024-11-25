@@ -41,11 +41,11 @@ export default function Professional(className = "Professional") {
             </Row>
             <Row>
               <Col md={6}>
-                <h3>Editor</h3>
+                <h3>Content Workspace</h3>
                 <Editor selectedFormat={selectedFormat} projectName={"nestlePro"} />
               </Col>
               <Col md={6}>
-                <h3>Comparator NP</h3>
+                <h3>Site Analyzer</h3>
                 <ArticleForm selectedFormat={selectedFormat} />
               </Col>
             </Row>
