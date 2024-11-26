@@ -40,6 +40,27 @@ const fetchImageDetails = async (imageUrl) => {
   });
 };
 
+const extractMetaData = ($) => {
+  const title = $("title").text();
+  const metaDescription = $("meta[name='description']").attr("content");
+  const articleTitle = $(".article-internal-title span").text();
+  return { title, metaDescription, articleTitle };
+};
+
+// Función para extraer esquema JSON-LD
+const extractJsonLdSchema = ($) => {
+  const schemaScripts = $('script[type="application/ld+json"]');
+  const schemas = [];
+  schemaScripts.each((index, element) => {
+    const schema = $(element).html();
+    if (schema) {
+      schemas.push(JSON.parse(schema));
+    }
+  });
+  return schemas.length > 0 ? schemas[0] : null;
+};
+
+// Función principal
 const handleSubmitLogic = async (
   url,
   redirectUrls,
@@ -63,13 +84,10 @@ const handleSubmitLogic = async (
     const response = await axios.get(requestUrl);
     const $ = cheerio.load(response.data);
 
-    // Extraer título y meta descripción
-    const title = $("title").text();
-    const metaDescription = $("meta[name='description']").attr("content");
-    const articleTitle = $(".article-internal-title span").text();
+    // **Extraer metadatos usando la nueva función**
+    const { title, metaDescription, articleTitle } = extractMetaData($);
     setTitle(title);
     setMetaDescription(metaDescription);
-    //NOTE: This is the title of the article
     setArticleTitle(articleTitle);
 
     // Extraer banner
@@ -124,13 +142,11 @@ const handleSubmitLogic = async (
       }
     }
 
-    //NOTE: ESTE EMPIEZA DESDE EL H5
     setArticleContent(contentArray);
 
     const saveContentToLocalStorage = (contentArray) => {
       localStorage.setItem("articleContent", JSON.stringify(contentArray));
     };
-  
     saveContentToLocalStorage(contentArray);
 
     // Check invalid links
@@ -157,20 +173,9 @@ const handleSubmitLogic = async (
     setInvalidLinks(invalid);
     setLinkStatuses(linkStatusesObj);
 
-    // Extraer esquema de JSON-LD
-    const schemaScripts = $('script[type="application/ld+json"]');
-    const schemas = [];
-    schemaScripts.each((index, element) => {
-      const schema = $(element).html();
-      if (schema) {
-        schemas.push(JSON.parse(schema));
-      }
-    });
-    if (schemas.length > 0) {
-      setSchema(schemas[0]);
-    } else {
-      setSchema(null);
-    }
+    // **Extraer esquema usando la nueva función**
+    const schema = extractJsonLdSchema($);
+    setSchema(schema);
 
     // Manejar URLs de redirección
     const redirectUrlsArray = redirectUrls.split(",");

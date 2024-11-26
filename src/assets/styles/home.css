@@ -93,7 +93,8 @@ h3.home-header strong {
 .home-right {
     background-color: #41339d;
     border-radius: 0 25px 25px 0;
-    row-gap: 33px;
+    flex-direction: column;
+    
 }
 
 .home-right div.container>div.row {
