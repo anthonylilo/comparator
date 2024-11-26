@@ -7,7 +7,6 @@ import '../assets/styles/styles.css'
 import '../assets/styles/home.css'
 import SubNavbar from "../components/navbar/subNavbar.jsx"
 import Dropdowns from '../components/home-dropdowns/dropdowns.jsx';
-import DarkToggler from "../components/navbar/darkToggler/themeToggler.jsx";
 export default function AboutPage(className = "home") {
   useEffect(() => {
     document.documentElement.setAttribute("data-project", "home");
@@ -15,6 +14,7 @@ export default function AboutPage(className = "home") {
   return (
     <>
     <HomeNavbar />
+    <SubNavbar></SubNavbar>
     <Container>
         <div className="containerWrapper">
           <h1 className="brandBackgroundHeading">NSB</h1>
@@ -23,8 +23,7 @@ export default function AboutPage(className = "home") {
               <Col className="home-left" md={7}>
                 <HomeCarousel />
               </Col>
-              <Col className="home-right d-flex align-items-end" md={5}>
-                <DarkToggler />
+              <Col className="home-right d-flex align-items-center" md={5}>
                 <Dropdowns />
               </Col>
             </Row>
