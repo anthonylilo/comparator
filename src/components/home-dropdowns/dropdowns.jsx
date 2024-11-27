@@ -24,20 +24,10 @@ function SplitBasicExample() {
                 </Dropdown>
             </Col>
             <Col md={12}>
-                <Dropdown as={ButtonGroup}>
-                    <Button className='section-btn' variant="success">MetaData Checker</Button>
-
-                    <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-
-                    <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Purina</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Baby and Me</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Nestlé Professional</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+                    <Button href='/comparator/meta-data-checker' className='section-btn'>SEO Checker</Button>
             </Col>
             <Col md={12}>
-                    <Button className='section-btn' >URL Status Checker</Button>
+                    <Button href='/comparator/redirection-validation' className='section-btn' >URL Status Checker</Button>
             </Col>
         </Row>
         </Container>
