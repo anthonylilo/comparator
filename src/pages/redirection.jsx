@@ -9,7 +9,7 @@ export default function Redirection({}) {
       <HomeNavbar />
       <SubNavbar />
       <Container>
-        <h1>Redirection Validation</h1>
+        <h1>URL Status Checker</h1>
       </Container>
       <VerticalButtons />
     </>
