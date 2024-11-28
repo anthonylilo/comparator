@@ -24,10 +24,10 @@ function SplitBasicExample() {
                 </Dropdown>
             </Col>
             <Col md={12}>
-                    <Button href='/comparator/meta-data-checker' className='section-btn'>SEO Checker</Button>
+                    <Button href='/comparator/seo-checker' className='section-btn'>SEO Checker</Button>
             </Col>
             <Col md={12}>
-                    <Button href='/comparator/redirection-validation' className='section-btn' >URL Status Checker</Button>
+                    <Button href='/comparator/url-status-checker' className='section-btn' >URL Status Checker</Button>
             </Col>
         </Row>
         </Container>

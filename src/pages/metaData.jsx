@@ -60,7 +60,7 @@ export default function MetaDataPage({ reset }) {
       <HomeNavbar />
       <SubNavbar />
       <Container fluid="md">
-        <h1>MetaData Checker</h1>
+        <h1>SEO Checker</h1>
         <Row className="justify-content-md-center text-center">
           <Form onSubmit={handleSubmit}>
             <Form.Group

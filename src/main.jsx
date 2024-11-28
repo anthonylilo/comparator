@@ -19,13 +19,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/comparator/purina" element={<Purina />} />
         <Route path="/comparator/nutrition" element={<Nutrition />} />
         <Route path="/comparator/professional" element={<Professional />} />
-        <Route path="/comparator/http-checker" element={<HttpChecker />} />
         <Route
-          path="/comparator/meta-data-checker"
+          path="/comparator/seo-checker"
           element={<MetaDataPage />}
         />
         <Route
-          path="/comparator/redirection-validation"
+          path="/comparator/url-status-checker"
           element={<Redirection />}
         />
       </Routes>
