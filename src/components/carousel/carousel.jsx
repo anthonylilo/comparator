@@ -2,7 +2,7 @@ import Carousel from 'react-bootstrap/Carousel';
 
 function HomeCarousel() {
   return (
-    <Carousel  data-bs-theme="dark" indicators={true}>
+    <Carousel indicators={true}>
       <Carousel.Item>
         <div className="carousel-home d-flex justify-content-center align-items-center">
           <h3 className='home-header'>Welcome to <strong className='text-p-2'>Nestlé Sync Box</strong>🤩</h3>

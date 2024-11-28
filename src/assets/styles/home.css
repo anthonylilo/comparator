@@ -9,6 +9,12 @@
     --purple-variant-2: #41339D;
     --btn-main: #8978F5;
     --btn-secondary: #6E5BEB;
+    --carousel-indicators:#0e0d15;
+    --carousel-indicators-active:#151421;
+    .carousel-control-next-icon, .carousel-control-prev-icon{ /* carousel arrow icons */
+        filter: invert(1) grayscale(100);
+     }
+
 }
 
 [data-project="home"][data-theme="dark"] {
@@ -32,6 +38,16 @@
     /* Darker shade of #8978F5 */
     --btn-secondary: #4C3AA3;
     /* Darker shade of #6E5BEB */
+    --carousel-indicators:#ffffffb9;
+    --carousel-indicators-active:#fff;
+}
+[data-bs-theme = "dark"]{
+    .carousel-indicators [data-bs-target]{
+        background-color: #fff;
+    }
+    .carousel .carousel-indicators [data-bs-target]{
+        background-color: #fff;
+    }
 }
 .containerWrapper {
     margin-top: 5rem;
@@ -49,12 +65,18 @@ h3.home-header strong {
         word-break: break-all;
     }
 }
+
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
     display: flex;
 }
-
+.carousel-indicators button{
+background-color: var(--carousel-indicators);
+}
+.carousel-indicators [data-bs-target]{
+background-color: var(--carousel-indicators-active);
+}
 .carousel-item {
     /* padding-bottom: 75px; */
     /* line-height: 15px; */
