@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/styles/styles.css";
 import Nutrition from "./pages/nutrition";
 import Professional from "./pages/nestlePro";
-import HttpChecker from "./pages/httpChecker";
 import MetaDataPage from "./pages/metaData";
 import Redirection from "./pages/redirection";
 import AboutPage from "./pages/about";
