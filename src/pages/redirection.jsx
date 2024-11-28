@@ -11,7 +11,6 @@ export default function Redirection({}) {
       <Container>
         <h1>URL Status Checker</h1>
       </Container>
-      <VerticalButtons />
     </>
   );
 }
