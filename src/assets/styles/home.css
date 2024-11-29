@@ -14,7 +14,6 @@
     .carousel-control-next-icon, .carousel-control-prev-icon{ /* carousel arrow icons */
         filter: invert(1) grayscale(100);
      }
-
 }
 
 [data-project="home"][data-theme="dark"] {
@@ -40,6 +39,9 @@
     /* Darker shade of #6E5BEB */
     --carousel-indicators:#ffffffb9;
     --carousel-indicators-active:#fff;
+    .carousel-control-next-icon, .carousel-control-prev-icon{ /* carousel arrow icons */
+        filter: none;
+     }
 }
 [data-bs-theme = "dark"]{
     .carousel-indicators [data-bs-target]{
