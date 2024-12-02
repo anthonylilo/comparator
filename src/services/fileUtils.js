@@ -8,6 +8,120 @@ export const handleFileChange = async (file, selectedFormat) => {
   }
 };
 
+function extractMetaData(contentParts) {
+  const extractedMetaData = {};
+  const tempContentParts = [];
+  let isProcessingMetaData = true;
+
+  const updatedContentParts = contentParts.filter((item) => {
+    if (item.type === "paragraph") {
+      const data = item.data.trim();
+
+      if (isProcessingMetaData) {
+        // metadatos
+        if (data.startsWith("MERCADO:")) {
+          extractedMetaData.market = data.replace("MERCADO:", "").trim();
+          return false;
+        } else if (data.startsWith("ARTÍCULO No:")) {
+          extractedMetaData.articleNumber = data
+            .replace("ARTÍCULO No:", "")
+            .trim();
+          return false;
+        } else if (data.startsWith("CATEGORÍA:")) {
+          extractedMetaData.category = data.replace("CATEGORÍA:", "").trim();
+          return false;
+        } else if (data.startsWith("__Title:__") && !extractedMetaData.title) {
+          extractedMetaData.title = data.replace("__Title:__", "").trim();
+          return false;
+        } else if (data.startsWith("__Meta descripción:__")) {
+          extractedMetaData.metaDescription = data
+            .replace("__Meta descripción:__", "")
+            .trim();
+          return false;
+        } else if (data.startsWith("__URL ACTUAL:__")) {
+          extractedMetaData.oldUrl = data.replace("__URL ACTUAL:__", "").trim();
+          return false;
+        } else if (data.startsWith("__URL SUGERIDA:__")) {
+          extractedMetaData.suggestedUrl = data
+            .replace("__URL SUGERIDA:__", "")
+            .trim();
+          return false;
+        } else if (data.startsWith("__DESCRIPCIÓN INTRODUCTORIA ARTÍCULO:__")) {
+          extractedMetaData.introDescription = data
+            .replace("__DESCRIPCIÓN INTRODUCTORIA ARTÍCULO:__", "")
+            .trim();
+          return false;
+        } else if (data.startsWith("__SEO:__")) {
+          return false;
+        } else if (data.startsWith("__FIN DE SEO__")) {
+          const transformedData = data.replace("__FIN DE SEO__", "").trim();
+          tempContentParts.push({
+            type: "paragraph",
+            data: transformedData.startsWith("#")
+              ? transformedData
+              : `# ${transformedData}`,
+          });
+          isProcessingMetaData = false;
+          return false;
+        }
+      }
+      return true;
+    }
+    return true;
+  });
+
+  const finalContentParts = [...tempContentParts, ...updatedContentParts];
+  return {
+    updatedContentParts: finalContentParts,
+    extractedMetaData,
+  };
+}
+
+function processImages(contentParts) {
+  console.log("Inicio imágenes:", contentParts);
+  const processedContentParts = [];
+  let tempImageData = {};
+  let isProcessingImage = false;
+
+  contentParts.forEach((item) => {
+    if (item.type === "paragraph") {
+      const data = item.data.trim();
+
+      if (data.startsWith("__ETIQUETAS DE IMAGEN:__")) {
+        isProcessingImage = true; // Comenzar a procesar una imagen
+        tempImageData = { src: "/comparator/src/assets/images/no-image.png" };
+      } else if (isProcessingImage) {
+        if (data.startsWith("__URL ACTUAL:__")) {
+          tempImageData.src = "/comparator/src/assets/images/no-image.png";
+        } else if (data.startsWith("__Alt Text:__")) {
+          tempImageData.alt = data.replace("__Alt Text:__", "").trim();
+        } else if (data.startsWith("__Title:__")) {
+          tempImageData.title = data.replace("__Title:__", "").trim();
+        } else if (data.startsWith("__Nombre de la imagen:__")) {
+          tempImageData.imageName = data
+            .replace("__Nombre de la imagen:__", "")
+            .trim();
+        } else if (data.startsWith("__FIN DE ETIQUETAS__")) {
+          // Terminar procesamiento de la imagen y agregarla
+          processedContentParts.push({
+            type: "image",
+            data: { ...tempImageData },
+          });
+          tempImageData = {};
+          isProcessingImage = false; // Terminar procesamiento de imagen
+        }
+      } else {
+        processedContentParts.push(item); // Agregar párrafos no relacionados con imágenes
+      }
+    } else {
+      processedContentParts.push(item); // Mantener otros tipos de contenido (como imágenes ya procesadas)
+    }
+  });
+
+  console.log("Final de imágenes:", processedContentParts);
+  return processedContentParts;
+}
+
 const parseMarkdownContent = (content, selectedFormat) => {
   content = content.replace(/<a id="_Hlk\d+"><\/a>/g, "");
   content = content.replace(/\s*__CONTENT:\s*__\s*/, "");
@@ -223,7 +337,6 @@ const parseMarkdownContent = (content, selectedFormat) => {
       tagMatches.push(tagMatch);
     }
   });
-  console.log(tagMatches);
 
   tagRegex.forEach(({ regex }) => {
     content = content.replace(regex, "");
@@ -231,7 +344,7 @@ const parseMarkdownContent = (content, selectedFormat) => {
 
   let imageIndex = 0;
   let contentCursor = 0;
-  const contentParts = [];
+  let contentParts = [];
   const images = [];
   let match;
 
@@ -295,6 +408,15 @@ const parseMarkdownContent = (content, selectedFormat) => {
       contentParts.push({ type: "paragraph", data: cleanedText });
     }
   });
+
+  // Procesar metadatos si `metaDataImport` está vacío
+  if (Object.keys(metaDataImport).length === 0) {
+    const metaDataResult = extractMetaData(contentParts);
+    metaDataImport = metaDataResult.extractedMetaData;
+    contentParts = metaDataResult.updatedContentParts;
+  }
+
+  contentParts = processImages(contentParts);
 
   if (selectedFormat === "html") {
     function convertToHTML(contentParts) {
