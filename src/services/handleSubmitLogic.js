@@ -44,7 +44,8 @@ const extractMetaData = ($) => {
   const title = $("title").text();
   const metaDescription = $("meta[name='description']").attr("content");
   const articleTitle = $(".article-internal-title span").text();
-  return { title, metaDescription, articleTitle };
+  const h1Title = $("h1").map((i, el) => $(el).text().trim()).get();
+  return { title, metaDescription, articleTitle, h1Title };
 };
 
 // Función para extraer esquema JSON-LD
@@ -75,7 +76,8 @@ const handleSubmitLogic = async (
   setBanner,
   setArticleContent,
   setRedirectStatuses,
-  setArticleTitle
+  setArticleTitle,
+  seth1Title
 ) => {
   setLoading(true);
   try {
@@ -85,10 +87,11 @@ const handleSubmitLogic = async (
     const $ = cheerio.load(response.data);
 
     // **Extraer metadatos usando la nueva función**
-    const { title, metaDescription, articleTitle } = extractMetaData($);
+    const { title, metaDescription, articleTitle, h1Title } = extractMetaData($);
     setTitle(title);
     setMetaDescription(metaDescription);
     setArticleTitle(articleTitle);
+    seth1Title(h1Title);
 
     // Extraer banner
     const bannerSrc = $(".article-internal-header-img img").attr("src");

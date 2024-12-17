@@ -11,6 +11,7 @@ const MetaData = ({ metaData }) => {
     articleNumber,
     category,
     oldUrl,
+    h1Title
   } = metaData;
 
   const titleLength = title ? title.length : 0;
@@ -129,6 +130,12 @@ const MetaData = ({ metaData }) => {
                   <td>{oldUrl}</td>
                 </tr>
               )}
+              {h1Title && (
+                <tr>
+                  <th>Actual URL</th>
+                  <td>{h1Title}</td>
+                </tr>
+              )}
             </tbody>
           </Table>
         </Container>
@@ -146,6 +153,7 @@ MetaData.propTypes = {
     articleNumber: PropTypes.string,
     category: PropTypes.string,
     oldUrl: PropTypes.string,
+    h1Title: PropTypes.string,
   }).isRequired,
 };
 
