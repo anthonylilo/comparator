@@ -9,6 +9,7 @@ import Professional from "./pages/nestlePro";
 import MetaDataPage from "./pages/metaData";
 import Redirection from "./pages/redirection";
 import AboutPage from "./pages/about";
+import Recetas from "./pages/recetas";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/comparator" element={<AboutPage />} />
         <Route path="/comparator/purina" element={<Purina />} />
+        <Route path="/comparator/recetas" element={<Recetas />} />
         <Route path="/comparator/nutrition" element={<Nutrition />} />
         <Route path="/comparator/professional" element={<Professional />} />
         <Route

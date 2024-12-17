@@ -23,6 +23,12 @@
   --sub-header-bg:#cd1717;
   --brand-heading:#ffffff4d;
 }
+[data-project="recetas"][data-theme="light"] {
+  --bg-color: #e437b0; /* Purina-specific light theme background */
+  --text-color: #000000; /* Purina-specific light theme text */
+  --sub-header-bg:#d32881;
+  --brand-heading:#ffffff4d;
+}
 
 [data-project="unifier"][data-theme="light"] {
   --bg-color: #099aa4; /* Unifier-specific light theme background */
@@ -41,6 +47,11 @@
   --text-color: #FFFFFF; /* Purina-specific dark theme text */
   --sub-header-bg:#303030;
   --brand-heading: #E82F2F;
+}
+[data-project="recetas"][data-theme="dark"] {
+  --text-color: #ffffff; /* Purina-specific dark theme text */
+  --sub-header-bg:#303030;
+  --brand-heading: #E50077;
 }
 
 [data-project="unifier"][data-theme="dark"] {
