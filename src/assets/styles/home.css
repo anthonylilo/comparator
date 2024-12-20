@@ -169,6 +169,9 @@ button.section-btn.btn:hover, a.section-btn.btn:hover {
 .dropdown-menu .dropdown-item:nth-child(3) {
     background-color: #FC9A08;
 }
+.dropdown-menu .dropdown-item:nth-child(4) {
+    background-color: #e437b0;
+}
 .section-btn {
     min-width: 200px;
     text-align: left;
