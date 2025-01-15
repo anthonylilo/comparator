@@ -6,7 +6,7 @@ import {
   Col,
   ProgressBar,
 } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useArticleFormHooks } from "./hooks/useArticleFormHooks";
 import handleSubmitLogic from "../../services/handleSubmitLogic";
 import CardsImages from "../../components/cards/cardsImages";

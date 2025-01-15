@@ -1,5 +1,5 @@
 import axios from "axios";
-import cheerio from "cheerio";
+import { load } from 'cheerio';
 
 const checkUrlStatus = async (url) => {
   try {
@@ -77,21 +77,21 @@ const handleSubmitLogic = async (
   setArticleContent,
   setRedirectStatuses,
   setArticleTitle,
-  seth1Title
+  setH1Title // Corrected parameter name
 ) => {
   setLoading(true);
   try {
     const proxyUrl = "https://cors-anywhere.herokuapp.com/";
     const requestUrl = url.startsWith(proxyUrl) ? url : proxyUrl + url.trim();
     const response = await axios.get(requestUrl);
-    const $ = cheerio.load(response.data);
+    const $ = load(response.data);
 
     // **Extraer metadatos usando la nueva función**
     const { title, metaDescription, articleTitle, h1Title } = extractMetaData($);
     setTitle(title);
     setMetaDescription(metaDescription);
     setArticleTitle(articleTitle);
-    seth1Title(h1Title);
+    setH1Title(h1Title); // Corrected function call
 
     // Extraer banner
     const bannerSrc = $(".article-internal-header-img img").attr("src");

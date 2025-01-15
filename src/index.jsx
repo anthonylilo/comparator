@@ -11,7 +11,7 @@ import Redirection from "./pages/redirection";
 import AboutPage from "./pages/about";
 import Recetas from "./pages/recetas";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
@@ -20,14 +20,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/comparator/recetas" element={<Recetas />} />
         <Route path="/comparator/nutrition" element={<Nutrition />} />
         <Route path="/comparator/professional" element={<Professional />} />
-        <Route
-          path="/comparator/seo-checker"
-          element={<MetaDataPage />}
-        />
-        <Route
-          path="/comparator/url-status-checker"
-          element={<Redirection />}
-        />
+        <Route path="/comparator/seo-checker" element={<MetaDataPage />} />
+        <Route path="/comparator/url-status-checker" element={<Redirection />} />
       </Routes>
     </Router>
   </React.StrictMode>
