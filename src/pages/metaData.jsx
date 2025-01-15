@@ -2,7 +2,7 @@ import { Container, Row, Form, Button, ProgressBar } from "react-bootstrap";
 import HomeNavbar from "../components/navbar/homeNavbar";
 import SubNavbar from "../components/navbar/subNavbar";
 import MetaData from "../components/metaData/metaData";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import handleSubmitLogic from "../services/handleSubmitLogic";
 
 export default function MetaDataPage({ reset }) {
