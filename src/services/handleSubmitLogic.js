@@ -91,7 +91,7 @@ const handleSubmitLogic = async (
     setTitle(title);
     setMetaDescription(metaDescription);
     setArticleTitle(articleTitle);
-    setH1Title(h1Title); // Corrected function call
+    // setH1Title(h1Title); // Corrected function call
 
     // Extraer banner
     const bannerSrc = $(".article-internal-header-img img").attr("src");
