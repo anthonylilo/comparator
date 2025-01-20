@@ -24,5 +24,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/comparator/url-status-checker" element={<Redirection />} />
       </Routes>
     </Router>
-  </React.StrictMode>
+  </React.StrictMode> 
 );
