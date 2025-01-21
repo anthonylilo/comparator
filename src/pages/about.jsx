@@ -1,11 +1,10 @@
 // src/pages/AboutPage.jsx
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import HomeNavbar from '../components/navbar/homeNavbar';
 import HomeCarousel from '../components/carousel/carousel.jsx';
 import { Row, Container, Col, Dropdown,  } from 'react-bootstrap';
 import '../assets/styles/styles.css'
 import '../assets/styles/home.css'
-import SubNavbar from "../components/navbar/subNavbar.jsx"
 import Dropdowns from '../components/home-dropdowns/dropdowns.jsx';
 import DarkToggler from "../components/navbar/darkToggler/themeToggler.jsx";
 export default function AboutPage(className = "home") {
