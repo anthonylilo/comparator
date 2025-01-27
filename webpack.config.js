@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin'); // Importa el plugin
 
 module.exports = {
   entry: './src/index.js',
@@ -20,16 +21,8 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.svg$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[hash].[ext]', // Format for the output file name
-              outputPath: 'assets/images', // Directory for the images
-            },
-          },
-        ],
+        test: /\.(png|jpg|jpeg|gif|svg)$/i, // Manejo de imágenes
+        type: 'asset/resource',
       },
     ],
   },
@@ -39,6 +32,14 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/assets/images'),
+          to: 'assets/images',
+        },
+      ],
     }),
   ],
   devServer: {

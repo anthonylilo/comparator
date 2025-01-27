@@ -89,10 +89,10 @@ function processImages(contentParts) {
 
       if (data.startsWith("__ETIQUETAS DE IMAGEN:__")) {
         isProcessingImage = true; // Comenzar a procesar una imagen
-        tempImageData = { src: "/comparator/src/assets/images/no-image.png" };
+        tempImageData = { src: "/images/no-image.png" };
       } else if (isProcessingImage) {
         if (data.startsWith("__URL ACTUAL:__")) {
-          tempImageData.src = "/comparator/src/assets/images/no-image.png";
+          tempImageData.src = "/images/no-image.png";
         } else if (data.startsWith("__Alt Text:__")) {
           tempImageData.alt = data.replace("__Alt Text:__", "").trim();
         } else if (data.startsWith("__Title:__")) {
