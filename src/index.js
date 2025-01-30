@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/comparator" element={<AboutPage />} />
+        <Route path="/" element={<AboutPage />} />
         <Route path="/comparator/purina" element={<Purina />} />
         <Route path="/comparator/recetas" element={<Recetas />} />
         <Route path="/comparator/nutrition" element={<Nutrition />} />
