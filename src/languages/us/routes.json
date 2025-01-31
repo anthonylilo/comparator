@@ -1,0 +1,26 @@
+{
+  "splash": {
+    "path": "/NSB/",
+    "label": "Splash"
+  },
+  "requestFormCRM": {
+    "path": "/NSB/request-form",
+    "label": "Request Form"
+  },
+  "marketsSettings": {
+    "path": "/NSB/markets-settings",
+    "label": "Mercados"
+  },
+  "brandsSettings": {
+    "path": "/NSB/brands-settings",
+    "label": "Marcas"
+  },
+  "usersSettings": {
+    "path": "/NSB/users-settings",
+    "label": "Usuarios"
+  },
+  "reportSettings": {
+    "path": "/NSB/report",
+    "label": "Informe"
+  }
+}
