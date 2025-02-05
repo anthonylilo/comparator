@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Form, Col, ProgressBar } from "react-bootstrap";
 import { handleFileChange } from "../services/fileUtils";
 import CardsImages from "../components/cards/cardsImages";
-import MetaData from "../components/metaData/metaData";
+import MetaData from "../components/metaData/seoChecker";
 import SchemaViewer from "../components/schema/SchemaViewer";
 import CopyButton from "../components/copyToClipboard/copyButton";
 

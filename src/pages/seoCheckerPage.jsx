@@ -1,11 +1,11 @@
 import { Container, Row, Form, Button, ProgressBar } from "react-bootstrap";
 import HomeNavbar from "../components/navbar/homeNavbar";
 import SubNavbar from "../components/navbar/subNavbar";
-import MetaData from "../components/metaData/metaData";
+import SeoChecker from "../components/metaData/seoChecker";
 import React, { useState, useEffect } from "react";
 import handleSubmitLogic from "../services/handleSubmitLogic";
 
-export default function MetaDataPage({ reset }) {
+export default function SeoCheckerPage({ reset }) {
   const [urls, setUrls] = useState("");
   const [loading, setLoading] = useState(false);
   const [metaData, setMetaData] = useState({});
@@ -91,7 +91,7 @@ export default function MetaDataPage({ reset }) {
         </Row>
         {metaData.title && metaData.metaDescription && (
           <Row className="mt-3">
-            <MetaData metaData={metaData} />
+            <SeoChecker metaData={metaData} />
           </Row>
         )}
         {h1Tags.length > 0 && (

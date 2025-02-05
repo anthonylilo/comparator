@@ -2,8 +2,9 @@ import React from "react";
 import { Alert, ListGroup, Badge } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { Table, Container, Row } from "react-bootstrap";
+import SeoCheckerPage from "../../pages/seoCheckerPage";
 
-const MetaData = ({ metaData }) => {
+const SeoChecker = ({ metaData }) => {
   const {
     title,
     metaDescription,
@@ -145,7 +146,7 @@ const MetaData = ({ metaData }) => {
   );
 };
 
-MetaData.propTypes = {
+SeoChecker.propTypes = {
   metaData: PropTypes.shape({
     title: PropTypes.string.isRequired,
     metaDescription: PropTypes.string.isRequired,
@@ -158,4 +159,4 @@ MetaData.propTypes = {
   }).isRequired,
 };
 
-export default MetaData;
+export default SeoChecker;

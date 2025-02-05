@@ -14,9 +14,7 @@ function SplitBasicExample() {
             <Col md={12}>
                 <Dropdown as={ButtonGroup}>
                     <Button className='section-btn left-text' >Matrix Mirror</Button>
-
                     <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-
                     <Dropdown.Menu>
                         <Dropdown.Item href="/comparator/purina">Purina</Dropdown.Item>
                         <Dropdown.Item href="/comparator/nutrition">Baby and Me</Dropdown.Item>

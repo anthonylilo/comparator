@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/styles/styles.css";
 import Nutrition from "./pages/nutrition";
 import Professional from "./pages/nestlePro";
-import MetaDataPage from "./pages/metaData";
+import SeoCheckerPage from "./pages/seoCheckerPage";
 import Redirection from "./pages/redirection";
 import AboutPage from "./pages/about";
 import Recetas from "./pages/recetas";
@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/comparator/recetas" element={<Recetas />} />
         <Route path="/comparator/nutrition" element={<Nutrition />} />
         <Route path="/comparator/professional" element={<Professional />} />
-        <Route path="/comparator/seo-checker" element={<MetaDataPage />} />
+        <Route path="/comparator/seo-checker" element={<SeoCheckerPage />} />
         <Route path="/comparator/url-status-checker" element={<Redirection />} />
       </Routes>
     </Router>

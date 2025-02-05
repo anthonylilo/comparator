@@ -13,7 +13,7 @@ import CardsImages from "../components/cards/cardsImages";
 import InvalidLinksComponent from "../components/invalidLinks/invalidLinks";
 import HttpsModule from "../components/httpsLinks/httpsModule";
 import SchemaViewer from "../components/schema/SchemaViewer";
-import MetaData from "../components/metaData/metaData";
+import MetaData from "../components/metaData/seoChecker";
 import RedirectStatusesComponent from "../components/redirectStatus/redirectStatuseComponent";
 
 function ArticleForm({ reset, selectedFormat }) {

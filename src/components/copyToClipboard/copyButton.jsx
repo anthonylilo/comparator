@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
-import Notification from "../notification/notification"; // Importa el nuevo componente
+import Notification from "../notification/notification";
 
 const CopyButton = ({ text }) => {
   const [showNotification, setShowNotification] = useState(false);
