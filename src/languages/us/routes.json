@@ -1,26 +1,30 @@
-{
-  "splash": {
-    "path": "/NSB/",
-    "label": "Splash"
+[
+  {
+    "path": "/NSB",
+    "component": "AboutPage"
   },
-  "requestFormCRM": {
-    "path": "/NSB/request-form",
-    "label": "Request Form"
+  {
+    "path": "/NSB/comparator/purina",
+    "component": "Purina"
   },
-  "marketsSettings": {
-    "path": "/NSB/markets-settings",
-    "label": "Mercados"
+  {
+    "path": "/NSB/comparator/recetas",
+    "component": "Recetas"
   },
-  "brandsSettings": {
-    "path": "/NSB/brands-settings",
-    "label": "Marcas"
+  {
+    "path": "/NSB/comparator/nutrition",
+    "component": "Nutrition"
   },
-  "usersSettings": {
-    "path": "/NSB/users-settings",
-    "label": "Usuarios"
+  {
+    "path": "/NSB/comparator/professional",
+    "component": "Professional"
   },
-  "reportSettings": {
-    "path": "/NSB/report",
-    "label": "Informe"
+  {
+    "path": "/NSB/seo-checker",
+    "component": "SeoCheckerPage"
+  },
+  {
+    "path": "/NSB/url-status-checker",
+    "component": "Redirection"
   }
-}
+]

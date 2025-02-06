@@ -16,7 +16,7 @@ function SubNavbar() {
             <Nav.Item>
               <a
                 className="text-center "
-                href="/comparator/url-status-checker"
+                href="/NSB/url-status-checker"
                 rel="noopener noreferrer"
               >
                 URL Status Checker
@@ -25,7 +25,7 @@ function SubNavbar() {
             <Nav.Item>
               <a
                 className="text-center "
-                href="/comparator/seo-checker"
+                href="/NSB/seo-checker"
                 rel="noopener noreferrer"
               >
                 SEO Checker

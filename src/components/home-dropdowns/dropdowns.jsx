@@ -16,18 +16,18 @@ function SplitBasicExample() {
                     <Button className='section-btn left-text' >Matrix Mirror</Button>
                     <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
                     <Dropdown.Menu>
-                        <Dropdown.Item href="/comparator/purina">Purina</Dropdown.Item>
-                        <Dropdown.Item href="/comparator/nutrition">Baby and Me</Dropdown.Item>
-                        <Dropdown.Item href="/comparator/professional">Nestlé Professional</Dropdown.Item>
-                        <Dropdown.Item href="/comparator/recetas">Recetas Nestlé</Dropdown.Item>
+                        <Dropdown.Item href="/NSB/comparator/purina">Purina</Dropdown.Item>
+                        <Dropdown.Item href="/NSB/comparator/nutrition">Baby and Me</Dropdown.Item>
+                        <Dropdown.Item href="/NSB/comparator/professional">Nestlé Professional</Dropdown.Item>
+                        <Dropdown.Item href="/NSB/comparator/recetas">Recetas Nestlé</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </Col>
             <Col md={12}>
-                    <Button href='/comparator/seo-checker' className='section-btn'>SEO Checker</Button>
+                    <Button href='/NSB/seo-checker' className='section-btn'>SEO Checker</Button>
             </Col>
             <Col md={12}>
-                    <Button href='/comparator/url-status-checker' className='section-btn' >URL Status Checker</Button>
+                    <Button href='/NSB/url-status-checker' className='section-btn' >URL Status Checker</Button>
             </Col>
         </Row>
         </Container>

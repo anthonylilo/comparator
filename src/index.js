@@ -1,28 +1,39 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Purina from "./pages/purina";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/styles/styles.css";
+import routesData from "../src/languages/us/routes.json";
+
+// Import components
+import AboutPage from "./pages/about";
+import Purina from "./pages/purina";
+import Recetas from "./pages/recetas";
 import Nutrition from "./pages/nutrition";
 import Professional from "./pages/nestlePro";
 import SeoCheckerPage from "./pages/seoCheckerPage";
 import Redirection from "./pages/redirection";
-import AboutPage from "./pages/about";
-import Recetas from "./pages/recetas";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+// Map the component names to the actual components
+const componentsMap = {
+  AboutPage,
+  Purina,
+  Recetas,
+  Nutrition,
+  Professional,
+  SeoCheckerPage,
+  Redirection
+};
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<AboutPage />} />
-        <Route path="/comparator/purina" element={<Purina />} />
-        <Route path="/comparator/recetas" element={<Recetas />} />
-        <Route path="/comparator/nutrition" element={<Nutrition />} />
-        <Route path="/comparator/professional" element={<Professional />} />
-        <Route path="/comparator/seo-checker" element={<SeoCheckerPage />} />
-        <Route path="/comparator/url-status-checker" element={<Redirection />} />
+        {routesData.map((route, index) => {
+          const Component = componentsMap[route.component];
+          return <Route key={index} path={route.path} element={<Component />} />;
+        })}
       </Routes>
     </Router>
-  </React.StrictMode> 
+  </React.StrictMode>
 );

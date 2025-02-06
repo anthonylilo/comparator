@@ -23,7 +23,6 @@ a.text-center.nav-link.active{
     height: 90px;
 }
 .sub-header{
-    padding-top: 30px;
     background-color: var(--sub-header-bg);
     color: white;
     align-items: center;

@@ -24,11 +24,13 @@ function BrandPicker() {
 
     // Navegar a diferentes rutas
     if (selectedValue === "1") {
-      navigate("/comparator/purina");
+      navigate("/NSB/comparator/purina");
     } else if (selectedValue === "2") {
-      navigate("/comparator/nutrition");
+      navigate("/NSB/comparator/nutrition");
     } else if (selectedValue === "3") {
-      navigate("/comparator/professional");
+      navigate("/NSB/comparator/professional");
+    } else if (selectedValue === "4") {
+      navigate("/NSB/comparator/recetas");
     }
   };
 
@@ -52,6 +54,7 @@ function BrandPicker() {
       <option value="1">Purina</option>
       <option value="2">Baby and me</option>
       <option value="3">Nestlé Professional</option>
+      <option value="4">Recetas LATAM</option>
     </Form.Select>
   );
 }

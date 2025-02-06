@@ -15,12 +15,12 @@ function HomeNavbar() {
   return (
     <Navbar expand="lg" className="header">
       <Container fluid>
-        <Navbar.Brand href="/">Nestlé Sync Box</Navbar.Brand>
+        <Navbar.Brand href="/NSB/">Nestlé Sync Box</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-between" id="basic-navbar-nav">
           <Nav>
             <Nav.Item>
-            {location.pathname !== "/comparator" && <BrandPicker />}
+            {location.pathname !== "/NSB" && <BrandPicker />}
             </Nav.Item>
           </Nav>
           <Nav>
