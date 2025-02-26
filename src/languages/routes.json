@@ -1,0 +1,30 @@
+[
+  {
+    "path": "/NSB",
+    "component": "AboutPage"
+  },
+  {
+    "path": "/NSB/comparator/purina",
+    "component": "Purina"
+  },
+  {
+    "path": "/NSB/comparator/recetas",
+    "component": "Recetas"
+  },
+  {
+    "path": "/NSB/comparator/nutrition",
+    "component": "Nutrition"
+  },
+  {
+    "path": "/NSB/comparator/professional",
+    "component": "Professional"
+  },
+  {
+    "path": "/NSB/seo-checker",
+    "component": "SeoCheckerPage"
+  },
+  {
+    "path": "/NSB/url-status-checker",
+    "component": "Redirection"
+  }
+]

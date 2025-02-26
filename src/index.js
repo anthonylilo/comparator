@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/styles/styles.css";
-import routesData from "../src/languages/us/routes.json";
+import routesData from "../src/languages/routes.json";
 
 // Import components
 import AboutPage from "./pages/about";
