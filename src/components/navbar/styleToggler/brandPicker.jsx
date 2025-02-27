@@ -24,13 +24,13 @@ function BrandPicker() {
 
     // Navegar a diferentes rutas
     if (selectedValue === "1") {
-      navigate("/NSB/comparator/purina");
+      navigate("/comparator/purina");
     } else if (selectedValue === "2") {
-      navigate("/NSB/comparator/nutrition");
+      navigate("/comparator/nutrition");
     } else if (selectedValue === "3") {
-      navigate("/NSB/comparator/professional");
+      navigate("/comparator/professional");
     } else if (selectedValue === "4") {
-      navigate("/NSB/comparator/recetas");
+      navigate("/comparator/recetas");
     }
   };
 

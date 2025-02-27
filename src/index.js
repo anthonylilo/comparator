@@ -27,13 +27,13 @@ const componentsMap = {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        {routesData.map((route, index) => {
-          const Component = componentsMap[route.component];
-          return <Route key={index} path={route.path} element={<Component />} />;
-        })}
-      </Routes>
-    </Router>
-  </React.StrictMode>
+  <Router basename="/NSB">
+    <Routes>
+      {routesData.map((route, index) => {
+        const Component = componentsMap[route.component];
+        return <Route key={index} path={route.path} element={<Component />} />;
+      })}
+    </Routes>
+  </Router>
+</React.StrictMode>
 );
