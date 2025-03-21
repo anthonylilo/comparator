@@ -1,5 +1,5 @@
 import axios from "axios";
-import { load } from 'cheerio';
+import { load } from "cheerio";
 
 const checkUrlStatus = async (url) => {
   try {
@@ -44,7 +44,9 @@ const extractMetaData = ($) => {
   const title = $("title").text();
   const metaDescription = $("meta[name='description']").attr("content");
   const articleTitle = $(".article-internal-title span").text();
-  const h1Title = $("h1").map((i, el) => $(el).text().trim()).get();
+  const h1Title = $("h1")
+    .map((i, el) => $(el).text().trim())
+    .get();
   return { title, metaDescription, articleTitle, h1Title };
 };
 
@@ -87,7 +89,8 @@ const handleSubmitLogic = async (
     const $ = load(response.data);
 
     // **Extraer metadatos usando la nueva función**
-    const { title, metaDescription, articleTitle, h1Title } = extractMetaData($);
+    const { title, metaDescription, articleTitle, h1Title } =
+      extractMetaData($);
     setTitle(title);
     setMetaDescription(metaDescription);
     setArticleTitle(articleTitle);
@@ -113,9 +116,7 @@ const handleSubmitLogic = async (
 
     // Extraer el contenido del artículo
     const contentArray = [];
-    const elements = $(
-      ".article-internal-body .wysiwyg, .article-internal-body img"
-    );
+    const elements = $(".article-internal .wysiwyg, .article-internal img");
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i];
       if ($(element).is("img")) {
@@ -158,7 +159,7 @@ const handleSubmitLogic = async (
     const invalid = [];
     const linkStatusesObj = {};
 
-    $(".article-internal-body a").each(async (index, element) => {
+    $(".article-internal a").each(async (index, element) => {
       const linkUrl = new URL($(element).attr("href"), baseUrl).href;
       const linkStatus = await checkUrlStatus(linkUrl);
       const linkDomain = new URL(linkUrl).origin.split(".").slice(-2).join(".");

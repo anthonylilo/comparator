@@ -25,9 +25,11 @@ const componentsMap = {
   Redirection
 };
 
+console.log("Esta funcionando");
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-  <Router basename="/NSB">
+  <Router>
     <Routes>
       {routesData.map((route, index) => {
         const Component = componentsMap[route.component];
