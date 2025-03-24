@@ -7,7 +7,6 @@ import {
   Container,
 } from "react-bootstrap";
 import "../../assets/styles/header.css";
-import { useLocation } from "react-router-dom"; // Import useLocation
 import BrandPicker from "./styleToggler/brandPicker";
 import "../navigatonButtons/TooltipButton.css";
 
@@ -20,7 +19,7 @@ function HomeNavbar() {
         <Navbar.Collapse className="justify-content-between" id="basic-navbar-nav">
           <Nav>
             <Nav.Item>
-            {location.pathname !== "/NSB" && <BrandPicker />}
+            {location.pathname !== "/NSB/" && location.pathname !== "/NSB" && <BrandPicker/>}
             </Nav.Item>
           </Nav>
           <Nav>

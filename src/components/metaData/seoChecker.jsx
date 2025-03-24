@@ -13,7 +13,10 @@ const SeoChecker = ({ metaData }) => {
     articleNumber,
     category,
     oldUrl,
-    h1Title
+    h1Title,
+    metaRobots,
+    metaGeoRegion,
+    metaGeoPlacename,
   } = metaData;
 
   const titleLength = title ? title.length : 0;
@@ -134,8 +137,24 @@ const SeoChecker = ({ metaData }) => {
               )}
               {h1Title && (
                 <tr>
-                  <th>Actual URL</th>
+                  <th>H1 Title</th>
                   <td>{h1Title}</td>
+                </tr>
+              )}
+              <tr>
+                <th>Index/Follow</th>
+                <td>{metaRobots ? metaRobots : "No-Follow"}</td>
+              </tr>
+              {metaGeoRegion && (
+                <tr>
+                  <th>Geo Region</th>
+                  <td>{metaGeoRegion}</td>
+                </tr>
+              )}
+              {metaGeoPlacename && (
+                <tr>
+                  <th>Geo Placename</th>
+                  <td>{metaGeoPlacename}</td>
                 </tr>
               )}
             </tbody>
@@ -156,6 +175,9 @@ SeoChecker.propTypes = {
     category: PropTypes.string,
     oldUrl: PropTypes.string,
     h1Title: PropTypes.string,
+    metaRobots: PropTypes.string,
+    metaGeoRegion: PropTypes.string,
+    metaGeoPlacename: PropTypes.string,
   }).isRequired,
 };
 

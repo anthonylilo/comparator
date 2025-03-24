@@ -25,8 +25,6 @@ const componentsMap = {
   Redirection
 };
 
-console.log("Esta funcionando");
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
   <Router>

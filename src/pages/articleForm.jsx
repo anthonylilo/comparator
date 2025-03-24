@@ -36,6 +36,12 @@ function ArticleForm({ reset, selectedFormat }) {
     setTitle,
     metaDescription,
     setMetaDescription,
+    metaRobots,
+    setMetaRobots,
+    metaGeoRegion,
+    setMetaGeoRegion,
+    metaGeoPlacename,
+    setMetaGeoPlacename,
     banner,
     setBanner,
     articleContent,
@@ -45,10 +51,15 @@ function ArticleForm({ reset, selectedFormat }) {
   const [redirectUrls, setRedirectUrls] = useState("");
   const [redirectStatuses, setRedirectStatuses] = useState({});
   const [articleTitle, setArticleTitle] = useState("");
+  const [headingTitle, setHeadingTitle] = useState("");
   const metaData = {
     title: title,
     metaDescription: metaDescription,
     suggestedUrl: url,
+    metaRobots: metaRobots,
+    metaGeoRegion: metaGeoRegion,
+    metaGeoPlacename: metaGeoPlacename,
+    h1Title: headingTitle,
   };
 
   const handleSubmit = async (e) => {
@@ -64,10 +75,14 @@ function ArticleForm({ reset, selectedFormat }) {
       setShowAdditionalFields,
       setTitle,
       setMetaDescription,
+      setMetaRobots,
+      setMetaGeoRegion,
+      setMetaGeoPlacename,
       setBanner,
       setArticleContent,
       setRedirectStatuses,
-      setArticleTitle
+      setArticleTitle,
+      setHeadingTitle
     );
   };
 
@@ -83,6 +98,9 @@ function ArticleForm({ reset, selectedFormat }) {
       setShowAdditionalFields(false);
       setTitle("");
       setMetaDescription("");
+      setMetaRobots(""),
+      setMetaGeoRegion(""),
+      setMetaGeoPlacename(""),
       setBanner(null);
       setArticleContent([]);
       setArticleTitle("");
@@ -104,10 +122,14 @@ function ArticleForm({ reset, selectedFormat }) {
               <Form.Control
                 type="url"
                 placeholder={
-                  placeHolderOption === "/comparator"
+                  placeHolderOption === "/NSB/comparator/purina"
                     ? "https://purina.cl/"
-                    : placeHolderOption === "/comparator/nutrition"
+                    : placeHolderOption === "/NSB/comparator/nutrition"
                     ? "https://www.babyandme.com"
+                    : placeHolderOption === "/NSB/comparator/professional"
+                    ? "https://nestleprofessional-latam.com/pais/"
+                    : placeHolderOption === "/NSB/comparator/recetas"
+                    ? "https://recetasnestle.com/"
                     : "https://nestleprofessional-latam.com/pais/"
                 }
                 value={url}
@@ -132,7 +154,7 @@ function ArticleForm({ reset, selectedFormat }) {
       {showAdditionalFields && (
         <Row className="mt-3">
           <div id="comparator">
-            <h1>{articleTitle}</h1>
+            <h1>{headingTitle}</h1>
             {banner && <CardsImages image={banner} />}
             <Row className="mt-3">
               {articleContent.map((item, index) => (

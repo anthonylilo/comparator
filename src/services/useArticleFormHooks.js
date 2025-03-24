@@ -2,23 +2,23 @@ import { useState } from "react";
 
 export const useArticleFormHooks = () => {
   const [url, setUrl] = useState("");
-  const [textareaValue, setTextareaValue] = useState("");
   const [imageUrls, setImageUrls] = useState([]);
   const [invalidLinks, setInvalidLinks] = useState([]);
   const [linkStatuses, setLinkStatuses] = useState({});
   const [schema, setSchema] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
-  const [metaDescription, setMetaDescription] = useState('');
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [metaRobots, setMetaRobots] = useState("");
+  const [metaGeoRegion, setMetaGeoRegion] = useState("");
+  const [metaGeoPlacename, setMetaGeoPlacename] = useState("");
   const [banner, setBanner] = useState(null);
-  const [articleContent, setArticleContent] = useState("");
+  const [articleContent, setArticleContent] = useState([]);
 
   return {
     url,
     setUrl,
-    textareaValue,
-    setTextareaValue,
     imageUrls,
     setImageUrls,
     invalidLinks,
@@ -31,13 +31,19 @@ export const useArticleFormHooks = () => {
     setLoading,
     showAdditionalFields,
     setShowAdditionalFields,
-    metaDescription,
-    setMetaDescription,
     title,
     setTitle,
+    metaDescription,
+    setMetaDescription,
+    metaRobots,
+    setMetaRobots,
+    metaGeoRegion,
+    setMetaGeoRegion,
+    metaGeoPlacename,
+    setMetaGeoPlacename,
     banner,
     setBanner,
     articleContent,
-    setArticleContent
+    setArticleContent,
   };
 };

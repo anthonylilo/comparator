@@ -43,11 +43,14 @@ const fetchImageDetails = async (imageUrl) => {
 const extractMetaData = ($) => {
   const title = $("title").text();
   const metaDescription = $("meta[name='description']").attr("content");
+  const metaRobots = $("meta[name='robots']").attr("content");
+  const metaGeoRegion = $("meta[name='geo.region']").attr("content");
+  const metaGeoPlacename = $("meta[name='geo.placename']").attr("content");
   const articleTitle = $(".article-internal-title span").text();
   const h1Title = $("h1")
     .map((i, el) => $(el).text().trim())
     .get();
-  return { title, metaDescription, articleTitle, h1Title };
+  return { title, metaDescription, metaRobots, metaGeoRegion, metaGeoPlacename, articleTitle, h1Title };
 };
 
 // Función para extraer esquema JSON-LD
@@ -75,11 +78,14 @@ const handleSubmitLogic = async (
   setShowAdditionalFields,
   setTitle,
   setMetaDescription,
+  setMetaRobots,
+  setMetaGeoRegion,
+  setMetaGeoPlacename,
   setBanner,
   setArticleContent,
   setRedirectStatuses,
   setArticleTitle,
-  setH1Title // Corrected parameter name
+  setHeadingTitle
 ) => {
   setLoading(true);
   try {
@@ -89,12 +95,15 @@ const handleSubmitLogic = async (
     const $ = load(response.data);
 
     // **Extraer metadatos usando la nueva función**
-    const { title, metaDescription, articleTitle, h1Title } =
+    const { title, metaDescription, metaRobots, metaGeoRegion, metaGeoPlacename, articleTitle, h1Title } =
       extractMetaData($);
     setTitle(title);
     setMetaDescription(metaDescription);
+    setMetaRobots(metaRobots);
+    setMetaGeoRegion(metaGeoRegion);
+    setMetaGeoPlacename(metaGeoPlacename);
     setArticleTitle(articleTitle);
-    // setH1Title(h1Title); // Corrected function call
+    setHeadingTitle(h1Title);
 
     // Extraer banner
     const bannerSrc = $(".article-internal-header-img img").attr("src");
@@ -121,22 +130,26 @@ const handleSubmitLogic = async (
       const element = elements[i];
       if ($(element).is("img")) {
         const imgSrc = $(element).attr("src");
-        const imgAlt = $(element).attr("alt") || "Empty";
-        const imgTitle = $(element).attr("title") || "Empty";
-        const imgSrcUrl = new URL(imgSrc, url.trim()).href;
-        const imgFilename = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
-
-        const imgDetails = await fetchImageDetails(imgSrcUrl);
-        contentArray.push({
-          type: "image",
-          src: imgSrcUrl,
-          alt: imgAlt,
-          title: imgTitle,
-          imageName: imgFilename,
-          width: imgDetails.width,
-          height: imgDetails.height,
-          size: imgDetails.size,
-        });
+        if(imgSrc){
+          const imgAlt = $(element).attr("alt") || "Empty";
+          const imgTitle = $(element).attr("title") || "Empty";
+          const imgSrcUrl = new URL(imgSrc, url.trim()).href;
+          const imgFilename = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
+  
+          const imgDetails = await fetchImageDetails(imgSrcUrl);
+          contentArray.push({
+            type: "image",
+            src: imgSrcUrl,
+            alt: imgAlt,
+            title: imgTitle,
+            imageName: imgFilename,
+            width: imgDetails.width,
+            height: imgDetails.height,
+            size: imgDetails.size,
+          });
+        }else{
+          console.warn("No image found");
+        }
       } else if ($(element).is("div")) {
         const htmlContent = $(element).html();
         contentArray.push({

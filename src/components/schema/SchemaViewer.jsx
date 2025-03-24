@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Container, Row } from "react-bootstrap";
-import CopyButton from "../../components/copyToClipboard/copyButton";
+
 const SchemaViewer = ({ schema }) => {
   const schemaData = schema["@graph"] ? schema["@graph"][0] : schema;
   if (!schemaData) {
@@ -9,7 +9,9 @@ const SchemaViewer = ({ schema }) => {
 
   // Función para formatear fechas
   const formatDate = (dateStr) => {
-    return dateStr ? new Date(dateStr).toLocaleString() : "N/A";
+    if (!dateStr) return "N/A";
+    const date = new Date(dateStr);
+    return isNaN(date.getTime()) ? dateStr : date.toLocaleString();
   };
 
   // Función para obtener una propiedad de un objeto de forma segura
@@ -158,6 +160,20 @@ const SchemaViewer = ({ schema }) => {
                   </a>
                 </td>
               </tr>
+              {schemaData.speakable && (
+                <>
+                  <tr>
+                    <th>Speakable Type</th>
+                    <td>{schemaData.speakable["@type"]}</td>
+                  </tr>
+                  {schemaData.speakable.xpath.map((xpath, idx) => (
+                    <tr key={idx}>
+                      <th>Speakable XPath {idx + 1}</th>
+                      <td>{xpath}</td>
+                    </tr>
+                  ))}
+                </>
+              )}
             </tbody>
           </Table>
         </Container>

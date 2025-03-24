@@ -40,7 +40,9 @@ function BrandPicker() {
       setSelectedBrand("2");
     } else if (location.pathname.includes("/professional")) {
       setSelectedBrand("3");
-    } else {
+    } else if (location.pathname.includes("/recetas")) {
+      setSelectedBrand("4");
+    }else {
       setSelectedBrand("1");
     }
   }, [location.pathname]);
