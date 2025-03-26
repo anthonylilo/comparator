@@ -22,7 +22,7 @@ export default function Nutrition(className = "Nutrition") {
       <SubNavbar />
       <Container>
         <div className="containerWrapper">
-          <h1 className="brandBackgroundHeading">Baby and me</h1>
+          <h1 className="brandBackgroundHeading">FamilyNes</h1>
           <Container className="main" fluid>
             <Row className="text-center pt-4 pb-4">
               <Col md={12}>

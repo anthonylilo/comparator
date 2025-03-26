@@ -32,6 +32,9 @@ function BrandPicker() {
     } else if (selectedValue === "4") {
       navigate("/NSB/comparator/recetas");
     }
+      else if (selectedValue === "5") {
+      navigate("/NSB/comparator/ndg");
+    }
   };
 
   // Este efecto maneja la selección del valor basado en la ruta actual
@@ -42,6 +45,8 @@ function BrandPicker() {
       setSelectedBrand("3");
     } else if (location.pathname.includes("/recetas")) {
       setSelectedBrand("4");
+    } else if (location.pathname.includes("/ndg")) {
+      setSelectedBrand("5");
     }else {
       setSelectedBrand("1");
     }
@@ -54,9 +59,10 @@ function BrandPicker() {
       value={selectedBrand}
     >
       <option value="1">Purina</option>
-      <option value="2">Baby and me</option>
+      <option value="2">FamilyNes</option>
       <option value="3">Nestlé Professional</option>
       <option value="4">Recetas LATAM</option>
+      <option value="5">Nestlé Dolce Gusto</option>
     </Form.Select>
   );
 }

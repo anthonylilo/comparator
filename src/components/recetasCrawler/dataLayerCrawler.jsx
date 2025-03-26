@@ -65,7 +65,7 @@ const DataLayerCrawler = () => {
 
   return (
     <div style={{ padding: "1rem" }}>
-      <h1>DataLayer Crawler</h1>
+      <h3>DataLayer Crawler</h3>
       <input
         type="text"
         placeholder="Enter URLs (separate with commas)"

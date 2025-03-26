@@ -164,13 +164,16 @@ button.section-btn.btn:hover, a.section-btn.btn:hover {
     background-color: #E82F2F;
 }
 .dropdown-menu .dropdown-item:nth-child(2) {
-    background-color: #099AA4;
+    background-color: #173c56;
 }
 .dropdown-menu .dropdown-item:nth-child(3) {
     background-color: #FC9A08;
 }
 .dropdown-menu .dropdown-item:nth-child(4) {
     background-color: #e437b0;
+}
+.dropdown-menu .dropdown-item:nth-child(5) {
+    background-color: #674711;
 }
 .section-btn {
     min-width: 200px;

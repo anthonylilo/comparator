@@ -31,9 +31,9 @@
 }
 
 [data-project="unifier"][data-theme="light"] {
-  --bg-color: #099aa4; /* Unifier-specific light theme background */
+  --bg-color: #173c56; /* Unifier-specific light theme background */
   --text-color: #000000; /* Unifier-specific light theme text */
-  --sub-header-bg:#005D63;
+  --sub-header-bg:#2b71a2;
   --brand-heading:#ffffff4d;
 }
 [data-project="professional"][data-theme="light"] {
@@ -62,7 +62,7 @@
 
 [data-project="unifier"][data-theme="dark"] {
   --text-color: #FFFFFF; /* Unifier-specific dark theme text */
-  --brand-heading: #099AA4;
+  --brand-heading: #173c56;
 }
 [data-project="professional"][data-theme="dark"] {
   --text-color: #FFFFFF; /* Unifier-specific dark theme text */

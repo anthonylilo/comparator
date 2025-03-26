@@ -17,9 +17,10 @@ function SplitBasicExample() {
                     <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
                     <Dropdown.Menu>
                         <Dropdown.Item href="/NSB/comparator/purina">Purina</Dropdown.Item>
-                        <Dropdown.Item href="/NSB/comparator/nutrition">Baby and Me</Dropdown.Item>
+                        <Dropdown.Item href="/NSB/comparator/nutrition">FamilyNes</Dropdown.Item>
                         <Dropdown.Item href="/NSB/comparator/professional">Nestlé Professional</Dropdown.Item>
                         <Dropdown.Item href="/NSB/comparator/recetas">Recetas Nestlé</Dropdown.Item>
+                        <Dropdown.Item href="/NSB/comparator/ndg">Nestlé Dolce Gusto</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </Col>
