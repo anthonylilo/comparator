@@ -13,6 +13,7 @@ import Nutrition from "./pages/nutrition";
 import Professional from "./pages/nestlePro";
 import SeoCheckerPage from "./pages/seoCheckerPage";
 import Redirection from "./pages/redirection";
+import Ndg from "./pages/dolceGusto";
 
 // Map the component names to the actual components
 const componentsMap = {
@@ -22,7 +23,8 @@ const componentsMap = {
   Nutrition,
   Professional,
   SeoCheckerPage,
-  Redirection
+  Redirection,
+  Ndg
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(

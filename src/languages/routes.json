@@ -20,6 +20,10 @@
     "component": "Professional"
   },
   {
+    "path": "/NSB/comparator/ndg",
+    "component": "Ndg"
+  },
+  {
     "path": "/NSB/seo-checker",
     "component": "SeoCheckerPage"
   },
