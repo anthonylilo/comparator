@@ -37,6 +37,22 @@ const SchemaViewer = ({ schema }) => {
                 <td>{schemaData["@type"]}</td>
               </tr>
               <tr>
+                <th>@id</th>
+                <td>
+                  <a
+                    href={
+                      getSafeProperty(schemaData.mainEntityOfPage, ["@id"]) ||
+                      schemaData.mainEntityOfPage
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {getSafeProperty(schemaData.mainEntityOfPage, ["@id"]) ||
+                      schemaData.mainEntityOfPage}
+                  </a>
+                </td>
+              </tr>
+              <tr>
                 <th>
                   Headline
                   <br />
@@ -115,6 +131,43 @@ const SchemaViewer = ({ schema }) => {
                 <td>{getSafeProperty(schemaData, ["author", "name"])}</td>
               </tr>
               <tr>
+                <td>URL</td>
+                <td>{getSafeProperty(schemaData, ["author", "url"])}</td>
+              </tr>
+              {schemaData.speakable ? (
+                <>
+                  <tr>
+                    <th>Speakable</th>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>@Type</td>
+                    <td>{schemaData.speakable["@type"]}</td>
+                  </tr>
+                  {schemaData.speakable.xpath.map((xpath, idx) => (
+                    <tr key={idx}>
+                      <td>XPath {idx + 1}</td>
+                      <td>{xpath}</td>
+                    </tr>
+                  ))}
+                </>
+              ) : (
+                <>
+                  <tr>
+                    <th>Speakable</th>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Copiar</td>
+                    <td>
+                      /html/head/title,
+                      /html/head/meta[@name='description']/@content
+                    </td>
+                  </tr>
+                </>
+              )}
+
+              <tr>
                 <th>Publisher</th>
                 <td></td>
               </tr>
@@ -160,20 +213,6 @@ const SchemaViewer = ({ schema }) => {
                   </a>
                 </td>
               </tr>
-              {schemaData.speakable && (
-                <>
-                  <tr>
-                    <th>Speakable Type</th>
-                    <td>{schemaData.speakable["@type"]}</td>
-                  </tr>
-                  {schemaData.speakable.xpath.map((xpath, idx) => (
-                    <tr key={idx}>
-                      <th>Speakable XPath {idx + 1}</th>
-                      <td>{xpath}</td>
-                    </tr>
-                  ))}
-                </>
-              )}
             </tbody>
           </Table>
         </Container>

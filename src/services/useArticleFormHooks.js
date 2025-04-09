@@ -11,10 +11,12 @@ export const useArticleFormHooks = () => {
   const [title, setTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
   const [metaRobots, setMetaRobots] = useState("");
+  const [metaKeyWords, setMetaKeyWords] = useState("");
   const [metaGeoRegion, setMetaGeoRegion] = useState("");
   const [metaGeoPlacename, setMetaGeoPlacename] = useState("");
   const [banner, setBanner] = useState(null);
   const [articleContent, setArticleContent] = useState([]);
+  const [headingTitle, setHeadingTitle] = useState("");
 
   return {
     url,
@@ -37,6 +39,8 @@ export const useArticleFormHooks = () => {
     setMetaDescription,
     metaRobots,
     setMetaRobots,
+    metaKeyWords,
+    setMetaKeyWords,
     metaGeoRegion,
     setMetaGeoRegion,
     metaGeoPlacename,
@@ -45,5 +49,7 @@ export const useArticleFormHooks = () => {
     setBanner,
     articleContent,
     setArticleContent,
+    headingTitle,
+    setHeadingTitle,
   };
 };

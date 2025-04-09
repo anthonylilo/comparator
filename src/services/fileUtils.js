@@ -30,6 +30,11 @@ function extractMetaData(contentParts) {
         } else if (data.startsWith("CATEGORÍA:")) {
           extractedMetaData.category = data.replace("CATEGORÍA:", "").trim();
           return false;
+        } else if (data.startsWith("KEYWORD SUGERIDA:")) {
+          extractedMetaData.metaKeyWords = data
+            .replace("KEYWORD SUGERIDA:", "")
+            .trim();
+          return false;
         } else if (data.startsWith("__Title:__") && !extractedMetaData.title) {
           extractedMetaData.title = data.replace("__Title:__", "").trim();
           return false;
@@ -78,7 +83,6 @@ function extractMetaData(contentParts) {
 }
 
 function processImages(contentParts) {
-  console.log("Inicio imágenes:", contentParts);
   const processedContentParts = [];
   let tempImageData = {};
   let isProcessingImage = false;
@@ -118,7 +122,6 @@ function processImages(contentParts) {
     }
   });
 
-  console.log("Final de imágenes:", processedContentParts);
   return processedContentParts;
 }
 

@@ -38,6 +38,8 @@ function ArticleForm({ reset, selectedFormat }) {
     setMetaDescription,
     metaRobots,
     setMetaRobots,
+    metaKeyWords,
+    setMetaKeyWords,
     metaGeoRegion,
     setMetaGeoRegion,
     metaGeoPlacename,
@@ -46,17 +48,19 @@ function ArticleForm({ reset, selectedFormat }) {
     setBanner,
     articleContent,
     setArticleContent,
+    headingTitle,
+    setHeadingTitle,
   } = useArticleFormHooks();
 
   const [redirectUrls, setRedirectUrls] = useState("");
   const [redirectStatuses, setRedirectStatuses] = useState({});
   const [articleTitle, setArticleTitle] = useState("");
-  const [headingTitle, setHeadingTitle] = useState("");
   const metaData = {
     title: title,
     metaDescription: metaDescription,
     suggestedUrl: url,
     metaRobots: metaRobots,
+    metaKeyWords: metaKeyWords,
     metaGeoRegion: metaGeoRegion,
     metaGeoPlacename: metaGeoPlacename,
     h1Title: headingTitle,
@@ -76,6 +80,7 @@ function ArticleForm({ reset, selectedFormat }) {
       setTitle,
       setMetaDescription,
       setMetaRobots,
+      setMetaKeyWords,
       setMetaGeoRegion,
       setMetaGeoPlacename,
       setBanner,
@@ -99,9 +104,10 @@ function ArticleForm({ reset, selectedFormat }) {
       setTitle("");
       setMetaDescription("");
       setMetaRobots(""),
-      setMetaGeoRegion(""),
-      setMetaGeoPlacename(""),
-      setBanner(null);
+        setMetaKeyWords(""),
+        setMetaGeoRegion(""),
+        setMetaGeoPlacename(""),
+        setBanner(null);
       setArticleContent([]);
       setArticleTitle("");
       setRedirectStatuses({});

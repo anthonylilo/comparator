@@ -36,7 +36,6 @@ La aplicación utiliza diversas librerías para manejar diferentes aspectos de s
 - **Express v4.18.3:** Framework web rápido, minimalista y flexible para Node.js.
 - **Http proxy middleware v2.0.6:** Middleware para configurar proxies en aplicaciones Node.js.
 - **Mammoth v1.7.2:** Herramienta para convertir documentos DOCX a HTML sin perder la semántica.
-- **ckeditor5-react v6.2.0:** Editor de texto enriquecido para aplicaciones React.
 - **Fortawesome v6.5.2:** Conjunto de iconos vectoriales y herramientas relacionadas.
 - **Cors v2.8.5:** Middleware para habilitar CORS (Cross-Origin Resource Sharing) en aplicaciones Express.
 - **Diff-match-patch v1.0.5:** Biblioteca para comparar y parchear texto.

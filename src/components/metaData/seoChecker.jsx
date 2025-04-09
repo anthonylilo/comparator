@@ -15,6 +15,7 @@ const SeoChecker = ({ metaData }) => {
     oldUrl,
     h1Title,
     metaRobots,
+    metaKeyWords,
     metaGeoRegion,
     metaGeoPlacename,
   } = metaData;
@@ -143,8 +144,14 @@ const SeoChecker = ({ metaData }) => {
               )}
               <tr>
                 <th>Index/Follow</th>
-                <td>{metaRobots ? metaRobots : "No-Follow"}</td>
+                <td>{metaRobots ? metaRobots : "index, follow"}</td>
               </tr>
+              {metaKeyWords && (
+                <tr>
+                  <th>Keywords</th>
+                  <td>{metaKeyWords ? metaKeyWords : "UNDEFINED"}</td>
+                </tr>
+              )}
               {metaGeoRegion && (
                 <tr>
                   <th>Geo Region</th>
@@ -176,6 +183,7 @@ SeoChecker.propTypes = {
     oldUrl: PropTypes.string,
     h1Title: PropTypes.string,
     metaRobots: PropTypes.string,
+    metaKeyWords: PropTypes.string,
     metaGeoRegion: PropTypes.string,
     metaGeoPlacename: PropTypes.string,
   }).isRequired,

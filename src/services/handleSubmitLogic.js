@@ -44,13 +44,14 @@ const extractMetaData = ($) => {
   const title = $("title").text();
   const metaDescription = $("meta[name='description']").attr("content");
   const metaRobots = $("meta[name='robots']").attr("content");
+  const metaKeyWords = $("meta[name='keywords']").attr("content");
   const metaGeoRegion = $("meta[name='geo.region']").attr("content");
   const metaGeoPlacename = $("meta[name='geo.placename']").attr("content");
   const articleTitle = $(".article-internal-title span").text();
   const h1Title = $("h1")
     .map((i, el) => $(el).text().trim())
     .get();
-  return { title, metaDescription, metaRobots, metaGeoRegion, metaGeoPlacename, articleTitle, h1Title };
+  return { title, metaDescription, metaRobots, metaKeyWords, metaGeoRegion, metaGeoPlacename, articleTitle, h1Title };
 };
 
 // Función para extraer esquema JSON-LD
@@ -79,6 +80,7 @@ const handleSubmitLogic = async (
   setTitle,
   setMetaDescription,
   setMetaRobots,
+  setMetaKeyWords,
   setMetaGeoRegion,
   setMetaGeoPlacename,
   setBanner,
@@ -95,11 +97,12 @@ const handleSubmitLogic = async (
     const $ = load(response.data);
 
     // **Extraer metadatos usando la nueva función**
-    const { title, metaDescription, metaRobots, metaGeoRegion, metaGeoPlacename, articleTitle, h1Title } =
+    const { title, metaDescription, metaRobots, metaKeyWords, metaGeoRegion, metaGeoPlacename, articleTitle, h1Title } =
       extractMetaData($);
     setTitle(title);
     setMetaDescription(metaDescription);
     setMetaRobots(metaRobots);
+    setMetaKeyWords(metaKeyWords);
     setMetaGeoRegion(metaGeoRegion);
     setMetaGeoPlacename(metaGeoPlacename);
     setArticleTitle(articleTitle);
