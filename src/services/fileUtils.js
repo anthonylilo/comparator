@@ -329,7 +329,6 @@ const parseMarkdownContent = (content, selectedFormat) => {
       console.error("Error parsing schema JSON:", e);
     }
   }
-  console.log(content);
 
   let tagMatches = [];
   tagRegex.forEach(({ regex }) => {
