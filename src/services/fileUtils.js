@@ -149,7 +149,7 @@ const parseMarkdownContent = (content, selectedFormat) => {
       Keys: ["altText", "title", "imageName"],
     },
   ];
-  const schemaRegex = /__DATOS ESTRUCTURADOS:\s*__\s*([\s\S]*?)<\/script>/i;
+  const schemaRegex = /__DATOS ESTRUCTURADOS:(?:.*?)__[\s\S]*?<script[^>]*>([\s\S]*?)<\/script>/i;
   const metaDataPatterns = [
     {
       regex:
@@ -329,6 +329,7 @@ const parseMarkdownContent = (content, selectedFormat) => {
       console.error("Error parsing schema JSON:", e);
     }
   }
+  console.log(content);
 
   let tagMatches = [];
   tagRegex.forEach(({ regex }) => {
