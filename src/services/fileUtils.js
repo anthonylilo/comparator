@@ -149,7 +149,8 @@ const parseMarkdownContent = (content, selectedFormat) => {
       Keys: ["altText", "title", "imageName"],
     },
   ];
-  const schemaRegex = /__DATOS ESTRUCTURADOS:(?:.*?)__[\s\S]*?<script[^>]*>([\s\S]*?)<\/script>/i;
+  const schemaRegex =
+    /__DATOS ESTRUCTURADOS:(?:.*?)__[\s\S]*?<script[^>]*>([\s\S]*?)<\/script>/i;
   const metaDataPatterns = [
     {
       regex:
@@ -498,6 +499,37 @@ const parseMarkdownContent = (content, selectedFormat) => {
       redirections,
     };
   } else {
+    const mergeListParagraphs = (parts) => {
+      const merged = [];
+      let listBuffer = [];
+
+      parts.forEach((part) => {
+        if (part.type === "paragraph" && part.data.startsWith("- ")) {
+          listBuffer.push(part.data);
+        } else {
+          if (listBuffer.length) {
+            merged.push({
+              type: "paragraph",
+              data: listBuffer.join("\n"),
+            });
+            listBuffer = [];
+          }
+          merged.push(part);
+        }
+      });
+
+      if (listBuffer.length) {
+        merged.push({
+          type: "paragraph",
+          data: listBuffer.join("\n"),
+        });
+      }
+
+      return merged;
+    };
+
+    contentParts = mergeListParagraphs(contentParts);
+
     localStorage.setItem("editorContent", JSON.stringify(contentParts));
 
     return {

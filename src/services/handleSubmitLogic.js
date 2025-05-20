@@ -126,6 +126,9 @@ const handleSubmitLogic = async (
       imageName: bannerFilename,
     });
 
+    console.log("Banner details:", bannerSrcUrl);
+    console.log(bannerDetails);
+
     // Extraer el contenido del artículo
     const contentArray = [];
     const elements = $(".article-internal .wysiwyg, .article-internal img");

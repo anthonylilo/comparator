@@ -18,6 +18,7 @@ const SeoChecker = ({ metaData }) => {
     metaKeyWords,
     metaGeoRegion,
     metaGeoPlacename,
+    introDescription,
   } = metaData;
 
   const titleLength = title ? title.length : 0;
@@ -35,7 +36,23 @@ const SeoChecker = ({ metaData }) => {
   const IDEAL_CHAR_DESC_SIZE =
     descriptionLength >= 41 && descriptionLength <= 170;
   const MAX_CHAR_DESC_SIZE = descriptionLength > 170;
-  const MAX_URL_SIZE = urlLength > 80;
+  const urlLastSegment =
+    url && url.includes("/") ? url.substring(url.lastIndexOf("/") + 1) : "";
+  const urlLastSegmentLength = urlLastSegment.length;
+
+  if (urlLastSegmentLength > 40) {
+    urlColor = "danger";
+    urlMessage =
+      "The final segment of the URL is longer than 40 characters. (" +
+      urlLastSegmentLength +
+      ")";
+  } else {
+    urlColor = "primary";
+    urlMessage =
+      "The final segment of the URL is within the limit of the (" +
+      urlLastSegmentLength +
+      ")";
+  }
 
   if (MIN_CHAR_TITLE_SIZE) {
     titleColor = "danger";
@@ -61,14 +78,6 @@ const SeoChecker = ({ metaData }) => {
     descriptionColor = "danger";
     descriptionMessage =
       "The number of characters exceeds the recommended amount";
-  }
-
-  if (MAX_URL_SIZE) {
-    urlColor = "danger";
-    urlMessage = "The URL length surpasses the recommended length";
-  } else {
-    urlColor = "primary";
-    urlMessage = "The URL length is okay";
   }
 
   return (
@@ -100,6 +109,14 @@ const SeoChecker = ({ metaData }) => {
                   </div>
                 </td>
               </tr>
+              {introDescription && (
+                <tr>
+                  <th>Intro Description</th>
+                  <td>
+                    <span>{introDescription}</span>
+                  </td>
+                </tr>
+              )}
               <tr>
                 <th>URL</th>
                 <td>
@@ -107,23 +124,11 @@ const SeoChecker = ({ metaData }) => {
                   <div className={`text-${urlColor}`}>
                     {urlMessage}{" "}
                     <Badge bg={urlColor} className="me-2">
-                      {urlLength}
+                      {urlLastSegmentLength}
                     </Badge>
                   </div>
                 </td>
               </tr>
-              {market && (
-                <tr>
-                  <th>Market</th>
-                  <td>{market}</td>
-                </tr>
-              )}
-              {articleNumber && (
-                <tr>
-                  <th>Article Number</th>
-                  <td>{articleNumber}</td>
-                </tr>
-              )}
               {category && (
                 <tr>
                   <th>Category</th>

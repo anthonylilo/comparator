@@ -25,15 +25,15 @@ const CardsImages = ({ image }) => {
           {image.imageName}
         </ListGroup.Item>
         <ListGroup.Item>
-          <strong>Title: </strong>
-          {image.title}
+          <strong>Alt Text: </strong>
+          {image.alt}
         </ListGroup.Item>
         <div className="d-flex justify-content-center bg_Color_Line">
           <div className="card_BorderLine"></div>
         </div>
         <ListGroup.Item>
-          <strong>Alt Text: </strong>
-          {image.alt}
+          <strong>Title: </strong>
+          {image.title}
         </ListGroup.Item>
       </ListGroup>
     </Card>

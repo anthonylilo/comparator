@@ -24,7 +24,7 @@ const DataLayerCrawler = () => {
         const response = await axios.get(url);
 
         // Use Cheerio to parse the HTML
-        const $ = cheerio.load(response.data);
+        const $ = load(response.data);
 
         // Find the script tag containing "dataLayer_tags"
         const scriptContent = $('script')
