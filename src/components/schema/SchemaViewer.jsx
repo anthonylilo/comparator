@@ -1,23 +1,41 @@
 import React from "react";
 import { Table, Container, Row } from "react-bootstrap";
 
+// Converts a value into an array (keeps arrays, wraps non-null values, returns empty array for null/undefined).
+const toArray = (value) =>
+  Array.isArray(value) ? value : value != null ? [value] : [];
+
 const SchemaViewer = ({ schema }) => {
-  const schemaData = schema["@graph"] ? schema["@graph"][0] : schema;
+  const schemaData = schema?.["@graph"] ? schema["@graph"][0] : schema;
+
   if (!schemaData) {
     return <div>No schema data available</div>;
   }
 
-  // Función para formatear fechas
-  const formatDate = (dateStr) => {
-    if (!dateStr) return "N/A";
-    const date = new Date(dateStr);
-    return isNaN(date.getTime()) ? dateStr : date.toLocaleString();
+  // Formats date strings safely (falls back to original value or "N/A").
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return Number.isNaN(date.getTime()) ? dateString : date.toLocaleString();
   };
 
-  // Función para obtener una propiedad de un objeto de forma segura
-  const getSafeProperty = (obj, path) => {
-    return path.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), obj);
-  };
+  // Safely retrieves a nested property from an object using a path array.
+  const getNestedValue = (sourceObject, pathSegments) =>
+    pathSegments.reduce(
+      (currentValue, segment) =>
+        currentValue && currentValue[segment] != null
+          ? currentValue[segment]
+          : null,
+      sourceObject,
+    );
+
+  // Normalize speakable and image fields into arrays for consistent rendering.
+  const speakables = toArray(schemaData?.speakable);
+  const images = toArray(schemaData?.image);
+
+  const mainEntityOfPageHref =
+    getNestedValue(schemaData.mainEntityOfPage, ["@id"]) ||
+    schemaData.mainEntityOfPage;
 
   return (
     <Container className="mt-3">
@@ -31,27 +49,26 @@ const SchemaViewer = ({ schema }) => {
                 <th>Value</th>
               </tr>
             </thead>
+
             <tbody>
               <tr>
                 <th>Type</th>
                 <td>{schemaData["@type"]}</td>
               </tr>
+
               <tr>
                 <th>@id</th>
                 <td>
                   <a
-                    href={
-                      getSafeProperty(schemaData.mainEntityOfPage, ["@id"]) ||
-                      schemaData.mainEntityOfPage
-                    }
+                    href={mainEntityOfPageHref}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {getSafeProperty(schemaData.mainEntityOfPage, ["@id"]) ||
-                      schemaData.mainEntityOfPage}
+                    {mainEntityOfPageHref}
                   </a>
                 </td>
               </tr>
+
               <tr>
                 <th>
                   Headline
@@ -60,6 +77,7 @@ const SchemaViewer = ({ schema }) => {
                 </th>
                 <td>{schemaData.headline}</td>
               </tr>
+
               <tr>
                 <th>
                   Description
@@ -68,40 +86,33 @@ const SchemaViewer = ({ schema }) => {
                 </th>
                 <td>{schemaData.description}</td>
               </tr>
-              {schemaData.image && (
+
+              {images.length > 0 && (
                 <tr>
                   <th>Image URL</th>
                   <td>
-                    {Array.isArray(schemaData.image) ? (
-                      schemaData.image.map((img, idx) => (
-                        <div key={idx}>
+                    {images.map((imageItem, index) => {
+                      const href =
+                        typeof imageItem === "string"
+                          ? imageItem
+                          : imageItem?.url;
+
+                      return href ? (
+                        <div key={`image-${index}`}>
                           <a
-                            href={img}
+                            href={href}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            {img}
+                            {href}
                           </a>
                         </div>
-                      ))
-                    ) : (
-                      <a
-                        href={
-                          schemaData.image.url
-                            ? schemaData.image.url
-                            : schemaData.image
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {schemaData.image.url
-                          ? schemaData.image.url
-                          : schemaData.image}
-                      </a>
-                    )}
+                      ) : null;
+                    })}
                   </td>
                 </tr>
               )}
+
               <tr>
                 <th>
                   Published Date
@@ -110,6 +121,7 @@ const SchemaViewer = ({ schema }) => {
                 </th>
                 <td>{formatDate(schemaData.datePublished)}</td>
               </tr>
+
               <tr>
                 <th>
                   Modified Date
@@ -118,68 +130,94 @@ const SchemaViewer = ({ schema }) => {
                 </th>
                 <td>{formatDate(schemaData.dateModified)}</td>
               </tr>
+
               <tr>
                 <th>Author</th>
                 <td></td>
               </tr>
+
               <tr>
                 <td>Type</td>
-                <td>{getSafeProperty(schemaData, ["author", "@type"])}</td>
+                <td>{getNestedValue(schemaData, ["author", "@type"])}</td>
               </tr>
+
               <tr>
                 <td>Name</td>
-                <td>{getSafeProperty(schemaData, ["author", "name"])}</td>
+                <td>{getNestedValue(schemaData, ["author", "name"])}</td>
               </tr>
+
               <tr>
                 <td>URL</td>
-                <td>{getSafeProperty(schemaData, ["author", "url"])}</td>
+                <td>{getNestedValue(schemaData, ["author", "url"])}</td>
               </tr>
-              {schemaData.speakable ? (
-                <>
-                  <tr>
-                    <th>Speakable</th>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>@Type</td>
-                    <td>{schemaData.speakable["@type"]}</td>
-                  </tr>
-                  {schemaData.speakable.xpath.map((xpath, idx) => (
-                    <tr key={idx}>
-                      <td>XPath {idx + 1}</td>
-                      <td>{xpath}</td>
-                    </tr>
-                  ))}
-                </>
+
+              <tr>
+                <th>Speakable</th>
+                <td></td>
+              </tr>
+
+              {speakables.length > 0 ? (
+                speakables.map((speakableItem, speakableIndex) => {
+                  const types = toArray(speakableItem?.["@type"]);
+                  const xpaths = toArray(speakableItem?.xpath);
+                  const selectors = toArray(speakableItem?.cssSelector);
+
+                  return (
+                    <React.Fragment key={`speakable-${speakableIndex}`}>
+                      <tr>
+                        <td>@type</td>
+                        <td>{types.join(", ") || "—"}</td>
+                      </tr>
+
+                      {xpaths.length > 0 ? (
+                        xpaths.map((xpathItem, xpathIndex) => (
+                          <tr key={`xpath-${speakableIndex}-${xpathIndex}`}>
+                            <td>XPath {xpathIndex + 1}</td>
+                            <td>{xpathItem}</td>
+                          </tr>
+                        ))
+                      ) : selectors.length > 0 ? (
+                        selectors.map((selectorItem, selectorIndex) => (
+                          <tr key={`css-${speakableIndex}-${selectorIndex}`}>
+                            <td>cssSelector {selectorIndex + 1}</td>
+                            <td>{selectorItem}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr key={`selectors-empty-${speakableIndex}`}>
+                          <td>Selectors</td>
+                          <td>—</td>
+                        </tr>
+                      )}
+                    </React.Fragment>
+                  );
+                })
               ) : (
-                <>
-                  <tr>
-                    <th>Speakable</th>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Copiar</td>
-                    <td>
-                      /html/head/title,
-                      /html/head/meta[@name='description']/@content
-                    </td>
-                  </tr>
-                </>
+                <tr>
+                  <td>Copy</td>
+                  <td>
+                    /html/head/title,
+                    /html/head/meta[@name='description']/@content
+                  </td>
+                </tr>
               )}
 
               <tr>
                 <th>Publisher</th>
                 <td></td>
               </tr>
+
               <tr>
                 <td>Type</td>
-                <td>{getSafeProperty(schemaData, ["publisher", "@type"])}</td>
+                <td>{getNestedValue(schemaData, ["publisher", "@type"])}</td>
               </tr>
+
               <tr>
                 <td>Name</td>
-                <td>{getSafeProperty(schemaData, ["publisher", "name"])}</td>
+                <td>{getNestedValue(schemaData, ["publisher", "name"])}</td>
               </tr>
-              {getSafeProperty(schemaData, ["publisher", "logo", "url"]) && (
+
+              {getNestedValue(schemaData, ["publisher", "logo", "url"]) && (
                 <tr>
                   <td>Logo</td>
                   <td>
@@ -193,6 +231,7 @@ const SchemaViewer = ({ schema }) => {
                   </td>
                 </tr>
               )}
+
               <tr>
                 <th>
                   Main Entity of Page
@@ -201,15 +240,11 @@ const SchemaViewer = ({ schema }) => {
                 </th>
                 <td>
                   <a
-                    href={
-                      getSafeProperty(schemaData.mainEntityOfPage, ["@id"]) ||
-                      schemaData.mainEntityOfPage
-                    }
+                    href={mainEntityOfPageHref}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {getSafeProperty(schemaData.mainEntityOfPage, ["@id"]) ||
-                      schemaData.mainEntityOfPage}
+                    {mainEntityOfPageHref}
                   </a>
                 </td>
               </tr>

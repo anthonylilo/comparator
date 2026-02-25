@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import HomeNavbar from "../components/navbar/homeNavbar";
-import SubNavbar from "../components/navbar/subNavbar";
+import HomeNavbar from "../components/navbar/HomeNavbar";
+import SubNavbar from "../components/navbar/SubNavbar";
 
 export default function Redirection({}) {
   return (

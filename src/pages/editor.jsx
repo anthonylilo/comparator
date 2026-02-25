@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Form, Col, ProgressBar } from "react-bootstrap";
-import { handleFileChange } from "../services/fileUtils";
-import CardsImages from "../components/cards/cardsImages";
-import MetaData from "../components/metaData/seoChecker";
+import { FileUtils } from "../services/FileUtils";
+import { ProjectSettings } from "../services/settings/ProjectSettings";
+import CardsImages from "../components/cards/CardsImages";
+import CardsText from "../components/cards/CardsText";
+import MetaData from "../components/metaData/SeoChecker";
 import SchemaViewer from "../components/schema/SchemaViewer";
-import CopyButton from "../components/copyToClipboard/copyButton";
+import CopyButton from "../components/copyToClipboard/CopyButton";
+import ModalLoading from "../components/modal/ModalLoading";
+import { useSafeCountry } from "../services/CountryContext";
 
 function Editor({ selectedFormat, projectName }) {
   const [parsedContent, setParsedContent] = useState([]);
@@ -14,22 +18,47 @@ function Editor({ selectedFormat, projectName }) {
   const [showMarkdownInput, setShowMarkdownInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState("");
+  const settings = ProjectSettings();
+  const { country } = useSafeCountry();
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     setShowMarkdownInput(false);
   }, [selectedFormat]);
 
+  useEffect(() => {
+    if (settings?.config?.status === "inProgress") {
+      setModalText(
+        "We’re still working on this project, please keep in touch with us for more news."
+      );
+      setShowModal(true);
+    }
+  }, [settings]);
+
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
+
+    if (projectName === "Professional" && !country) {
+      setModalText("Please select a country before uploading your document.");
+      setShowModal(true);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      return;
+    }
+
     if (file) {
       setLoading(true);
       setProgress(0);
 
       try {
-        const result = await handleFileChange(
+        const result = await FileUtils(
           file,
           selectedFormat,
-          projectName
+          projectName,
+          country,
         );
         setParsedContent(result.content);
         setSchema(result.schema);
@@ -38,6 +67,11 @@ function Editor({ selectedFormat, projectName }) {
         setShowMarkdownInput(true);
       } catch (error) {
         console.error("Error loading file:", error);
+        setModalText(
+          error.message ||
+            "An unexpected error occurred while processing the file."
+        );
+        setShowModal(true);
       } finally {
         setLoading(false);
       }
@@ -47,15 +81,34 @@ function Editor({ selectedFormat, projectName }) {
   const groupedContent = parsedContent.reduce((acc, item) => {
     if (item.type === "image") {
       acc.push({ type: "image", data: item.data });
-    } else {
-      if (acc.length === 0 || acc[acc.length - 1].type === "image") {
-        acc.push({ type: "paragraphs", data: [item.data] });
+      return acc;
+    }
+
+    if (item.type === "textCard") {
+      if (acc.length === 0 || acc[acc.length - 1].type !== "textCards") {
+        acc.push({ type: "textCards", data: [item.data] });
       } else {
         acc[acc.length - 1].data.push(item.data);
       }
+      return acc;
+    }
+
+    // default: paragraphs
+    if (acc.length === 0 || acc[acc.length - 1].type !== "paragraphs") {
+      acc.push({ type: "paragraphs", data: [item.data] });
+    } else {
+      acc[acc.length - 1].data.push(item.data);
     }
     return acc;
   }, []);
+
+  const getImageCompareIndex = (grouped, groupIndex) => {
+    let count = 0;
+    for (let i = 0; i <= groupIndex; i++) {
+      if (grouped[i]?.type === "image") count++;
+    }
+    return count;
+  };
 
   return (
     <Container fluid="md">
@@ -64,6 +117,7 @@ function Editor({ selectedFormat, projectName }) {
           <div>
             <Form.Group controlId="formFile" className="mb-3 mt-3">
               <Form.Control
+                ref={fileInputRef}
                 onChange={handleFileInputChange}
                 type="file"
                 accept=".docx"
@@ -86,7 +140,15 @@ function Editor({ selectedFormat, projectName }) {
                 {groupedContent.map((item, index) => (
                   <div key={index} className="d-flex align-items-center">
                     {item.type === "image" ? (
-                      <CardsImages image={item.data} className="flex-grow-1" />
+                      <CardsImages
+                        image={item.data}
+                        compareIndex={getImageCompareIndex(
+                          groupedContent,
+                          index,
+                        )}
+                        compareSide="editor"
+                        className="flex-grow-1"
+                      />
                     ) : (
                       <Row>
                         <Col md={10}>
@@ -102,7 +164,7 @@ function Editor({ selectedFormat, projectName }) {
                               <p key={paraIndex} className="flex-grow-1">
                                 {paragraph}
                               </p>
-                            )
+                            ),
                           )}
                         </Col>
                         <Col md={2}>
@@ -130,13 +192,20 @@ function Editor({ selectedFormat, projectName }) {
                   </div>
                 )}
               </div>
-              <div className="mt-3">
-                {schema && <SchemaViewer schema={schema} />}
-              </div>
+              {schema && Object.keys(schema).length > 0 && (
+                <div className="mt-3">
+                  <SchemaViewer schema={schema} />
+                </div>
+              )}
             </div>
           </div>
         )}
       </Row>
+      <ModalLoading
+        text={modalText}
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </Container>
   );
 }

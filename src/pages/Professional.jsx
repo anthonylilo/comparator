@@ -1,14 +1,16 @@
 import { Container, Row, Col, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import ArticleForm from "./articleForm";
-import Editor from "./editor";
-import HomeNavbar from "../components/navbar/homeNavbar";
-import VerticalButtons from "../components/navigatonButtons/verticalButtons";
-import SubNavbar from "../components/navbar/subNavbar";
+import ArticleForm from "./ArticleForm";
+import Editor from "./Editor";
+import HomeNavbar from "../components/navbar/HomeNavbar";
+import VerticalButtons from "../components/navigatonButtons/VerticalButtons";
+import SubNavbar from "../components/navbar/SubNavbar";
+import CountrySelect from "../components/countrySelect/CountrySelect";
+import { CountryProvider } from "../services/CountryContext";
 
-export default function Ndg(className = "Ndg") {
+export default function Professional() {
   useEffect(() => {
-    document.documentElement.setAttribute("data-project", "ndg");
+    document.documentElement.setAttribute("data-project", "professional");
   }, []);
   const [selectedFormat, setSelectedFormat] = useState("html");
 
@@ -17,15 +19,15 @@ export default function Ndg(className = "Ndg") {
   };
 
   return (
-    <>
+    <CountryProvider>
       <HomeNavbar />
       <SubNavbar />
       <Container>
         <div className="containerWrapper">
-          <h1 className="brandBackgroundHeading">Dolce Gusto</h1>
+          <h1 className="brandBackgroundHeading">Professional</h1>
           <Container className="main" fluid>
             <Row className="text-center pt-4 pb-4">
-              <Col md={12}>
+              <Col md={6}>
                 <h3>Select your output format:</h3>
                 <Container fluid="md">
                   <Form.Select
@@ -37,11 +39,17 @@ export default function Ndg(className = "Ndg") {
                   </Form.Select>
                 </Container>
               </Col>
+              <Col md={6}>
+                <CountrySelect></CountrySelect>
+              </Col>
             </Row>
             <Row>
               <Col md={6}>
                 <h3>Content Workspace</h3>
-                <Editor selectedFormat={selectedFormat} projectName={"ndg"}/>
+                <Editor
+                  selectedFormat={selectedFormat}
+                  projectName={"Professional"}
+                />
               </Col>
               <Col md={6}>
                 <h3>Site Analyzer</h3>
@@ -52,6 +60,6 @@ export default function Ndg(className = "Ndg") {
         </div>
       </Container>
       <VerticalButtons />
-    </>
+    </CountryProvider>
   );
 }

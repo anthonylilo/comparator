@@ -1,12 +1,11 @@
-// src/pages/AboutPage.jsx
 import React, { useEffect } from "react";
-import HomeNavbar from '../components/navbar/homeNavbar';
-import HomeCarousel from '../components/carousel/carousel.jsx';
+import HomeNavbar from '../components/navbar/HomeNavbar.jsx';
+import HomeCarousel from '../components/carousel/HomeCarousel.jsx';
 import { Row, Container, Col } from 'react-bootstrap';
 import '../assets/styles/styles.css'
 import '../assets/styles/home.css'
-import Dropdowns from '../components/home-dropdowns/dropdowns.jsx';
-import DarkToggler from "../components/navbar/darkToggler/themeToggler.jsx";
+import Dropdowns from '../components/home-dropdowns/Dropdowns.jsx';
+import ThemeToggler from "../components/navbar/darkToggler/ThemeToggler.jsx";
 export default function AboutPage(className = "home") {
   useEffect(() => {
     document.documentElement.setAttribute("data-project", "home");
@@ -23,7 +22,7 @@ export default function AboutPage(className = "home") {
                 <HomeCarousel />
               </Col>
               <Col className="home-right d-flex align-items-end" md={5}>
-                <DarkToggler />
+                <ThemeToggler />
                 <Dropdowns />
               </Col>
             </Row>

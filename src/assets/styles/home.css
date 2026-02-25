@@ -53,7 +53,6 @@
 }
 .containerWrapper {
     margin-top: 5rem;
-    /* padding-top: 50px; */
 }
 h3.home-header {
     font-weight: 400;
@@ -80,8 +79,6 @@ background-color: var(--carousel-indicators);
 background-color: var(--carousel-indicators-active);
 }
 .carousel-item {
-    /* padding-bottom: 75px; */
-    /* line-height: 15px; */
     flex-direction: column;
     justify-content: center;
     min-height: 300px;
@@ -112,7 +109,6 @@ background-color: var(--carousel-indicators-active);
 .carousel-home {
     flex-direction: column;
     min-height: 400px;
-    /* row-gap: 20px; */
 }
 .home-right {
     background-color: #41339d;

@@ -1,9 +1,9 @@
 import { Container, Row, Form, Button, ProgressBar } from "react-bootstrap";
-import HomeNavbar from "../components/navbar/homeNavbar";
-import SubNavbar from "../components/navbar/subNavbar";
-import SeoChecker from "../components/metaData/seoChecker";
+import HomeNavbar from "../components/navbar/HomeNavbar";
+import SubNavbar from "../components/navbar/SubNavbar";
+import SeoChecker from "../components/metaData/SeoChecker";
 import React, { useState, useEffect } from "react";
-import handleSubmitLogic from "../services/handleSubmitLogic";
+import HandleSubmitLogic from "../services/HandleSubmitLogic";
 
 export default function SeoCheckerPage({ reset }) {
   const [urls, setUrls] = useState("");
@@ -17,29 +17,29 @@ export default function SeoCheckerPage({ reset }) {
     setLoading(true);
 
     const urlList = urls
-      .split("\n") // Dividir por línea
+      .split("\n") // Split by line breaks
       .map((url) => url.trim())
-      .filter((url) => url); // Eliminar líneas vacías
+      .filter((url) => url); // Remove empty lines
 
     for (const url of urlList) {
       if (url) {
-        await handleSubmitLogic(
+        await HandleSubmitLogic(
           url,
-          "", // No estamos usando redirectUrls aquí
+          "", // Not using redirectUrls here
           setUrls,
           setLoading,
-          () => {}, // setInvalidLinks (no usado)
-          () => {}, // setLinkStatuses (no usado)
-          () => {}, // setSchema (omitido)
-          () => {}, // setShowAdditionalFields (no usado)
-          (title) => setMetaData((prev) => ({ ...prev, title })), // Almacenar título en metaData
+          () => {}, // setInvalidLinks (not used)
+          () => {}, // setLinkStatuses (not used)
+          () => {}, // setSchema (omitted)
+          () => {}, // setShowAdditionalFields (not used)
+          (title) => setMetaData((prev) => ({ ...prev, title })), // Store title in metaData
           (metaDescription) =>
-            setMetaData((prev) => ({ ...prev, metaDescription })), // Almacenar metaDescription
-          () => {}, // setBanner (no usado)
-          () => {}, // setArticleContent (no usado)
-          () => {}, // setRedirectStatuses (no usado)
-          (articleTitle) => setMetaData((prev) => ({ ...prev, articleTitle })), // Almacenar articleTitle
-          setH1Tags // Almacenar H1 tags
+            setMetaData((prev) => ({ ...prev, metaDescription })), // Store metaDescription in metaData
+          () => {}, // setBanner (not used)
+          () => {}, // setArticleContent (not used)
+          () => {}, // setRedirectStatuses (not used)
+          (articleTitle) => setMetaData((prev) => ({ ...prev, articleTitle })), // Store articleTitle in metaData
+          setH1Tags, // Store H1 tags
         );
       }
     }

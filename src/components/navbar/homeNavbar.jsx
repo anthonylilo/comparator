@@ -7,7 +7,7 @@ import {
   Container,
 } from "react-bootstrap";
 import "../../assets/styles/header.css";
-import BrandPicker from "./styleToggler/brandPicker";
+import BrandPicker from "./styleToggler/BrandPicker";
 import "../navigatonButtons/TooltipButton.css";
 
 function HomeNavbar() {

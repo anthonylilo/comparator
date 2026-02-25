@@ -1,31 +1,96 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CompareIcon from "../../assets/images/compare.svg";
 import ResetIcon from "../../assets/images/reset.svg";
 import ArrowIcon from "../../assets/images/arrow-up.svg";
 import EnableIcon from "../../assets/images/enable.svg";
 import TooltipButton from "./TooltipButton";
-import ModalLoading from "../modal/modal";
-import compareContent from "../../services/equals";
+import ModalLoading from "../modal/ModalLoading";
+import Equals from "../../services/Equals";
 import "./VerticalButtons.css";
 
 const VerticalButtons = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [modalText, setModalText] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
-    if (scrollTop > 150) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
+    setIsVisible(scrollTop > 150);
   };
+
   const handleReset = () => {
     localStorage.removeItem("editorContent");
     localStorage.removeItem("articleContent");
+    localStorage.removeItem("articleBanner");
+    localStorage.removeItem("imageCompareActive");
+    localStorage.removeItem("imageCompareReport");
     window.location.reload();
+  };
+
+  const handleEqualsClick = async () => {
+    setModalText("Making comparison, please wait.");
+    setShowModal(true);
+
+    try {
+      const storedEditorContentRaw = localStorage.getItem("editorContent");
+      const storedArticleContentRaw = localStorage.getItem("articleContent");
+      const storedArticleBannerRaw = localStorage.getItem("articleBanner");
+
+      const storedEditorContent = storedEditorContentRaw
+        ? JSON.parse(storedEditorContentRaw)
+        : null;
+      const storedArticleContent = storedArticleContentRaw
+        ? JSON.parse(storedArticleContentRaw)
+        : null;
+      const storedArticleBanner = storedArticleBannerRaw
+        ? JSON.parse(storedArticleBannerRaw)
+        : null;
+
+      if (!storedEditorContent) throw new Error("Transformed text not found.");
+      if (!storedArticleContent) throw new Error("Web text was not found.");
+
+      const comparatorWithBanner = Array.isArray(storedArticleContent)
+        ? storedArticleBanner
+          ? [
+              { type: "image", data: storedArticleBanner },
+              ...storedArticleContent,
+            ]
+          : storedArticleContent
+        : storedArticleBanner
+          ? [{ type: "image", data: storedArticleBanner }]
+          : [];
+
+      const comparisonResult = await Equals(
+        storedEditorContent,
+        comparatorWithBanner,
+      );
+
+      if (comparisonResult?.imageReport) {
+        localStorage.setItem(
+          "imageCompareReport",
+          JSON.stringify(comparisonResult.imageReport),
+        );
+        localStorage.setItem("imageCompareActive", "1");
+      }
+
+      setModalText(
+        comparisonResult.hasDifferences
+          ? "Differences were found in the contents. Please verify."
+          : "No differences in content were found.",
+      );
+    } catch (error) {
+      const safeErrorMessage =
+        error instanceof Error
+          ? error.message
+          : "An error occurred while comparing the content.";
+      setModalText(safeErrorMessage);
+    } finally {
+      window.setTimeout(() => setShowModal(false), 3000);
+    }
   };
 
   useEffect(() => {
@@ -35,69 +100,6 @@ const VerticalButtons = () => {
     };
   }, []);
 
-  const [modalText, setModalText] = useState("");
-  const [showModal, setShowModal] = useState(false);
-
-  const handleEqualsClick = async () => {
-    setModalText("Making comparison, please wait :D");
-    setShowModal(true);
-
-    setTimeout(async () => {
-      const storedEditorContent = JSON.parse(
-        localStorage.getItem("editorContent")
-      );
-      const storedArticleContent = JSON.parse(
-        localStorage.getItem("articleContent")
-      );
-
-      if (!storedEditorContent && !storedArticleContent) {
-        setModalText("Error: There's not any content.");
-        setShowModal(true);
-        setTimeout(() => {
-          setShowModal(false);
-        }, 3000);
-        return;
-      } else if (!storedEditorContent) {
-        setModalText("Error: Transformed text not found");
-        setShowModal(true);
-        setTimeout(() => {
-          setShowModal(false);
-        }, 3000);
-        return;
-      } else if (!storedArticleContent) {
-        setModalText("Error: Web text was not found.");
-        setShowModal(true);
-        setTimeout(() => {
-          setShowModal(false);
-        }, 3000);
-        return;
-      }
-
-      try {
-        // Llamar a la función compareContent desde equals.js
-        const comparisonResult = await compareContent(
-          storedEditorContent,
-          storedArticleContent
-        );
-
-        if (comparisonResult.hasDifferences) {
-          setModalText(
-            "Differences were found in the contents :( please verify"
-          );
-        } else {
-          setModalText("No differences in content were found :)");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        setModalText("An error occurred while comparing the content.");
-      } finally {
-        setTimeout(() => {
-          setShowModal(false);
-        }, 3000);
-      }
-    }, 100);
-  };
-
   return (
     <div className="vertical-buttons">
       <TooltipButton
@@ -105,7 +107,7 @@ const VerticalButtons = () => {
         iconType="custom"
         onClick={handleEqualsClick}
         className="placeholder-button equals"
-        tooltip="Comparate"
+        tooltip="Compare"
       />
       <ModalLoading
         text={modalText}

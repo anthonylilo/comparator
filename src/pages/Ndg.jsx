@@ -1,16 +1,16 @@
 import { Container, Row, Col, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import ArticleForm from "./articleForm";
-import Editor from "./editor";
-import HomeNavbar from "../components/navbar/homeNavbar";
-import VerticalButtons from "../components/navigatonButtons/verticalButtons";
-import SubNavbar from "../components/navbar/subNavbar";
+import ArticleForm from "./ArticleForm";
+import Editor from "./Editor";
+import HomeNavbar from "../components/navbar/HomeNavbar";
+import VerticalButtons from "../components/navigatonButtons/VerticalButtons";
+import SubNavbar from "../components/navbar/SubNavbar";
 
-export default function Professional(className = "Professional") {
+export default function Ndg() {
   useEffect(() => {
-    document.documentElement.setAttribute("data-project", "professional");
+    document.documentElement.setAttribute("data-project", "ndg");
   }, []);
-  const [selectedFormat, setSelectedFormat] = useState("markdown");
+  const [selectedFormat, setSelectedFormat] = useState("html");
 
   const handleFormatChange = (e) => {
     setSelectedFormat(e.target.value);
@@ -22,7 +22,7 @@ export default function Professional(className = "Professional") {
       <SubNavbar />
       <Container>
         <div className="containerWrapper">
-          <h1 className="brandBackgroundHeading">Professional</h1>
+          <h1 className="brandBackgroundHeading">Dolce Gusto</h1>
           <Container className="main" fluid>
             <Row className="text-center pt-4 pb-4">
               <Col md={12}>
@@ -34,7 +34,6 @@ export default function Professional(className = "Professional") {
                     value={selectedFormat}
                   >
                     <option value="html">HTML</option>
-                    <option value="markdown">Markdown</option>
                   </Form.Select>
                 </Container>
               </Col>
@@ -42,7 +41,7 @@ export default function Professional(className = "Professional") {
             <Row>
               <Col md={6}>
                 <h3>Content Workspace</h3>
-                <Editor selectedFormat={selectedFormat} projectName={"nestlePro"} />
+                <Editor selectedFormat={selectedFormat} projectName={"ndg"}/>
               </Col>
               <Col md={6}>
                 <h3>Site Analyzer</h3>

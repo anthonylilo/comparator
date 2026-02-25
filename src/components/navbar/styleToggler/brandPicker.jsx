@@ -8,7 +8,7 @@ function BrandPicker() {
 
   const getInitialBrand = () => {
     const storedBrand = localStorage.getItem("selectedBrand");
-    return storedBrand ? storedBrand : "0"; // Default value
+    return storedBrand || "Purina";
   };
 
   const [selectedBrand, setSelectedBrand] = useState(getInitialBrand);
@@ -16,40 +16,45 @@ function BrandPicker() {
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedBrand(selectedValue);
-
-    // Guardar selección en localStorage
     localStorage.setItem("selectedBrand", selectedValue);
     localStorage.removeItem("editorContent");
     localStorage.removeItem("articleContent");
 
-    // Navegar a diferentes rutas
-    if (selectedValue === "1") {
-      navigate("/NSB/comparator/purina");
-    } else if (selectedValue === "2") {
-      navigate("/NSB/comparator/nutrition");
-    } else if (selectedValue === "3") {
-      navigate("/NSB/comparator/professional");
-    } else if (selectedValue === "4") {
-      navigate("/NSB/comparator/recetas");
-    }
-      else if (selectedValue === "5") {
-      navigate("/NSB/comparator/ndg");
+    switch (selectedValue) {
+      case "Purina":
+        navigate("/NSB/comparator/purina");
+        break;
+      case "Nutrition":
+        navigate("/NSB/comparator/nutrition");
+        break;
+      case "Professional":
+        navigate("/NSB/comparator/professional");
+        break;
+      case "Recetas":
+        navigate("/NSB/comparator/recetas");
+        break;
+      case "NDG":
+        navigate("/NSB/comparator/ndg");
+        break;
+      default:
+        navigate("/");
     }
   };
 
-  // Este efecto maneja la selección del valor basado en la ruta actual
+  // Detectar marca desde la URL al cargar
   useEffect(() => {
-    if (location.pathname.includes("/nutrition")) {
-      setSelectedBrand("2");
-    } else if (location.pathname.includes("/professional")) {
-      setSelectedBrand("3");
-    } else if (location.pathname.includes("/recetas")) {
-      setSelectedBrand("4");
-    } else if (location.pathname.includes("/ndg")) {
-      setSelectedBrand("5");
-    }else {
-      setSelectedBrand("1");
-    }
+    let brand = "Purina";
+    if (location.pathname.includes("/nutrition"))
+      brand = "Nutrition";
+    else if (location.pathname.includes("/professional"))
+      brand = "Professional";
+    else if (location.pathname.includes("/recetas"))
+      brand = "Recetas";
+    else if (location.pathname.includes("/ndg"))
+      brand = "NDG";
+
+    setSelectedBrand(brand);
+    localStorage.setItem("selectedBrand", brand);
   }, [location.pathname]);
 
   return (
@@ -58,11 +63,11 @@ function BrandPicker() {
       onChange={handleSelectChange}
       value={selectedBrand}
     >
-      <option value="1">Purina</option>
-      <option value="2">FamilyNes</option>
-      <option value="3">Nestlé Professional</option>
-      <option value="4">Recetas LATAM</option>
-      <option value="5">Nestlé Dolce Gusto</option>
+      <option value="Purina">Purina</option>
+      <option value="Nutrition">FamilyNes</option>
+      <option value="Professional">Nestlé Professional</option>
+      <option value="Recetas">Recetas LATAM</option>
+      <option value="NDG">Nestlé Dolce Gusto</option>
     </Form.Select>
   );
 }

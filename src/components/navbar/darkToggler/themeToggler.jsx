@@ -2,7 +2,7 @@ import {faMoon} from "@fortawesome/free-solid-svg-icons";
 import TooltipButton from "../../navigatonButtons/TooltipButton";
 import React, { useState, useEffect } from 'react';
 
-function DarkToggler() {
+function ThemeToggler() {
     const storedTheme = localStorage.getItem('theme') || 'light';
   const [theme, setTheme] = useState(storedTheme);
 
@@ -30,4 +30,4 @@ function DarkToggler() {
   );
 }
 
-export default DarkToggler;
+export default ThemeToggler;

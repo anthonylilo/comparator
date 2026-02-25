@@ -18,6 +18,11 @@ export const useArticleFormHooks = () => {
   const [articleContent, setArticleContent] = useState([]);
   const [headingTitle, setHeadingTitle] = useState("");
 
+  // These fields enrich the SEO metadata panel with content extracted from the live page.
+  const [descriptionIntro, setDescriptionIntro] = useState("");
+  const [brandSelected, setBrandSelected] = useState("");
+  const [category, setCategory] = useState("");
+
   return {
     url,
     setUrl,
@@ -51,5 +56,11 @@ export const useArticleFormHooks = () => {
     setArticleContent,
     headingTitle,
     setHeadingTitle,
+    descriptionIntro,
+    setDescriptionIntro,
+    brandSelected,
+    setBrandSelected,
+    category,
+    setCategory,
   };
 };

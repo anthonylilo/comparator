@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, ListGroup } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-const InvalidLinksComponent = ({ invalidLinks }) => {
+const InvalidLinks = ({ invalidLinks }) => {
   return (
     <Alert variant="danger" className="mt-3">
       <Alert.Heading>Different domains, please check:</Alert.Heading>
@@ -15,8 +15,8 @@ const InvalidLinksComponent = ({ invalidLinks }) => {
   );
 };
 
-InvalidLinksComponent.propTypes = {
+InvalidLinks.propTypes = {
   invalidLinks: PropTypes.array.isRequired,
 };
 
-export default InvalidLinksComponent;
+export default InvalidLinks;

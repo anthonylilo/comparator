@@ -1,12 +1,12 @@
 import { Container, Row, Col, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import ArticleForm from "./articleForm";
-import Editor from "./editor";
-import HomeNavbar from "../components/navbar/homeNavbar";
-import VerticalButtons from "../components/navigatonButtons/verticalButtons";
-import SubNavbar from "../components/navbar/subNavbar";
+import ArticleForm from "./ArticleForm";
+import Editor from "./Editor";
+import HomeNavbar from "../components/navbar/HomeNavbar";
+import VerticalButtons from "../components/navigatonButtons/VerticalButtons";
+import SubNavbar from "../components/navbar/SubNavbar";
 
-export default function Nutrition(className = "Nutrition") {
+export default function Nutrition() {
   useEffect(() => {
     document.documentElement.setAttribute("data-project", "unifier");
   }, []);
@@ -34,6 +34,7 @@ export default function Nutrition(className = "Nutrition") {
                     value={selectedFormat}
                   >
                     <option value="html">HTML</option>
+                    <option value="markdown">Markdown</option>
                   </Form.Select>
                 </Container>
               </Col>

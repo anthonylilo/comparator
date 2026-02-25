@@ -1,74 +1,14 @@
-import axios from "axios";
 import { load } from "cheerio";
+import { ProjectSettings } from "./settings/ProjectSettings";
+import {
+  checkUrlStatus,
+  fetchImageDetails,
+  extractMetaData,
+  extractJsonLdSchema,
+  PROXY_URL,
+} from "./SharedUtils";
 
-const checkUrlStatus = async (url) => {
-  try {
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const requestUrl = url.startsWith(proxyUrl) ? url : proxyUrl + url.trim();
-    const response = await fetch(requestUrl, { method: "GET" });
-    return response.status;
-  } catch (error) {
-    console.error("Error fetching URL status:", error);
-    return null;
-  }
-};
-
-const formatFileSize = (bytes) => {
-  if (bytes === 0) return "0 Bytes";
-  const k = 1024;
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-};
-
-const fetchImageDetails = async (imageUrl) => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.src = imageUrl;
-    img.onload = () => {
-      const width = img.naturalWidth;
-      const height = img.naturalHeight;
-      axios
-        .get(imageUrl, { responseType: "arraybuffer" })
-        .then((response) => {
-          const size = formatFileSize(response.headers["content-length"]);
-          resolve({ width, height, size });
-        })
-        .catch(reject);
-    };
-    img.onerror = reject;
-  });
-};
-
-const extractMetaData = ($) => {
-  const title = $("title").text();
-  const metaDescription = $("meta[name='description']").attr("content");
-  const metaRobots = $("meta[name='robots']").attr("content");
-  const metaKeyWords = $("meta[name='keywords']").attr("content");
-  const metaGeoRegion = $("meta[name='geo.region']").attr("content");
-  const metaGeoPlacename = $("meta[name='geo.placename']").attr("content");
-  const articleTitle = $(".article-internal-title span").text();
-  const h1Title = $("h1")
-    .map((i, el) => $(el).text().trim())
-    .get();
-  return { title, metaDescription, metaRobots, metaKeyWords, metaGeoRegion, metaGeoPlacename, articleTitle, h1Title };
-};
-
-// Función para extraer esquema JSON-LD
-const extractJsonLdSchema = ($) => {
-  const schemaScripts = $('script[type="application/ld+json"]');
-  const schemas = [];
-  schemaScripts.each((index, element) => {
-    const schema = $(element).html();
-    if (schema) {
-      schemas.push(JSON.parse(schema));
-    }
-  });
-  return schemas.length > 0 ? schemas[0] : null;
-};
-
-// Función principal
-const handleSubmitLogic = async (
+const HandleSubmitLogic = async (
   url,
   redirectUrls,
   setUrl,
@@ -87,134 +27,79 @@ const handleSubmitLogic = async (
   setArticleContent,
   setRedirectStatuses,
   setArticleTitle,
-  setHeadingTitle
+  setHeadingTitle,
+  setModalText,
+  setShowModal,
+  setDescriptionIntro,
+  setBrandSelected,
+  setCategory,
 ) => {
   setLoading(true);
+
   try {
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const requestUrl = url.startsWith(proxyUrl) ? url : proxyUrl + url.trim();
-    const response = await axios.get(requestUrl);
-    const $ = load(response.data);
+    const requestUrl = url.startsWith(PROXY_URL) ? url : PROXY_URL + url.trim();
 
-    // **Extraer metadatos usando la nueva función**
-    const { title, metaDescription, metaRobots, metaKeyWords, metaGeoRegion, metaGeoPlacename, articleTitle, h1Title } =
-      extractMetaData($);
-    setTitle(title);
-    setMetaDescription(metaDescription);
-    setMetaRobots(metaRobots);
-    setMetaKeyWords(metaKeyWords);
-    setMetaGeoRegion(metaGeoRegion);
-    setMetaGeoPlacename(metaGeoPlacename);
-    setArticleTitle(articleTitle);
-    setHeadingTitle(h1Title);
+    const response = await fetch(requestUrl);
+    const html = await response.text();
+    const $ = load(html);
 
-    // Extraer banner
-    const bannerSrc = $(".article-internal-header-img img").attr("src");
-    const bannerAlt = $(".article-internal-header-img img").attr("alt");
-    const bannerSrcUrl = new URL(bannerSrc, url.trim()).href;
-    const bannerTitle = $(".article-internal-header-img img").attr("title");
-    const bannerFilename = bannerSrc.substring(bannerSrc.lastIndexOf("/") + 1);
+    const { config, crawler } = ProjectSettings();
 
-    const bannerDetails = await fetchImageDetails(bannerSrcUrl);
-    setBanner({
-      src: bannerSrcUrl,
-      alt: bannerAlt,
-      title: bannerTitle,
-      width: bannerDetails.width,
-      height: bannerDetails.height,
-      size: bannerDetails.size,
-      imageName: bannerFilename,
-    });
-
-    console.log("Banner details:", bannerSrcUrl);
-    console.log(bannerDetails);
-
-    // Extraer el contenido del artículo
-    const contentArray = [];
-    const elements = $(".article-internal .wysiwyg, .article-internal img");
-    for (let i = 0; i < elements.length; i++) {
-      const element = elements[i];
-      if ($(element).is("img")) {
-        const imgSrc = $(element).attr("src");
-        if(imgSrc){
-          const imgAlt = $(element).attr("alt") || "Empty";
-          const imgTitle = $(element).attr("title") || "Empty";
-          const imgSrcUrl = new URL(imgSrc, url.trim()).href;
-          const imgFilename = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
-  
-          const imgDetails = await fetchImageDetails(imgSrcUrl);
-          contentArray.push({
-            type: "image",
-            src: imgSrcUrl,
-            alt: imgAlt,
-            title: imgTitle,
-            imageName: imgFilename,
-            width: imgDetails.width,
-            height: imgDetails.height,
-            size: imgDetails.size,
-          });
-        }else{
-          console.warn("No image found");
-        }
-      } else if ($(element).is("div")) {
-        const htmlContent = $(element).html();
-        contentArray.push({
-          type: "html",
-          content: htmlContent,
-        });
-      }
+    // Validation: missing or invalid configuration.
+    if (!config || !crawler) {
+      throw new Error("No valid configuration was found for this project.");
     }
 
-    setArticleContent(contentArray);
-
-    const saveContentToLocalStorage = (contentArray) => {
-      localStorage.setItem("articleContent", JSON.stringify(contentArray));
-    };
-    saveContentToLocalStorage(contentArray);
-
-    // Check invalid links
-    const baseUrl = new URL(url.trim()).origin;
-    const baseDomain = baseUrl.split(".").slice(-2).join(".");
-    const invalid = [];
-    const linkStatusesObj = {};
-
-    $(".article-internal a").each(async (index, element) => {
-      const linkUrl = new URL($(element).attr("href"), baseUrl).href;
-      const linkStatus = await checkUrlStatus(linkUrl);
-      const linkDomain = new URL(linkUrl).origin.split(".").slice(-2).join(".");
-
-      if (linkStatus === undefined) {
-        linkStatusesObj[linkUrl] = "No se pudo obtener el estado";
-      } else {
-        linkStatusesObj[linkUrl] = linkStatus;
-      }
-
-      if (linkDomain !== baseDomain) {
-        invalid.push(linkUrl);
-      }
-    });
-    setInvalidLinks(invalid);
-    setLinkStatuses(linkStatusesObj);
-
-    // **Extraer esquema usando la nueva función**
-    const schema = extractJsonLdSchema($);
-    setSchema(schema);
-
-    // Manejar URLs de redirección
-    const redirectUrlsArray = redirectUrls.split(",");
-    const redirectStatuses = {};
-    for (const redirectUrl of redirectUrlsArray) {
-      const trimmedUrl = redirectUrl.trim();
-      const status = await checkUrlStatus(trimmedUrl);
-      redirectStatuses[trimmedUrl] = status;
+    // Validation: project marked as in progress.
+    if (config.status === "inProgress") {
+      throw new Error("This project is still under development.");
     }
-    setRedirectStatuses(redirectStatuses);
+
+    // Validation: crawler not available or not ready.
+    if (config.crawler === "notReady" || typeof crawler !== "function") {
+      throw new Error("The crawler is not yet ready for this project.");
+    }
+
+    await crawler({
+      url,
+      $,
+      setUrl,
+      setInvalidLinks,
+      setLinkStatuses,
+      setSchema,
+      setShowAdditionalFields,
+      setTitle,
+      setMetaDescription,
+      setMetaRobots,
+      setMetaKeyWords,
+      setMetaGeoRegion,
+      setMetaGeoPlacename,
+      setBanner,
+      setArticleContent,
+      setRedirectStatuses,
+      setArticleTitle,
+      setHeadingTitle,
+      setDescriptionIntro,
+      setBrandSelected,
+      setCategory,
+      fetchImageDetails,
+      extractMetaData,
+      extractJsonLdSchema,
+      checkUrlStatus,
+      redirectUrls,
+      setLoading,
+    });
 
     setShowAdditionalFields(true);
   } catch (error) {
-    console.error("Error fetching HTML:", error);
+    console.error("Error in scraping:", error.message);
+    if (setModalText && setShowModal) {
+      setModalText(error.message || "Unknown error while scraping.");
+      setShowModal(true);
+    }
   }
+
   setLoading(false);
 };
 
-export default handleSubmitLogic;
+export default HandleSubmitLogic;

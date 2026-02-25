@@ -1,16 +1,13 @@
 import React from "react";
-import { Alert, ListGroup, Badge } from "react-bootstrap";
+import { Badge } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { Table, Container, Row } from "react-bootstrap";
-import SeoCheckerPage from "../../pages/seoCheckerPage";
 
 const SeoChecker = ({ metaData }) => {
   const {
     title,
     metaDescription,
     suggestedUrl: url,
-    market,
-    articleNumber,
     category,
     oldUrl,
     h1Title,
@@ -18,12 +15,12 @@ const SeoChecker = ({ metaData }) => {
     metaKeyWords,
     metaGeoRegion,
     metaGeoPlacename,
-    introDescription,
+    descriptionIntro,
+    brandSelected,
   } = metaData;
 
   const titleLength = title ? title.length : 0;
   const descriptionLength = metaDescription ? metaDescription.length : 0;
-  const urlLength = url ? url.length : 0;
 
   let titleColor, descriptionColor, urlColor;
   let titleMessage, descriptionMessage, urlMessage;
@@ -33,25 +30,17 @@ const SeoChecker = ({ metaData }) => {
   const WARNING_CHAR_TITLE_SIZE = titleLength === 40 || titleLength === 70;
   const MAX_CHAR_TITLE_SIZE = titleLength > 70;
   const MIN_CHAR_DESC_SIZE = descriptionLength <= 0;
-  const IDEAL_CHAR_DESC_SIZE =
-    descriptionLength >= 41 && descriptionLength <= 170;
+  const IDEAL_CHAR_DESC_SIZE = descriptionLength >= 41 && descriptionLength <= 170;
   const MAX_CHAR_DESC_SIZE = descriptionLength > 170;
-  const urlLastSegment =
-    url && url.includes("/") ? url.substring(url.lastIndexOf("/") + 1) : "";
+  const urlLastSegment = url && url.includes("/") ? url.substring(url.lastIndexOf("/") + 1) : "";
   const urlLastSegmentLength = urlLastSegment.length;
 
   if (urlLastSegmentLength > 40) {
     urlColor = "danger";
-    urlMessage =
-      "The final segment of the URL is longer than 40 characters. (" +
-      urlLastSegmentLength +
-      ")";
+    urlMessage = "The final segment of the URL is longer than 40 characters. (" + urlLastSegmentLength +")";
   } else {
     urlColor = "primary";
-    urlMessage =
-      "The final segment of the URL is within the limit of the (" +
-      urlLastSegmentLength +
-      ")";
+    urlMessage = "The final segment of the URL is within the limit of the (" + urlLastSegmentLength +")";
   }
 
   if (MIN_CHAR_TITLE_SIZE) {
@@ -109,11 +98,19 @@ const SeoChecker = ({ metaData }) => {
                   </div>
                 </td>
               </tr>
-              {introDescription && (
+              {brandSelected && (
+                <tr>
+                  <th>Brand Selected</th>
+                  <td>
+                    <span>{brandSelected}</span>
+                  </td>
+                </tr>
+              )}
+              {descriptionIntro && (
                 <tr>
                   <th>Intro Description</th>
                   <td>
-                    <span>{introDescription}</span>
+                    <span>{descriptionIntro}</span>
                   </td>
                 </tr>
               )}
@@ -129,16 +126,16 @@ const SeoChecker = ({ metaData }) => {
                   </div>
                 </td>
               </tr>
+              {oldUrl && (
+                <tr>
+                  <th>Old URL</th>
+                  <td>{oldUrl}</td>
+                </tr>
+              )}
               {category && (
                 <tr>
                   <th>Category</th>
                   <td>{category}</td>
-                </tr>
-              )}
-              {oldUrl && (
-                <tr>
-                  <th>Actual URL</th>
-                  <td>{oldUrl}</td>
                 </tr>
               )}
               {h1Title && (
@@ -182,8 +179,6 @@ SeoChecker.propTypes = {
     title: PropTypes.string.isRequired,
     metaDescription: PropTypes.string.isRequired,
     suggestedUrl: PropTypes.string.isRequired,
-    market: PropTypes.string,
-    articleNumber: PropTypes.string,
     category: PropTypes.string,
     oldUrl: PropTypes.string,
     h1Title: PropTypes.string,

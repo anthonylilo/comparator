@@ -7,16 +7,18 @@ import {
   ProgressBar,
 } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import { useArticleFormHooks } from "../services/useArticleFormHooks";
-import handleSubmitLogic from "../services/handleSubmitLogic";
-import CardsImages from "../components/cards/cardsImages";
-import InvalidLinksComponent from "../components/invalidLinks/invalidLinks";
-import HttpsModule from "../components/httpsLinks/httpsModule";
+import { useArticleFormHooks } from "../services/UseArticleFormHooks";
+import HandleSubmitLogic from "../services/HandleSubmitLogic";
+import { ProjectSettings } from "../services/settings/ProjectSettings";
+import ModalLoading from "../components/modal/ModalLoading";
+import CardsImages from "../components/cards/CardsImages";
+import InvalidLinks from "../components/invalidLinks/InvalidLinks";
+import HttpsModule from "../components/httpsLinks/HttpsModule";
 import SchemaViewer from "../components/schema/SchemaViewer";
-import MetaData from "../components/metaData/seoChecker";
-import RedirectStatusesComponent from "../components/redirectStatus/redirectStatuseComponent";
+import MetaData from "../components/metaData/SeoChecker";
+import RedirectStatusesComponent from "../components/redirectStatus/RedirectStatusComponent";
 
-function ArticleForm({ reset, selectedFormat }) {
+function ArticleForm({ reset }) {
   const {
     url,
     setUrl,
@@ -50,6 +52,12 @@ function ArticleForm({ reset, selectedFormat }) {
     setArticleContent,
     headingTitle,
     setHeadingTitle,
+    descriptionIntro,
+    setDescriptionIntro,
+    brandSelected,
+    setBrandSelected,
+    category,
+    setCategory,
   } = useArticleFormHooks();
 
   const [redirectUrls, setRedirectUrls] = useState("");
@@ -64,11 +72,24 @@ function ArticleForm({ reset, selectedFormat }) {
     metaGeoRegion: metaGeoRegion,
     metaGeoPlacename: metaGeoPlacename,
     h1Title: headingTitle,
+    descriptionIntro: descriptionIntro,
+    brandSelected: brandSelected,
+    category: category,
   };
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState("");
+  const settings = ProjectSettings();
+
+  useEffect(() => {
+    if (settings?.config?.crawler === "notReady") {
+      setModalText("The crawler is not ready yet, we're working on it.");
+      setShowModal(true);
+    }
+  }, [settings]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleSubmitLogic(
+    await HandleSubmitLogic(
       url,
       redirectUrls,
       setUrl,
@@ -87,7 +108,12 @@ function ArticleForm({ reset, selectedFormat }) {
       setArticleContent,
       setRedirectStatuses,
       setArticleTitle,
-      setHeadingTitle
+      setHeadingTitle,
+      setModalText,
+      setShowModal,
+      setDescriptionIntro,
+      setBrandSelected,
+      setCategory,
     );
   };
 
@@ -103,14 +129,15 @@ function ArticleForm({ reset, selectedFormat }) {
       setShowAdditionalFields(false);
       setTitle("");
       setMetaDescription("");
-      setMetaRobots(""),
+      (setMetaRobots(""),
         setMetaKeyWords(""),
         setMetaGeoRegion(""),
         setMetaGeoPlacename(""),
-        setBanner(null);
+        setBanner(null));
       setArticleContent([]);
       setArticleTitle("");
       setRedirectStatuses({});
+      setCategory("");
     }
   }, [reset]);
 
@@ -131,12 +158,12 @@ function ArticleForm({ reset, selectedFormat }) {
                   placeHolderOption === "/NSB/comparator/purina"
                     ? "https://purina.cl/"
                     : placeHolderOption === "/NSB/comparator/nutrition"
-                    ? "https://www.babyandme.com"
-                    : placeHolderOption === "/NSB/comparator/professional"
-                    ? "https://nestleprofessional-latam.com/pais/"
-                    : placeHolderOption === "/NSB/comparator/recetas"
-                    ? "https://recetasnestle.com/"
-                    : "https://nestleprofessional-latam.com/pais/"
+                      ? "https://www.babyandme.com"
+                      : placeHolderOption === "/NSB/comparator/professional"
+                        ? "https://nestleprofessional-latam.com/pais/"
+                        : placeHolderOption === "/NSB/comparator/recetas"
+                          ? "https://recetasnestle.com/"
+                          : "https://nestleprofessional-latam.com/pais/"
                 }
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
@@ -161,16 +188,35 @@ function ArticleForm({ reset, selectedFormat }) {
         <Row className="mt-3">
           <div id="comparator">
             <h1>{headingTitle}</h1>
-            {banner && <CardsImages image={banner} />}
+            {banner && (
+              <CardsImages image={banner} compareIndex={1} compareSide="site" />
+            )}
             <Row className="mt-3">
-              {articleContent.map((item, index) => (
-                <Col key={index} md={12} className="mb-3">
-                  {item.type === "html" && (
-                    <div dangerouslySetInnerHTML={{ __html: item.content }} />
-                  )}
-                  {item.type === "image" && <CardsImages image={item} />}
-                </Col>
-              ))}
+              {(() => {
+                // imagePos is 1-based; banner already used position 1
+                let imagePos = banner ? 1 : 0;
+                return articleContent.map((item, index) => {
+                  // Increase counter ONLY for images
+                  if (item?.type === "image") imagePos += 1;
+                  return (
+                    <Col key={index} md={12} className="mb-3">
+                      {item.type === "html" && (
+                        <div
+                          dangerouslySetInnerHTML={{ __html: item.content }}
+                        />
+                      )}
+
+                      {item.type === "image" && (
+                        <CardsImages
+                          image={item}
+                          compareIndex={imagePos}
+                          compareSide="site"
+                        />
+                      )}
+                    </Col>
+                  );
+                });
+              })()}
             </Row>
           </div>
           <Row className="mt-3">
@@ -178,7 +224,7 @@ function ArticleForm({ reset, selectedFormat }) {
           </Row>
           {schema && <SchemaViewer schema={schema} />}
           {invalidLinks.length > 0 && (
-            <InvalidLinksComponent invalidLinks={invalidLinks} />
+            <InvalidLinks invalidLinks={invalidLinks} />
           )}
           <Row className="mt-3">
             <HttpsModule linkStatuses={linkStatuses} />
@@ -190,6 +236,11 @@ function ArticleForm({ reset, selectedFormat }) {
           )}
         </Row>
       )}
+      <ModalLoading
+        text={modalText}
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </Container>
   );
 }

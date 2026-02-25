@@ -6,14 +6,14 @@ import "./assets/styles/styles.css";
 import routesData from "../src/languages/routes.json";
 
 // Import components
-import AboutPage from "./pages/about";
-import Purina from "./pages/purina";
-import Recetas from "./pages/recetas";
-import Nutrition from "./pages/nutrition";
-import Professional from "./pages/nestlePro";
-import SeoCheckerPage from "./pages/seoCheckerPage";
-import Redirection from "./pages/redirection";
-import Ndg from "./pages/dolceGusto";
+import AboutPage from "./pages/AboutPage";
+import Purina from "./pages/Purina";
+import Recetas from "./pages/Recetas";
+import Nutrition from "./pages/Nutrition";
+import Professional from "./pages/Professional";
+import SeoCheckerPage from "./pages/SeoCheckerPage";
+import Redirection from "./pages/Redirection";
+import Ndg from "./pages/Ndg";
 
 // Map the component names to the actual components
 const componentsMap = {
@@ -24,18 +24,20 @@ const componentsMap = {
   Professional,
   SeoCheckerPage,
   Redirection,
-  Ndg
+  Ndg,
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-  <Router>
-    <Routes>
-      {routesData.map((route, index) => {
-        const Component = componentsMap[route.component];
-        return <Route key={index} path={route.path} element={<Component />} />;
-      })}
-    </Routes>
-  </Router>
-</React.StrictMode>
+    <Router>
+      <Routes>
+        {routesData.map((route, index) => {
+          const Component = componentsMap[route.component];
+          return (
+            <Route key={index} path={route.path} element={<Component />} />
+          );
+        })}
+      </Routes>
+    </Router>
+  </React.StrictMode>,
 );

@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import "../../assets/styles/header.css";
-import DarkToggler from "./darkToggler/themeToggler";
+import ThemeToggler from "./darkToggler/ThemeToggler";
 
 function SubNavbar() {
   return (
@@ -38,7 +38,7 @@ function SubNavbar() {
             </Nav.Item>
           </Nav>
           <Nav>
-            <DarkToggler></DarkToggler>
+            <ThemeToggler></ThemeToggler>
           </Nav>
         </Navbar.Collapse>
       </Container>
