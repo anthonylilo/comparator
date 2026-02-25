@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/comparator/static/css/main.2e59e235.css",
-    "main.js": "/comparator/static/js/main.b9c17b08.js",
-    "static/media/reset.svg": "/comparator/static/media/reset.28522f6ed1f7ef8a2c7a661c3bd0a1f4.svg",
-    "static/media/compare.svg": "/comparator/static/media/compare.0b54ac0f6b0175bba8d9775585262f4b.svg",
-    "static/media/arrow-up.svg": "/comparator/static/media/arrow-up.9a8ab523ad9ec66ff653775f80ca0a2b.svg",
-    "index.html": "/comparator/index.html",
-    "static/media/enable.svg": "/comparator/static/media/enable.4d237f57c3ac8139745defd27ab0bc60.svg",
-    "main.2e59e235.css.map": "/comparator/static/css/main.2e59e235.css.map",
-    "main.b9c17b08.js.map": "/comparator/static/js/main.b9c17b08.js.map"
+    "main.css": "/comparator/NSB/static/css/main.2e59e235.css",
+    "main.js": "/comparator/NSB/static/js/main.555b11f5.js",
+    "static/media/reset.svg": "/comparator/NSB/static/media/reset.28522f6ed1f7ef8a2c7a661c3bd0a1f4.svg",
+    "static/media/compare.svg": "/comparator/NSB/static/media/compare.0b54ac0f6b0175bba8d9775585262f4b.svg",
+    "static/media/arrow-up.svg": "/comparator/NSB/static/media/arrow-up.9a8ab523ad9ec66ff653775f80ca0a2b.svg",
+    "index.html": "/comparator/NSB/index.html",
+    "static/media/enable.svg": "/comparator/NSB/static/media/enable.4d237f57c3ac8139745defd27ab0bc60.svg",
+    "main.2e59e235.css.map": "/comparator/NSB/static/css/main.2e59e235.css.map",
+    "main.555b11f5.js.map": "/comparator/NSB/static/js/main.555b11f5.js.map"
   },
   "entrypoints": [
     "static/css/main.2e59e235.css",
-    "static/js/main.b9c17b08.js"
+    "static/js/main.555b11f5.js"
   ]
 }
